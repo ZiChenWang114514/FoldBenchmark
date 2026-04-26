@@ -1,0 +1,7 @@
+outputs/
+*.cif
+*.pdb
+*_data.json
+__pycache__/
+*.pyc
+.DS_Store

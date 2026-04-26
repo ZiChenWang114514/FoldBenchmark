@@ -1,0 +1,26 @@
+{
+  "name": "2AZ0_U1A_RNA_hairpin",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA"
+      }
+    },
+    {
+      "rna": {
+        "id": [
+          "B"
+        ],
+        "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

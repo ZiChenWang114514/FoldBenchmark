@@ -1,0 +1,26 @@
+{
+  "name": "5V3F_FUS_RRM_RNA",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC"
+      }
+    },
+    {
+      "rna": {
+        "id": [
+          "B"
+        ],
+        "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}
