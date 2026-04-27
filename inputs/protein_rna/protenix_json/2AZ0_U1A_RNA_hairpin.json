@@ -1,0 +1,22 @@
+[
+  {
+    "name": "2AZ0_U1A_RNA_hairpin",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA",
+          "count": 1
+        }
+      },
+      {
+        "rnaSequence": {
+          "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

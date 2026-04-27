@@ -1,0 +1,26 @@
+[
+    {
+        "name": "7N4I_RBD_neutralizing_ab",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "EVQLVQSGAEVKKPGESLKISCKGSGYSFISYWIAWVRQMPGKGLEWMGIIYPGDSDTTYSPSFQGQVTISADKSISTAYLQWSSLKASDTAIYYCARLLYYSDSSPLDSWGQGTLVTVSSASTKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKRVEPKSCDK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/7N4I_RBD_neutralizing_ab/7N4I_RBD_neutralizing_ab/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/7N4I_RBD_neutralizing_ab/7N4I_RBD_neutralizing_ab/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "DIQMTQSPSSLSASVGDRVTITCRASQSISTYLNWYQQKPGKAPNLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQSHSTPRTFGPGTKVDIKRTVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGEC",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/7N4I_RBD_neutralizing_ab/7N4I_RBD_neutralizing_ab/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/7N4I_RBD_neutralizing_ab/7N4I_RBD_neutralizing_ab/msa/0/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

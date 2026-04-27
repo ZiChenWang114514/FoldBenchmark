@@ -1,0 +1,16 @@
+[
+  {
+    "name": "2GB1_protein_G",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MTYKLILNGKTLKGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

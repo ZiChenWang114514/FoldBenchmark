@@ -90,7 +90,7 @@ case "$MODEL" in
             --query-json "$INPUT_JSON" \
             --output-dir "${OUTPUTS}/${CASE_NAME}" \
             --inference-ckpt-path "${OPENFOLD_CACHE}/of3-p2-155k.pt" \
-            --no-templates \
+            --use-templates false \
             2>&1 || echo "FAILED: openfold3/${SCENARIO}/${CASE_NAME}"
         ;;
     protenix)

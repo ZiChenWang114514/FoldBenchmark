@@ -1,0 +1,32 @@
+[
+    {
+        "name": "1HSG_HIV_protease_indinavir",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "PQITLWQRPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/1HSG_HIV_protease_indinavir/1HSG_HIV_protease_indinavir/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/1HSG_HIV_protease_indinavir/1HSG_HIV_protease_indinavir/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "PQITLWQRPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/1HSG_HIV_protease_indinavir/1HSG_HIV_protease_indinavir/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/1HSG_HIV_protease_indinavir/1HSG_HIV_protease_indinavir/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CC(C)(C)NC(=O)[C@@H]1CN(Cc2cccnc2)CCN1C[C@@H](O)C[C@@H](Cc1ccccc1)C(=O)N[C@H]1c2ccccc2C[C@H]1O",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

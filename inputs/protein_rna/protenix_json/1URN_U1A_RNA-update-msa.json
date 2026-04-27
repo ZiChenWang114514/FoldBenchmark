@@ -1,0 +1,24 @@
+[
+    {
+        "name": "1URN_U1A_RNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_rna/1URN_U1A_RNA/1URN_U1A_RNA/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_rna/1URN_U1A_RNA/1URN_U1A_RNA/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "rnaSequence": {
+                    "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

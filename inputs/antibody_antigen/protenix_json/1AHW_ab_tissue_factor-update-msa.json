@@ -1,0 +1,34 @@
+[
+    {
+        "name": "1AHW_ab_tissue_factor",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "DIKMTQSPSSMYASLGERVTITCKASQDIRKYLNWYQQKPWKSPKTLIYYATSLADGVPSRFSGSGSGQDYSLTISSLESDDTATYYCLQHGESPYTFGGGTKLEINRADAAPTVSIFPPSSEQLTSGGASVVCFLNNFYPKDINVKWKIDGSERQNGVLNSWTDQDSKDSTYSMSSTLTLTKDEYERHNSYTCEATHKTSTSPIVKSFNRNEC",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "EIQLQQSGAELVRPGALVKLSCKASGFNIKDYYMHWVKQRPEQGLEWIGLIDPENGNTIYDPKFQGKASITADTSSNTAYLQLSSLTSEDTAVYYCARDNSYYFDYWGQGTTLTVSSAKTTPPSVYPLAPGSAAQTNSMVTLGCLVKGYFPEPVTVTWNSGSLSSGVHTFPAVLQSDLYTLSSSVTVPSSTWPSETVTCNVAHPASSTKVDKKI",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "SGTTNTVAAYNLTWKSTNFKTILEWEPKPVNQVYTVQISTKSGDWKSKCFYTTDTECDLTDEIVKDVKQTYLARVFSYPAGNVESTGSAGEPLYENSPEFTPYLETNLGQPTIQSFEQVGTKVNVTVEDERTLVRRNNTFLSLRDVFGKDLIYTLYYWKSSSSGKKTAKTNTNEFLIDVDKGENYCFSVQAVIPSRTVNRKSTDSPVECMGQEKGEFRE",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/2/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1AHW_ab_tissue_factor/1AHW_ab_tissue_factor/msa/2/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

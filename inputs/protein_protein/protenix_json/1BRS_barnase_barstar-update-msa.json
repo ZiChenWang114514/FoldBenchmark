@@ -1,0 +1,26 @@
+[
+    {
+        "name": "1BRS_barnase_barstar",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "AQVINTFDGVADYLQTYHKLPDNYITKSEAQALGWVASKGNLADVAPGKSIGGDIFSNREGKLPGKSGRTWREADINYTSGFRNSDRILYSSDWLIYKTTDHYQTFTKIR",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1BRS_barnase_barstar/1BRS_barnase_barstar/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1BRS_barnase_barstar/1BRS_barnase_barstar/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "KKAVINGEQIRSISDLHQTLKKELALPEYYGENLDALWDALTGWVEYPLVLEWRQFEQSKQLTENGAESVLQVFREAKAEGADITIILS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1BRS_barnase_barstar/1BRS_barnase_barstar/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1BRS_barnase_barstar/1BRS_barnase_barstar/msa/1/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

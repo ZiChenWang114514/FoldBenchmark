@@ -1,0 +1,22 @@
+[
+  {
+    "name": "5V3F_FUS_RRM_RNA",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC",
+          "count": 1
+        }
+      },
+      {
+        "rnaSequence": {
+          "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

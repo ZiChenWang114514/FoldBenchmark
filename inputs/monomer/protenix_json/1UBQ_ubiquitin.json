@@ -1,0 +1,16 @@
+[
+  {
+    "name": "1UBQ_ubiquitin",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

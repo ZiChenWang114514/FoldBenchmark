@@ -1,0 +1,24 @@
+[
+    {
+        "name": "5V3F_FUS_RRM_RNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_rna/5V3F_FUS_RRM_RNA/5V3F_FUS_RRM_RNA/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_rna/5V3F_FUS_RRM_RNA/5V3F_FUS_RRM_RNA/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "rnaSequence": {
+                    "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

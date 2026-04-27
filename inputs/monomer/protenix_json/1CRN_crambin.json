@@ -1,0 +1,16 @@
+[
+  {
+    "name": "1CRN_crambin",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

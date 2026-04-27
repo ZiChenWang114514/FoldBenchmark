@@ -1,0 +1,34 @@
+[
+    {
+        "name": "1MLC_ab_lysozyme",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "DIELTQSPATLSVTPGDSVSLSCRASQSISNNLHWYQQKSHESPRLLIKYVSQSSSGIPSRFSGSGSGTDFTLSINSVETEDFGMYFCQQSNSWPRTFGGGTKLEIKRADAAPTVSIFPPSSEQLTSGGASVVCFLNNFYPKDINVKWKIDGSERQNGVLNSWTDQDSKDSTYSMSSTLTLTKDEYERHNSYTCEATHKTSTSPIVKSFNRNEC",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "QVQLQESGAEVMKPGASVKISCKATGYTFSTYWIEWVKQRPGHGLEWIGEILPGSGSTYYNEKFKGKATFTADTSSNTAYMQLSSLTSEDSAVYYCARGDGNYGYWGQGTTLTVSSASTTPPSVFPLAPGSAAQTNSMVTLGCLVKGYFPEPVTVTWNSGSLSSGVHTFPAVLQSDLYTLSSSVTVPSSPRPSETVTCNVAHPASSTKVDKKIVPRDC",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/2/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/2/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "KVFGRCELAAAMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1MLC_ab_lysozyme/1MLC_ab_lysozyme/msa/1/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

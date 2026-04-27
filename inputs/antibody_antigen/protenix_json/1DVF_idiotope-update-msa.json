@@ -1,0 +1,42 @@
+[
+    {
+        "name": "1DVF_idiotope",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "DIVLTQSPASLSASVGETVTITCRASGNIHNYLAWYQQKQGKSPQLLVYYTTTLADGVPSRFSGSGSGTQYSLKINSLQPEDFGSYYCQHFWSTPRTFGGGTKLEIKR",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "QVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGNTDYNSALKSRLSISKDNSKSQVFLKMNSLHTDDTARYYCARERDYRLDYWGQGTTLTVSS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/2/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/2/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "DIQLTQSPSSLSASLGDRVTISCRASQDISNYLNWYQQKPDGTVKLLIYYTSRLHSGVPSRFSGSGSGTDYSLTISNLEQEDIATYFCQQGNTLPWTFGGGTKLEIK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "QVQLQQSGTELVKSGASVKLSCTASGFNIKDTHMNWVKQRPEQGLEWIGRIDPANGNIQYDPKFRGKATITADTSSNTAYLQLSSLTSEDTAVYYCATKVIYYQGRGAMDYWGQGTTLTVS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/3/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/antibody_antigen/1DVF_idiotope/1DVF_idiotope/msa/3/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

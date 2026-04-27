@@ -1,0 +1,24 @@
+[
+    {
+        "name": "4LDE_BRAF_vemurafenib",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "DYKDDDDAENLYFQGNIFEMLRIDEGLRLKIYKDTEGYYTIGIGHLLTKSPSLNAAKSELDKAIGRNTNGVITKDEAEKLFNQDVDAAVRGILRNAKLKPVYDSLDAVRRAALINMVFQMGETGVAGFTNSLRMLQQKRWDEAAVNLAKSRWYNQTPNRAKRVITTFRTGTWDAYAADEVWVVGMGIVMSLIVLAIVFGNVLVITAIAKFERLQTVTNYFITSLACADLVMGLAVVPFGAAHILTKTWTFGNFWCEFWTSIDVLCVTASIETLCVIAVDRYFAITSPFKYQSLLTKNKARVIILMVWIVSGLTSFLPIQMHWYRATHQEAINCYAEETCCDFFTNQAYAIASSIVSFYVPLVIMVFVYSRVFQEAKRQLQKIDKFALKEHKALKTLGIIMGTFTLCWLPFFIVNIVHVIQDNLIRKEVYILLNWIGYVNSGFNPLIYCRSPDFRIAFQELLCLRRSSLK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/4LDE_BRAF_vemurafenib/4LDE_BRAF_vemurafenib/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/4LDE_BRAF_vemurafenib/4LDE_BRAF_vemurafenib/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCCS(=O)(=O)Nc1ccc(-c2c[nH]c3c(F)cc(-c4cc(F)c(Cl)cc4F)cc23)c(F)c1F",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

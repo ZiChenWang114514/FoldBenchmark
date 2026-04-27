@@ -1,0 +1,24 @@
+[
+    {
+        "name": "3HTB_CDK2_inhibitor",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "MNIFEMLRIDEGLRLKIYKDTEGYYTIGIGHLLTKSPDLNAAKSELDKAIGRNCNGVITKDEAEKLFNQDVDAAVRGILRNAKLKPVYDSLDAVRRCAAINQVFQMGETGVAGFTNSLRMLQQKRWDEAAVNLAKSRWYNQTPDRAKRVITTFRTGTWDAYKNL",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/3HTB_CDK2_inhibitor/3HTB_CDK2_inhibitor/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_ligand/3HTB_CDK2_inhibitor/3HTB_CDK2_inhibitor/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_ATP",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1URN_U1A_RNA",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK",
+          "count": 1
+        }
+      },
+      {
+        "rnaSequence": {
+          "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

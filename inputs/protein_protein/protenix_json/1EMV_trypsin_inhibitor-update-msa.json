@@ -1,0 +1,26 @@
+[
+    {
+        "name": "1EMV_trypsin_inhibitor",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "MELKHSISDYTEAEFLQLVTTICNADTSSEEELVKLVTHFEEMTEHPSGSDLIYYPKEGDDDSPSGIVNTVKQWRAANGKSGFKQG",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1EMV_trypsin_inhibitor/1EMV_trypsin_inhibitor/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1EMV_trypsin_inhibitor/1EMV_trypsin_inhibitor/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "MESKRNKPGKATGKGKPVGDKWLDDAGKDSGAPIPDRIADKLRDKEFKSFDDFRKAVWEEVSKDPELSKNLNPSNKSSVSKGYSPFTPKNQQVGGRKVYELHHDKPISQGGEVYDMDNIRVTTPKRHIDIHRGK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1EMV_trypsin_inhibitor/1EMV_trypsin_inhibitor/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_protein/1EMV_trypsin_inhibitor/1EMV_trypsin_inhibitor/msa/1/non_pairing.a3m"
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]
