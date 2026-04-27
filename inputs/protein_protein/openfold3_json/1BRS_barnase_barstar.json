@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "1BRS_barnase_barstar": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "AQVINTFDGVADYLQTYHKLPDNYITKSEAQALGWVASKGNLADVAPGKSIGGDIFSNREGKLPGKSGRTWREADINYTSGFRNSDRILYSSDWLIYKTTDHYQTFTKIR"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "D",
+          "sequence": "KKAVINGEQIRSISDLHQTLKKELALPEYYGENLDALWDALTGWVEYPLVLEWRQFEQSKQLTENGAESVLQVFREAKAEGADITIILS"
+        }
+      ]
+    }
+  }
+}

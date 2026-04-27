@@ -243,14 +243,12 @@ def generate_boltz2_yaml(af3_json: dict) -> str:
             lines.append(f"      id: {entry['rna']['id'][0]}")
             lines.append(f"      sequence: {entry['rna']['sequence']}")
         elif "ligand" in entry:
+            lines.append(f"  - ligand:")
+            lines.append(f"      id: {entry['ligand']['id'][0]}")
             if "smiles" in entry["ligand"]:
-                lines.append(f"  - smiles:")
-                lines.append(f"      id: {entry['ligand']['id'][0]}")
                 lines.append(f"      smiles: \"{entry['ligand']['smiles']}\"")
             elif "ccdCodes" in entry["ligand"]:
-                lines.append(f"  - ccd:")
-                lines.append(f"      id: {entry['ligand']['id'][0]}")
-                lines.append(f"      code: {entry['ligand']['ccdCodes'][0]}")
+                lines.append(f"      ccd: {entry['ligand']['ccdCodes'][0]}")
     return "\n".join(lines) + "\n"
 
 
@@ -272,6 +270,59 @@ def generate_chai1_fasta(af3_json: dict) -> str:
                 lines.append(f">ligand|name=chain_{chain_id}")
                 lines.append(entry["ligand"]["smiles"])
     return "\n".join(lines) + "\n"
+
+
+def generate_protenix_json(af3_json: dict) -> list:
+    """Convert AF3 JSON to Protenix format (list of job dicts)."""
+    seqs = []
+    for entry in af3_json["sequences"]:
+        if "protein" in entry:
+            seqs.append({"proteinChain": {
+                "sequence": entry["protein"]["sequence"],
+                "count": 1,
+            }})
+        elif "rna" in entry:
+            seqs.append({"rnaSequence": {
+                "sequence": entry["rna"]["sequence"],
+                "count": 1,
+            }})
+        elif "ligand" in entry:
+            lig = entry["ligand"]
+            if "smiles" in lig:
+                seqs.append({"ligand": {"ligand": lig["smiles"], "count": 1}})
+            elif "ccdCodes" in lig:
+                seqs.append({"ligand": {"ligand": f"CCD_{lig['ccdCodes'][0]}", "count": 1}})
+    return [{"name": af3_json["name"], "sequences": seqs, "modelSeeds": af3_json.get("modelSeeds", [1])}]
+
+
+def generate_openfold3_json(af3_json: dict) -> dict:
+    """Convert AF3 JSON to OpenFold3 query format."""
+    chains = []
+    for entry in af3_json["sequences"]:
+        if "protein" in entry:
+            chains.append({
+                "molecule_type": "protein",
+                "chain_ids": entry["protein"]["id"][0],
+                "sequence": entry["protein"]["sequence"],
+            })
+        elif "rna" in entry:
+            chains.append({
+                "molecule_type": "rna",
+                "chain_ids": entry["rna"]["id"][0],
+                "sequence": entry["rna"]["sequence"],
+            })
+        elif "ligand" in entry:
+            lig = entry["ligand"]
+            chain_entry = {
+                "molecule_type": "ligand",
+                "chain_ids": lig["id"][0],
+            }
+            if "smiles" in lig:
+                chain_entry["smiles"] = lig["smiles"]
+            elif "ccdCodes" in lig:
+                chain_entry["ccd_codes"] = lig["ccdCodes"][0]
+            chains.append(chain_entry)
+    return {"queries": {af3_json["name"]: {"use_msas": True, "chains": chains}}}
 
 
 def main():
@@ -301,6 +352,20 @@ def main():
             json_path = json_dir / f"{case['name']}.json"
             with open(json_path, "w") as f:
                 json.dump(af3_json, f, indent=2)
+
+            # Save Protenix JSON
+            ptx_dir = INPUTS_DIR / scenario / "protenix_json"
+            ptx_dir.mkdir(parents=True, exist_ok=True)
+            ptx_path = ptx_dir / f"{case['name']}.json"
+            with open(ptx_path, "w") as f:
+                json.dump(generate_protenix_json(af3_json), f, indent=2)
+
+            # Save OpenFold3 JSON
+            of3_dir = INPUTS_DIR / scenario / "openfold3_json"
+            of3_dir.mkdir(parents=True, exist_ok=True)
+            of3_path = of3_dir / f"{case['name']}.json"
+            with open(of3_path, "w") as f:
+                json.dump(generate_openfold3_json(af3_json), f, indent=2)
 
             # Save Boltz-2 YAML
             yaml_dir = INPUTS_DIR / scenario / "boltz2_yaml"

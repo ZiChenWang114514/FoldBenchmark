@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "3HTB_CDK2_inhibitor": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MNIFEMLRIDEGLRLKIYKDTEGYYTIGIGHLLTKSPDLNAAKSELDKAIGRNCNGVITKDEAEKLFNQDVDAAVRGILRNAKLKPVYDSLDAVRRCAAINQVFQMGETGVAGFTNSLRMLQQKRWDEAAVNLAKSRWYNQTPDRAKRVITTFRTGTWDAYKNL"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "ccd_codes": "ATP"
+        }
+      ]
+    }
+  }
+}

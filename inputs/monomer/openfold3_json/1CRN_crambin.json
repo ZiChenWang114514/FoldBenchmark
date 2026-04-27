@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "1CRN_crambin": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN"
+        }
+      ]
+    }
+  }
+}

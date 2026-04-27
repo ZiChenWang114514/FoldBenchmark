@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "2GB1_protein_G": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MTYKLILNGKTLKGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE"
+        }
+      ]
+    }
+  }
+}

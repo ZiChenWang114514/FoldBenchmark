@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "2AZ0_U1A_RNA_hairpin": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA"
+        },
+        {
+          "molecule_type": "rna",
+          "chain_ids": "B",
+          "sequence": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA"
+        }
+      ]
+    }
+  }
+}

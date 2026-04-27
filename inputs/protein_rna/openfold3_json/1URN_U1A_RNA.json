@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "1URN_U1A_RNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK"
+        },
+        {
+          "molecule_type": "rna",
+          "chain_ids": "C",
+          "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK"
+        }
+      ]
+    }
+  }
+}

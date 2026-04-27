@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "1EMV_trypsin_inhibitor": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MELKHSISDYTEAEFLQLVTTICNADTSSEEELVKLVTHFEEMTEHPSGSDLIYYPKEGDDDSPSGIVNTVKQWRAANGKSGFKQG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "MESKRNKPGKATGKGKPVGDKWLDDAGKDSGAPIPDRIADKLRDKEFKSFDDFRKAVWEEVSKDPELSKNLNPSNKSSVSKGYSPFTPKNQQVGGRKVYELHHDKPISQGGEVYDMDNIRVTTPKRHIDIHRGK"
+        }
+      ]
+    }
+  }
+}

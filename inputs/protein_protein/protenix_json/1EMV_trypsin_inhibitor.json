@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1EMV_trypsin_inhibitor",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MELKHSISDYTEAEFLQLVTTICNADTSSEEELVKLVTHFEEMTEHPSGSDLIYYPKEGDDDSPSGIVNTVKQWRAANGKSGFKQG",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MESKRNKPGKATGKGKPVGDKWLDDAGKDSGAPIPDRIADKLRDKEFKSFDDFRKAVWEEVSKDPELSKNLNPSNKSSVSKGYSPFTPKNQQVGGRKVYELHHDKPISQGGEVYDMDNIRVTTPKRHIDIHRGK",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1BRS_barnase_barstar",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "AQVINTFDGVADYLQTYHKLPDNYITKSEAQALGWVASKGNLADVAPGKSIGGDIFSNREGKLPGKSGRTWREADINYTSGFRNSDRILYSSDWLIYKTTDHYQTFTKIR",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "KKAVINGEQIRSISDLHQTLKKELALPEYYGENLDALWDALTGWVEYPLVLEWRQFEQSKQLTENGAESVLQVFREAKAEGADITIILS",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "7RN1_3CL_inhibitor": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGHSMQNCVLKLKVDTANPKTPKYKFVRIQPGQTFSVLACYNGSPSGVYQCAMRPNFTIKGSFLNGSCGSVGFNIDYDCVSFCYMHHMELPTGVHAGTDLEGNFYGPFVDRQTAQAAGTDTTITVNVLAWLYAAVINGDRWFLNRFTTTLNDFNLVAMKYNYEPLTQDHVDILGPLSAQTGIAVLDMCASLKELLQNGMNGRTILGSALLEDEFTPFDVVRQCSGVTFQ"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "smiles": "O=C(C(N(C1=CC=C(C=C1)OC(F)(Cl)F)C(CCl)=O)C2=CN=CN=C2)NCC3=CC=CC=C3"
+        }
+      ]
+    }
+  }
+}

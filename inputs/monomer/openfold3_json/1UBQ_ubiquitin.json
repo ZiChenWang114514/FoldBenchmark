@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "1UBQ_ubiquitin": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG"
+        }
+      ]
+    }
+  }
+}

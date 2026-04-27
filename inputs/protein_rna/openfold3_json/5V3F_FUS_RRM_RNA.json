@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "5V3F_FUS_RRM_RNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC"
+        },
+        {
+          "molecule_type": "rna",
+          "chain_ids": "B",
+          "sequence": "GUGCGAAGGGACGGUGCGGAGAGGAGAGCAC"
+        }
+      ]
+    }
+  }
+}

@@ -39,6 +39,7 @@ case "$MODEL" in
             --volume /data2/zcwang/af3/databases_sharded:/root/public_databases \
             --volume /data2/zcwang/af3/databases/mmcif_files:/root/public_databases/mmcif_files:ro \
             --volume /data2/zcwang/af3/databases/pdb_seqres_2022_09_28.fasta:/root/public_databases/pdb_seqres_2022_09_28.fasta:ro \
+            --volume /data2/zcwang/af3/alphafold3/src/alphafold3/data/msa.py:/app/alphafold/src/alphafold3/data/msa.py:ro \
             --gpus "device=${GPU_ID}" \
             alphafold3 \
             python3 run_alphafold.py \
@@ -71,32 +72,37 @@ case "$MODEL" in
         [ ! -f "$INPUT_YAML" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate boltz2
+        export LD_LIBRARY_PATH="/data/zcwang/anaconda3/envs/boltz2/lib/python3.11/site-packages/nvidia/cu13/lib:${LD_LIBRARY_PATH}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} boltz predict "$INPUT_YAML" \
             --out_dir "${OUTPUTS}/${CASE_NAME}" \
             --use_msa_server \
             2>&1 || echo "FAILED: boltz2/${SCENARIO}/${CASE_NAME}"
         ;;
     openfold3)
-        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
+        INPUT_JSON="${INPUTS}/openfold3_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
         [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate openfold3
+        export OPENFOLD_CACHE="/data2/zcwang/structure_prediction/openfold3/cache"
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
-        CUDA_VISIBLE_DEVICES=${GPU_ID} openfold predict \
-            --input "$INPUT_JSON" \
-            --output_dir "${OUTPUTS}/${CASE_NAME}" \
+        CUDA_VISIBLE_DEVICES=${GPU_ID} run_openfold predict \
+            --query-json "$INPUT_JSON" \
+            --output-dir "${OUTPUTS}/${CASE_NAME}" \
+            --inference-ckpt-path "${OPENFOLD_CACHE}/of3-p2-155k.pt" \
+            --no-templates \
             2>&1 || echo "FAILED: openfold3/${SCENARIO}/${CASE_NAME}"
         ;;
     protenix)
-        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
+        INPUT_JSON="${INPUTS}/protenix_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
         [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate protenix
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
-        CUDA_VISIBLE_DEVICES=${GPU_ID} protenix predict \
-            --input "$INPUT_JSON" \
-            --output_dir "${OUTPUTS}/${CASE_NAME}" \
-            --use_msa_server \
+        CUDA_VISIBLE_DEVICES=${GPU_ID} protenix pred \
+            -i "$INPUT_JSON" \
+            -o "${OUTPUTS}/${CASE_NAME}" \
             2>&1 || echo "FAILED: protenix/${SCENARIO}/${CASE_NAME}"
         ;;
     chai1)
@@ -105,21 +111,22 @@ case "$MODEL" in
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate chai1
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
-        CUDA_VISIBLE_DEVICES=${GPU_ID} chai fold \
-            --input "$INPUT_FASTA" \
-            --output_dir "${OUTPUTS}/${CASE_NAME}" \
+        CUDA_VISIBLE_DEVICES=${GPU_ID} chai-lab fold \
+            "$INPUT_FASTA" \
+            "${OUTPUTS}/${CASE_NAME}" \
             --use-msa-server \
             2>&1 || echo "FAILED: chai1/${SCENARIO}/${CASE_NAME}"
         ;;
     intellifold)
-        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
-        [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        INPUT_YAML="${INPUTS}/boltz2_yaml/${CASE_NAME}.yaml"
+        [ ! -f "$INPUT_YAML" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate intellifold
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} intellifold predict \
-            --input "$INPUT_JSON" \
-            --output_dir "${OUTPUTS}/${CASE_NAME}" \
+            "$INPUT_YAML" \
+            --out_dir "${OUTPUTS}/${CASE_NAME}" \
+            --use_msa_server \
             2>&1 || echo "FAILED: intellifold/${SCENARIO}/${CASE_NAME}"
         ;;
     *)
