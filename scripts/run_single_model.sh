@@ -129,9 +129,43 @@ case "$MODEL" in
             --use_msa_server \
             2>&1 || echo "FAILED: intellifold/${SCENARIO}/${CASE_NAME}"
         ;;
+    alphafast)
+        # AlphaFast = AF3 with MMseqs2-GPU MSA (~22x faster end-to-end on H100)
+        # Native install (Docker Hub blocked from PRC); reuses AF3 JSON inputs.
+        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        mkdir -p "${OUTPUTS}/${CASE_NAME}"
+
+        ALPHAFAST_DIR=/data2/zcwang/af3/alphafast
+        ALPHAFAST_PYTHON=$ALPHAFAST_DIR/.venv/bin/python
+        ALPHAFAST_RUN=$ALPHAFAST_DIR/run_alphafold.py
+        MMSEQS_BIN=$ALPHAFAST_DIR/bin/bin/mmseqs
+        # DB on /hdd01 by default; pass ALPHAFAST_DB_DIR=... to override (e.g. NVMe)
+        ALPHAFAST_DB_DIR="${ALPHAFAST_DB_DIR:-/hdd01/zcwang/alphafast_db}"
+        ALPHAFAST_MODEL_DIR="${ALPHAFAST_MODEL_DIR:-/data/zxhuang/Shared/Alphafold3params}"
+
+        # Runtime gotchas (verified during smoke test):
+        # 1. cpp.so was built with system GCC 13 → needs newer libstdc++
+        #    than conda ships → LD_PRELOAD system libstdc++.so.6
+        # 2. libcifpp expects components.cif at hardcoded build-tmp paths;
+        #    symlinks placed in .venv/share/libcifpp/ resolve this (one-time setup)
+        LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
+        CUDA_VISIBLE_DEVICES=${GPU_ID} \
+        $ALPHAFAST_PYTHON $ALPHAFAST_RUN \
+            --json_path="$INPUT_JSON" \
+            --output_dir="${OUTPUTS}/${CASE_NAME}" \
+            --model_dir="$ALPHAFAST_MODEL_DIR" \
+            --db_dir="$ALPHAFAST_DB_DIR" \
+            --mmseqs_binary_path="$MMSEQS_BIN" \
+            --mmseqs_db_dir="$ALPHAFAST_DB_DIR/mmseqs" \
+            --use_mmseqs_gpu=True \
+            --run_data_pipeline=True \
+            --run_inference=True \
+            2>&1 || echo "FAILED: alphafast/${SCENARIO}/${CASE_NAME}"
+        ;;
     *)
         echo "Unknown model: $MODEL"
-        echo "Available: af3, boltz2, openfold3, protenix, chai1, intellifold"
+        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold"
         exit 1
         ;;
 esac

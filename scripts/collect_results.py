@@ -13,7 +13,7 @@ OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 RESULTS_DIR = PROJECT_ROOT / "results"
 TIMING_FILE = RESULTS_DIR / "timing.csv"
 
-MODELS = ["af3", "boltz2", "openfold3", "protenix", "chai1", "intellifold"]
+MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intellifold"]
 SCENARIOS = ["protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen"]
 
 

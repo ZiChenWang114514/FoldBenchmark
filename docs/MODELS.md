@@ -14,7 +14,7 @@ For known issues see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 | Model | Conda env | Command | Input |
 |-------|-----------|---------|-------|
 | AF3 | (Docker) | `docker run alphafold3 python3 run_alphafold.py ...` | AF3 JSON |
-| AlphaFast | (Docker) | `bash scripts/run_alphafast.sh ...` | AF3 JSON |
+| AlphaFast | (native uv venv at `/data2/zcwang/af3/alphafast/.venv`) | `LD_PRELOAD=... python run_alphafold.py ...` | AF3 JSON |
 | Boltz-2 | `boltz2` | `boltz predict input.yaml --use_msa_server` | YAML |
 | OpenFold3 | `openfold3` | `run_openfold predict --query-json input.json` | OpenFold3 JSON |
 | Protenix | `protenix` | `protenix pred -i input.json -o output/` | Protenix JSON |
@@ -80,36 +80,69 @@ docker run --rm \
 
 ## 2. AlphaFast (AF3 + GPU MMseqs2 MSA)
 
-```bash
-cd /data2/zcwang/af3/alphafast
+Native install (Docker Hub blocked from PRC). Verified working command:
 
-bash scripts/run_alphafast.sh \
-    --input_dir /path/to/input_jsons \
-    --output_dir /path/to/output \
-    --db_dir /hdd01/zcwang/alphafast_db \
-    --weights_dir /data2/zcwang/af3/models \
-    --gpu_devices 0 \
-    --jax_compilation_cache_dir /data2/zcwang/af3/jax_cache
+```bash
+LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
+CUDA_VISIBLE_DEVICES=0 \
+/data2/zcwang/af3/alphafast/.venv/bin/python \
+    /data2/zcwang/af3/alphafast/run_alphafold.py \
+    --json_path=/path/to/my_complex.json \
+    --output_dir=/path/to/output \
+    --model_dir=/data/zxhuang/Shared/Alphafold3params \
+    --db_dir=/hdd01/zcwang/alphafast_db \
+    --mmseqs_binary_path=/data2/zcwang/af3/alphafast/bin/bin/mmseqs \
+    --mmseqs_db_dir=/hdd01/zcwang/alphafast_db/mmseqs \
+    --use_mmseqs_gpu=True \
+    --run_data_pipeline=True \
+    --run_inference=True
 ```
 
-**Multi-GPU**: `--gpu_devices 0,1,2,3` runs phase-separated multi-GPU (1 GPU does MSA,
-others do inference). On a 4× 4090 box this is the fastest configuration.
+**Input**: AF3 JSON format (same as AF3 itself — fully compatible). The
+benchmark wrapper at `scripts/run_single_model.sh alphafast ...` uses
+`inputs/{scenario}/af3_json/{case}.json`.
 
-**Input**: AF3 JSON format (same as AF3 itself — fully compatible).
+**Multi-GPU**: only `CUDA_VISIBLE_DEVICES=0` exposed in current run script. To use
+phase-separated multi-GPU (1 GPU does MSA, others do inference), see
+`/data2/zcwang/af3/alphafast/scripts/run_alphafast.sh --gpu_devices 0,1,2,3`,
+but that wrapper is Docker-based.
 
-**Critical gotchas**:
+**Override DB location** (e.g. after migrating DB from HDD to NVMe):
 
-1. Status as of 2026-04-30: **DB is still downloading**. See
-   [TROUBLESHOOTING.md](TROUBLESHOOTING.md#alphafast-download-stalls).
-2. AlphaFast uses MMseqs2 GPU search instead of JackHMMER. The MSAs are ~95% identical
-   to JackHMMER's but built in seconds instead of minutes.
-3. The MMseqs2 RNA database is optional. Use `--use_nhmmer` to fall back to AF3-style
-   nhmmer for RNA if the RNA MMseqs2 DB is not available.
-4. `--temp_dir /scratch` is recommended on HPC — MMseqs2 writes large temp files.
+```bash
+ALPHAFAST_DB_DIR=/data2/zcwang/alphafast_db \
+    bash scripts/run_single_model.sh alphafast protein_protein 1BRS_barnase_barstar 0
+```
 
-**Output**: same structure as AF3 (`.cif` + confidence JSON).
+**Critical gotchas** (verified during 2026-04-30 install + smoke test):
 
-**Speed**: ~30 seconds per typical PPI (MSA dropped from minutes to seconds).
+1. **`LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6`** is mandatory.
+   The `cpp.so` C++ extension was built with system GCC 13.3 → needs `GLIBCXX_3.4.32+`,
+   but conda's bundled libstdc++ caps at 3.4.29 → `ImportError: GLIBCXX_3.4.32 not found`.
+
+2. **`components.cif` symlinks** are pre-set in
+   `.venv/share/libcifpp/components.cif` and `.venv/lib/python3.12/site-packages/share/libcifpp/components.cif`
+   (one-time setup). Without these, libcifpp throws `Could not find the libcifpp components.cif file.`
+
+3. **MMseqs2 padded DBs** at `/hdd01/zcwang/alphafast_db/mmseqs/` were built locally
+   from existing FASTAs at `/data/zxhuang/Shared/genetic_database/` via
+   `mmseqs createdb` + `mmseqs makepaddedseqdb` (5 protein DBs, ~388 GB total).
+   This is 100% functionally equivalent to AlphaFast's HuggingFace pre-built DBs
+   but bypassed the rate-limited HF download.
+
+4. The MMseqs2 RNA database is **not built** (we did `--protein-only`). For RNA-containing
+   inputs add `--use_nhmmer=True` to fall back to AF3-style nhmmer; that requires the
+   AF3-style RNA databases at `--db_dir`.
+
+5. **Speed reality check (2026-04-30 smoke test, NiV G + EFNB2, 733 tokens)**:
+
+   | DB on | Single pair end-to-end | Bottleneck |
+   |---|---:|---|
+   | HDD `/hdd01` | **~2h 11min** | MMseqs2 prefilter on HDD (random reads) |
+   | NVMe (planned) | ~5-15 min | inference + MSA scan |
+   | Reference (4× H100 NVMe per AlphaFast paper) | ~10-30 sec | — |
+
+**Output**: same structure as AF3 (`.cif` + `*_summary_confidences.json` + `*_ranking_scores.csv`).
 
 ---
 

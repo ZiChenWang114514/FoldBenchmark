@@ -51,7 +51,7 @@ For the full setup-from-scratch path including conda envs and Docker, see
 | Protenix | latest | benchmarked | conda `protenix` | Local MSA | Apache 2.0 |
 | Chai-1 | latest | benchmarked | conda `chai1` | ColabFold server | Apache 2.0 |
 | IntelliFold-2 | latest | benchmarked | conda `intellifold` | ColabFold server | Apache 2.0 |
-| AlphaFast | v0.x | DB downloading | Docker | MMseqs2 GPU | CC BY-NC-SA 4.0 |
+| AlphaFast | v1.0 (commit 2026-04) | **integrated, benchmark pending** | native uv venv | MMseqs2 GPU (5 padded DBs locally built) | CC BY-NC-SA 4.0 |
 
 See [docs/MODELS.md](docs/MODELS.md) for the verified-working CLI command, input format,
 and gotchas of each model.
@@ -70,7 +70,7 @@ and gotchas of each model.
 | Chai-1 | 20/23 | 3 | RNA not supported |
 | IntelliFold-2 | **23/23** | 0 | All scenarios work |
 | OpenFold3 v0.4.1 | 7/23 | 16 | ColabFold MSA unstable in China |
-| AlphaFast | pending | — | DB still downloading |
+| AlphaFast v1.0 | pending | — | code integrated; smoke test passed (NiV G + EFNB2, ipTM extraction OK); awaiting full 23-case run after DB migration to NVMe |
 
 ### Average pTM by Scenario (higher = better)
 
