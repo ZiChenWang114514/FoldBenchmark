@@ -63,12 +63,27 @@ def find_output_files(model_dir: Path) -> dict:
                 result["ptm"] = conf["ptm"]
             if "iptm" in conf:
                 result["iptm"] = conf["iptm"]
-            result["has_output"] = True
         except Exception:
             pass
 
-    # Generic: look for any JSON with plddt/ptm
-    if result["plddt"] is None:
+    # Chai-1 style: scores.model_idx_0.npz (top-ranked model)
+    if result["ptm"] is None:
+        npz_files = sorted(model_dir.rglob("scores.model_idx_0.npz"))
+        if npz_files:
+            try:
+                import numpy as np
+                d = np.load(npz_files[0])
+                if "ptm" in d.files:
+                    result["ptm"] = float(d["ptm"].item() if d["ptm"].size == 1 else d["ptm"].max())
+                if "iptm" in d.files:
+                    result["iptm"] = float(d["iptm"].item() if d["iptm"].size == 1 else d["iptm"].max())
+                if "aggregate_score" in d.files:
+                    result["ranking_score"] = float(d["aggregate_score"].item() if d["aggregate_score"].size == 1 else d["aggregate_score"].max())
+            except Exception:
+                pass
+
+    # Generic: look for any JSON with plddt/ptm (only if .cif already proved success)
+    if result["has_output"] and result["plddt"] is None:
         for json_file in model_dir.rglob("*.json"):
             try:
                 with open(json_file) as f:
@@ -81,7 +96,6 @@ def find_output_files(model_dir: Path) -> dict:
                     for key in ["ptm", "pTM"]:
                         if key in data and result["ptm"] is None:
                             result["ptm"] = data[key]
-                    result["has_output"] = True
             except Exception:
                 pass
 
