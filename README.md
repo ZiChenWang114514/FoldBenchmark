@@ -51,7 +51,7 @@ For the full setup-from-scratch path including conda envs and Docker, see
 | Protenix | latest | benchmarked | conda `protenix` | Local MSA | Apache 2.0 |
 | Chai-1 | latest | benchmarked | conda `chai1` | ColabFold server | Apache 2.0 |
 | IntelliFold-2 | latest | benchmarked | conda `intellifold` | ColabFold server | Apache 2.0 |
-| AlphaFast | v1.0 (commit 2026-04) | **integrated, benchmark pending** | native uv venv | MMseqs2 GPU (5 padded DBs locally built) | CC BY-NC-SA 4.0 |
+| AlphaFast | v1.0 (commit 2026-04) | benchmarked | native uv venv | MMseqs2 GPU (5 padded DBs, 4× 4090 sharded) | CC BY-NC-SA 4.0 |
 
 See [docs/MODELS.md](docs/MODELS.md) for the verified-working CLI command, input format,
 and gotchas of each model.
@@ -70,27 +70,35 @@ and gotchas of each model.
 | Chai-1 | 20/23 | 3 | RNA not supported |
 | IntelliFold-2 | **23/23** | 0 | All scenarios work |
 | OpenFold3 v0.4.1 | 7/23 | 16 | ColabFold MSA unstable in China |
-| AlphaFast v1.0 | pending | — | code integrated; smoke test passed (NiV G + EFNB2, ipTM extraction OK); awaiting full 23-case run after DB migration to NVMe |
+| AlphaFast v1.0 | **19/19** | 0 | RNA scenario (4 cases) skipped — RNA MMseqs2 DB not built (`--protein-only`). Faster than AF3 on every scenario when run in batch mode. |
 
 ### Average pTM by Scenario (higher = better)
 
-| Scenario | AF3 | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
-|----------|-----|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 0.92 | **0.94** | **0.94** | - | 0.86 | - |
-| Protein-Ligand | 0.89 | **0.95** | **0.94** | - | 0.85 | - |
-| Protein-RNA | 0.51 | **0.56** | FAIL | FAIL | 0.45 | - |
-| Monomer | 0.69 | **0.83** | **0.83** | - | 0.65 | - |
-| Antibody-Antigen | 0.73 | **0.89** | 0.76 | - | 0.71 | - |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|
+| Protein-Protein | 0.92 | 0.91 | **0.94** | **0.94** | - | 0.86 | - |
+| Protein-Ligand | 0.89 | 0.90 | **0.95** | **0.94** | - | 0.85 | - |
+| Protein-RNA | 0.51 | skip | **0.56** | FAIL | FAIL | 0.45 | - |
+| Monomer | 0.69 | 0.70 | **0.83** | **0.83** | - | 0.65 | - |
+| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | - | 0.71 | - |
+
+AlphaFast and AF3 share the same model weights and produce essentially identical
+structures — small pTM differences are seed/MSA noise.
 
 ### Average Speed (seconds/system)
 
-| Scenario | AF3 | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 |
-|----------|-----|---------|----------|--------|---------------|
-| Protein-Protein | 236 | **53** | 377 | 364 | 84 |
-| Protein-Ligand | 255 | **51** | 110 | 130 | 84 |
-| Protein-RNA | 403 | **60** | - | - | 133 |
-| Monomer | 176 | **45** | 98 | 89 | **52** |
-| Antibody-Antigen | 392 | **68** | 392 | 379 | 129 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 |
+|----------|-----|-----------|---------|----------|--------|---------------|
+| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 |
+| Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 |
+| Protein-RNA | 403 | skip | **60** | - | - | 133 |
+| Monomer | 176 | 109 | **45** | 98 | 89 | **52** |
+| Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 |
+
+AlphaFast timings are amortized across the per-scenario batch (one MMseqs2 queryDB +
+JAX compilation cache shared across all cases in the scenario). See
+[docs/MODELS.md § AlphaFast](docs/MODELS.md#2-alphafast-af3--gpu-mmseqs2-msa) for
+the batch-mode runner.
 
 ### Key Findings
 
@@ -98,10 +106,14 @@ and gotchas of each model.
 2. **Protenix** matches Boltz-2 accuracy for PPI/ligand/monomer but fails on RNA.
 3. **AF3** is the most reliable (23/23) but slowest due to local MSA. Sharded databases
    bring it down from ~5 minutes to ~50 seconds of MSA time per case.
-4. **IntelliFold-2** handles all scenarios but with lower accuracy.
-5. **RNA prediction** remains challenging — only AF3, Boltz-2, and IntelliFold-2 can
+4. **AlphaFast** matches AF3 accuracy (same weights, same architecture) and is **40-50%
+   faster** than AF3 in batch mode. Single-case mode is actually *slower* than AF3 on
+   4× 4090 — the speedup comes entirely from amortizing MMseqs2 GPU search and JAX
+   compilation across multiple cases.
+5. **IntelliFold-2** handles all scenarios but with lower accuracy.
+6. **RNA prediction** remains challenging — only AF3, Boltz-2, and IntelliFold-2 can
    handle it at all.
-6. **Antibody-antigen** shows the largest accuracy spread between models.
+7. **Antibody-antigen** shows the largest accuracy spread between models.
 
 For the full per-case results table, see [results/benchmark_results.csv](results/benchmark_results.csv)
 and [results/summary.md](results/summary.md).

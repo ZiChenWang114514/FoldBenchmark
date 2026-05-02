@@ -144,13 +144,26 @@ case "$MODEL" in
         ALPHAFAST_DB_DIR="${ALPHAFAST_DB_DIR:-/hdd01/zcwang/alphafast_db}"
         ALPHAFAST_MODEL_DIR="${ALPHAFAST_MODEL_DIR:-/data/zxhuang/Shared/Alphafold3params}"
 
-        # Runtime gotchas (verified during smoke test):
+        # Runtime gotchas (verified during smoke test + 4090 OOM workaround):
         # 1. cpp.so was built with system GCC 13 → needs newer libstdc++
         #    than conda ships → LD_PRELOAD system libstdc++.so.6
         # 2. libcifpp expects components.cif at hardcoded build-tmp paths;
         #    symlinks placed in .venv/share/libcifpp/ resolve this (one-time setup)
+        # 3. uniref90_padded (49G) and mgnify_padded (108G) don't fit in a single
+        #    4090 (48G). MMSEQS_USE_ALL_GPUS=1 + multi-GPU CUDA_VISIBLE_DEVICES
+        #    shards the DB across all 4 cards (192G total). Patch in
+        #    .venv/lib/.../alphafold3/data/tools/{mmseqs,mmseqs_batch,
+        #    mmseqs_template,foldseek}.py allows MMSEQS_USE_ALL_GPUS=1 to bypass
+        #    the single-GPU CUDA_VISIBLE_DEVICES override.
+        ALPHAFAST_GPUS="${ALPHAFAST_GPUS:-0,1,2,3}"
+        ALPHAFAST_JAX_CACHE="${ALPHAFAST_JAX_CACHE:-/data2/zcwang/af3/alphafast/jax_cache}"
+        mkdir -p "$ALPHAFAST_JAX_CACHE"
+        # NOTE: per-case mode. For best perf use scripts/run_alphafast_batch.sh
+        # which batches all cases in a scenario through a single MMseqs2 queryDB
+        # (~70-80% time savings on multi-case scenarios).
         LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
-        CUDA_VISIBLE_DEVICES=${GPU_ID} \
+        MMSEQS_USE_ALL_GPUS=1 \
+        CUDA_VISIBLE_DEVICES="${ALPHAFAST_GPUS}" \
         $ALPHAFAST_PYTHON $ALPHAFAST_RUN \
             --json_path="$INPUT_JSON" \
             --output_dir="${OUTPUTS}/${CASE_NAME}" \
@@ -159,6 +172,7 @@ case "$MODEL" in
             --mmseqs_binary_path="$MMSEQS_BIN" \
             --mmseqs_db_dir="$ALPHAFAST_DB_DIR/mmseqs" \
             --use_mmseqs_gpu=True \
+            --jax_compilation_cache_dir="$ALPHAFAST_JAX_CACHE" \
             --run_data_pipeline=True \
             --run_inference=True \
             2>&1 || echo "FAILED: alphafast/${SCENARIO}/${CASE_NAME}"

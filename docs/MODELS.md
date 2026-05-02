@@ -80,41 +80,46 @@ docker run --rm \
 
 ## 2. AlphaFast (AF3 + GPU MMseqs2 MSA)
 
-Native install (Docker Hub blocked from PRC). Verified working command:
+Native install (Docker Hub blocked from PRC). On 4× RTX 4090, **always use batch mode**
+— per-case mode is slower than vanilla AF3 because the MMseqs2 GPU search is
+the bottleneck and amortizes well across cases.
+
+### Batch mode (recommended — used for all benchmark numbers)
+
+```bash
+# Run a whole scenario in one shot (one MMseqs2 queryDB, one JAX cache warm-up)
+ALPHAFAST_DB_DIR=/data2/zcwang/alphafast_db \
+ALPHAFAST_GPUS=0,1,2,3 \
+bash scripts/run_alphafast_batch.sh monomer
+```
+
+The batch runner stages every JSON in `inputs/<scenario>/af3_json/` into a temp dir
+and invokes AlphaFast once with `--input_dir` + `--batch_size=N` + a persistent
+`--jax_compilation_cache_dir`.
+
+### Per-case mode (for one-off prediction, not benchmarking)
 
 ```bash
 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
-CUDA_VISIBLE_DEVICES=0 \
+MMSEQS_USE_ALL_GPUS=1 \
+CUDA_VISIBLE_DEVICES=0,1,2,3 \
 /data2/zcwang/af3/alphafast/.venv/bin/python \
     /data2/zcwang/af3/alphafast/run_alphafold.py \
     --json_path=/path/to/my_complex.json \
     --output_dir=/path/to/output \
     --model_dir=/data/zxhuang/Shared/Alphafold3params \
-    --db_dir=/hdd01/zcwang/alphafast_db \
+    --db_dir=/data2/zcwang/alphafast_db \
     --mmseqs_binary_path=/data2/zcwang/af3/alphafast/bin/bin/mmseqs \
-    --mmseqs_db_dir=/hdd01/zcwang/alphafast_db/mmseqs \
+    --mmseqs_db_dir=/data2/zcwang/alphafast_db/mmseqs \
     --use_mmseqs_gpu=True \
+    --jax_compilation_cache_dir=/data2/zcwang/af3/alphafast/jax_cache \
     --run_data_pipeline=True \
     --run_inference=True
 ```
 
-**Input**: AF3 JSON format (same as AF3 itself — fully compatible). The
-benchmark wrapper at `scripts/run_single_model.sh alphafast ...` uses
-`inputs/{scenario}/af3_json/{case}.json`.
+**Input**: AF3 JSON format (same as AF3 itself — fully compatible).
 
-**Multi-GPU**: only `CUDA_VISIBLE_DEVICES=0` exposed in current run script. To use
-phase-separated multi-GPU (1 GPU does MSA, others do inference), see
-`/data2/zcwang/af3/alphafast/scripts/run_alphafast.sh --gpu_devices 0,1,2,3`,
-but that wrapper is Docker-based.
-
-**Override DB location** (e.g. after migrating DB from HDD to NVMe):
-
-```bash
-ALPHAFAST_DB_DIR=/data2/zcwang/alphafast_db \
-    bash scripts/run_single_model.sh alphafast protein_protein 1BRS_barnase_barstar 0
-```
-
-**Critical gotchas** (verified during 2026-04-30 install + smoke test):
+### Critical gotchas (verified 2026-05-02 with full benchmark)
 
 1. **`LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6`** is mandatory.
    The `cpp.so` C++ extension was built with system GCC 13.3 → needs `GLIBCXX_3.4.32+`,
@@ -124,23 +129,40 @@ ALPHAFAST_DB_DIR=/data2/zcwang/alphafast_db \
    `.venv/share/libcifpp/components.cif` and `.venv/lib/python3.12/site-packages/share/libcifpp/components.cif`
    (one-time setup). Without these, libcifpp throws `Could not find the libcifpp components.cif file.`
 
-3. **MMseqs2 padded DBs** at `/hdd01/zcwang/alphafast_db/mmseqs/` were built locally
+3. **DBs don't fit on a single 4090** (uniref90_padded 49G, mgnify_padded 108G vs
+   48G GPU). You **must** shard across all 4 GPUs by setting
+   `CUDA_VISIBLE_DEVICES=0,1,2,3` AND `MMSEQS_USE_ALL_GPUS=1`. The latter is read
+   by a small patch in `src/alphafold3/data/tools/{mmseqs,mmseqs_batch,mmseqs_template,foldseek}.py`
+   that allows the env-level CUDA_VISIBLE_DEVICES to pass through to MMseqs2
+   subprocesses (vanilla AlphaFast hardcodes the subprocess to a single GPU).
+
+4. **MMseqs2 padded DBs** at `/data2/zcwang/alphafast_db/mmseqs/` were built locally
    from existing FASTAs at `/data/zxhuang/Shared/genetic_database/` via
    `mmseqs createdb` + `mmseqs makepaddedseqdb` (5 protein DBs, ~388 GB total).
    This is 100% functionally equivalent to AlphaFast's HuggingFace pre-built DBs
    but bypassed the rate-limited HF download.
 
-4. The MMseqs2 RNA database is **not built** (we did `--protein-only`). For RNA-containing
-   inputs add `--use_nhmmer=True` to fall back to AF3-style nhmmer; that requires the
-   AF3-style RNA databases at `--db_dir`.
+5. The MMseqs2 RNA database is **not built** (we did `--protein-only`). RNA scenarios
+   are skipped in the benchmark. For RNA-containing inputs you can add
+   `--use_nhmmer=True` to fall back to AF3-style nhmmer; that requires the AF3-style
+   RNA databases at `--db_dir`.
 
-5. **Speed reality check (2026-04-30 smoke test, NiV G + EFNB2, 733 tokens)**:
+6. **Use batch mode whenever possible.** Per-case mode runs the 5 padded DBs through
+   MMseqs2 once per case — that is the dominant cost. Batch mode runs MMseqs2 once
+   for all cases in the batch (one combined queryDB), which is what makes AlphaFast
+   actually faster than AF3 on this hardware.
 
-   | DB on | Single pair end-to-end | Bottleneck |
-   |---|---:|---|
-   | HDD `/hdd01` | **~2h 11min** | MMseqs2 prefilter on HDD (random reads) |
-   | NVMe (planned) | ~5-15 min | inference + MSA scan |
-   | Reference (4× H100 NVMe per AlphaFast paper) | ~10-30 sec | — |
+### Measured speed on 4× 4090 (2026-05-02 benchmark)
+
+| Scenario | AF3 (sharded JackHMMER) | AlphaFast (batch, 4-GPU mmseqs) | Δ |
+|----------|---:|---:|---:|
+| Monomer (5 cases) | 176 s/case | **109 s/case** | 38% faster |
+| Protein-Protein (4) | 236 s/case | **142 s/case** | 40% faster |
+| Protein-Ligand (5) | 255 s/case | **135 s/case** | 47% faster |
+| Antibody-Antigen (5) | 392 s/case | **179 s/case** | 54% faster |
+
+Per-case mode (no batching) gave 525-1000 s/case — slower than AF3. The speedup is
+entirely from amortizing MMseqs2 search across cases plus warm JAX kernel cache.
 
 **Output**: same structure as AF3 (`.cif` + `*_summary_confidences.json` + `*_ranking_scores.csv`).
 
