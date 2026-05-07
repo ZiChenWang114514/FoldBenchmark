@@ -177,6 +177,47 @@ helpful error — it just fails on missing MSA files mid-pipeline.
 
 **Fix**: Use `run_openfold predict --query-json input.json ...`.
 
+### OpenFold3: `Unable to JIT load the evoformer_attn op`
+
+**Cause**: DeepSpeed4Science fused EvoformerAttention requires three things at runtime
+that the conda env doesn't ship:
+1. `nvcc` from a CUDA toolkit (conda env only has runtime libs)
+2. NVIDIA CUTLASS template library at version >= 3.1.0
+3. A `TORCH_CUDA_ARCH_LIST` that matches your GPU (RTX 4090 = SM 8.9, not in default list)
+
+**Fix**: in the openfold3 wrapper or before launching:
+```bash
+export CUDA_HOME=/usr/local/cuda
+export PATH=/usr/local/cuda/bin:$PATH
+export CUTLASS_PATH=/path/to/cutlass-checkout    # git clone --depth 1 --branch v3.5.1 https://github.com/NVIDIA/cutlass.git
+export TORCH_CUDA_ARCH_LIST=8.9
+```
+
+This is already wired into `scripts/run_single_model.sh` openfold3 branch.
+
+### OpenFold3: `numpy.exceptions.DTypePromotionError: Invalid type promotion with void datatypes of different lengths`
+
+**Cause**: bug in OpenFold3 v0.4.1's `msa.py:create_main` MSA-deduplication path.
+For multi-chain queries the paired MSA contains all chains' columns concatenated,
+so its row width != main MSA row width. The numpy void-view dedup trick the code
+uses doesn't tolerate different itemsizes on numpy >= 2.0.
+
+**Fix**: patch `openfold3/core/data/pipelines/sample_processing/msa.py` around
+line 290-314 to skip the void-view dedup when widths differ:
+```python
+if paired_arr.shape[1] == arr.shape[1]:
+    # original void-view dedup logic
+    ...
+else:
+    # widths mismatch (e.g. multi-chain paired MSA) — keep redundant
+    filtered_msa = main_msa_redundant
+    filtered_deletion = main_deletion_matrix_redundant
+```
+
+This unblocks ~3 cases but exposes a downstream IndexError in
+`map_msas_to_tokens` for some inputs. Remaining fails need actual OpenFold3
+code changes, not just env/patch tweaks.
+
 ### OpenFold3 hangs for ~60 seconds then fails on template search
 
 **Cause**: Template search calls a remote API that is unreliable (especially from

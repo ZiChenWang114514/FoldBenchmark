@@ -224,3 +224,13 @@ openfold3,monomer,1L2Y_trpcage,103
 openfold3,monomer,1MBN_myoglobin,98
 openfold3,monomer,1UBQ_ubiquitin,114
 openfold3,monomer,2GB1_protein_G,98
+openfold3,protein_protein,1BRS_barnase_barstar,139
+openfold3,antibody_antigen,1AHW_ab_tissue_factor,101
+openfold3,protein_ligand,3HTB_CDK2_inhibitor,112
+openfold3,protein_rna,1ASY_tRNA_synthetase,125
+openfold3,protein_ligand,4LDE_BRAF_vemurafenib,118
+openfold3,protein_rna,1URN_U1A_RNA,110
+openfold3,antibody_antigen,1DVF_idiotope,195
+openfold3,protein_ligand,6LU7_Mpro_N3,78
+openfold3,protein_protein,1EMV_trypsin_inhibitor,82
+openfold3,protein_ligand,7RN1_3CL_inhibitor,80

@@ -81,8 +81,8 @@ for details.)
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
 |----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.48 (2/4) |
-| Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.37 (3/5) |
+| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.64 (3/4) |
+| Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.55 (2/5) |
 | Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.34 (2/3) |
 | Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 (5/5) |
 | Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.77 (3/5) |
@@ -123,16 +123,21 @@ the batch-mode runner.
    4× 4090 — the speedup comes entirely from amortizing MMseqs2 GPU search and JAX
    compilation across multiple cases.
 6. **IntelliFold-2** handles all scenarios but with consistently lower accuracy.
-7. **OpenFold3** went from 0/22 to 15/22 after three fixes: (a) `CUDA_HOME=/usr/local/cuda`
-   so DeepSpeed can find nvcc for JIT; (b) `CUTLASS_PATH` set to a CUTLASS 3.5+ checkout
-   so the evoformer_attn fused kernel will JIT-compile; (c) `TORCH_CUDA_ARCH_LIST=8.9`
-   so the kernel targets RTX 4090 SM 8.9 (the kernel only ships 70/80/86/90 by default).
-   Earlier "all-22-fail" claim was misleading — it was an environment problem, not a
-   network/model issue. Remaining 7 fails on protein-pair / ligand / RNA cases hit a
-   numpy `DTypePromotionError` deep inside `colabfold_msa_server.preprocess_colabfold_msas`
-   (numpy 2.x type-promotion strictness vs structured arrays). Per-case OpenFold3 pTM is
-   noisy (0.18–0.87) — the model is research preview v0.4.1 and not as stable as the
-   others.
+7. **OpenFold3** went from 0/22 to 15/22 after four fixes:
+   (a) `CUDA_HOME=/usr/local/cuda` so DeepSpeed can find nvcc for JIT;
+   (b) `CUTLASS_PATH` set to a CUTLASS 3.5+ checkout so the evoformer_attn fused
+       kernel will JIT-compile;
+   (c) `TORCH_CUDA_ARCH_LIST=8.9` so the kernel targets RTX 4090 SM 8.9 (the kernel
+       only ships 70/80/86/90 by default);
+   (d) Patched `openfold3/core/data/pipelines/sample_processing/msa.py:307` to skip
+       the void-view `np.isin` dedup when paired-MSA width != main-MSA width
+       (numpy 2.x rejects different-length void promotion). Without this, every
+       multi-chain protein-pair case crashes immediately.
+
+   Remaining 7 fails are deeper bugs in OpenFold3 v0.4.1's MSA → token mapping
+   (`map_msas_to_tokens` IndexError) that the patch surfaces — these would need
+   actual code changes in OpenFold3, not just env tweaks. Where the patch does
+   succeed, pTM is decent (0.64 PPI, 0.77 antibody, 0.59 monomer).
 8. **RNA prediction** is now solved by all 6 working models (Boltz-2 leads at 0.90 avg).
 9. **Antibody-antigen** shows the largest accuracy spread between models.
 
