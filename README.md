@@ -62,15 +62,20 @@ and gotchas of each model.
 
 ### Completion Rate
 
+22 test cases total (5 scenarios; protein_rna trimmed from 5 cases to 3 — 5V3F and
+4TZX were RNA-only PDB entries with no protein chain; the original `prepare_inputs.py`
+also had wrong RNA chain IDs for the rest. See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+for details.)
+
 | Model | Success | Failed | Notes |
 |-------|---------|--------|-------|
-| AlphaFold 3 v3.0.2 | **23/23** | 0 | Gold standard |
-| Boltz-2 v2.2.1 | **23/23** | 0 | Fastest + highest pTM |
-| Protenix | 19/23 | 4 | RNA not supported |
-| Chai-1 | 20/23 | 3 | RNA mostly fails (1/4 succeeded — 5V3F) |
-| IntelliFold-2 | **23/23** | 0 | All scenarios work |
-| OpenFold3 v0.4.1 | **0/23** | 23 | ColabFold MSA unstable in China; every case ends with `Successful Queries: 0/1` |
-| AlphaFast v1.0 | **19/19** | 0 | RNA scenario (4 cases) skipped — RNA MMseqs2 DB not built (`--protein-only`). Faster than AF3 on every scenario when run in batch mode. |
+| AlphaFold 3 v3.0.2 | **22/22** | 0 | Gold standard |
+| Boltz-2 v2.2.1 | **22/22** | 0 | Best speed + top-tier pTM |
+| Protenix | **22/22** | 0 | Now confirmed to support RNA after input bug fix |
+| Chai-1 | **22/22** | 0 | Now confirmed to support RNA after input bug fix |
+| IntelliFold-2 | **22/22** | 0 | All scenarios work |
+| AlphaFast v1.0 | **22/22** | 0 | RNA DB built locally from FASTAs (HF mirror download was unreliable) |
+| OpenFold3 v0.4.1 | **0/22** | 22 | ColabFold MSA unstable in China; every case ends with `Successful Queries: 0/1` |
 
 ### Average pTM by Scenario (higher = better)
 
@@ -78,7 +83,7 @@ and gotchas of each model.
 |----------|-----|-----------|---------|----------|--------|---------------|-----------|
 | Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | FAIL |
 | Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | FAIL |
-| Protein-RNA | 0.51 | skip | **0.56** | FAIL | 0.37 (1/4) | 0.45 | FAIL |
+| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | FAIL |
 | Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | FAIL |
 | Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | FAIL |
 
@@ -91,7 +96,7 @@ structures — small pTM differences are seed/MSA noise.
 |----------|-----|-----------|---------|----------|--------|---------------|
 | Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 |
 | Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 |
-| Protein-RNA | 403 | skip | **60** | - | - | 133 |
+| Protein-RNA | 338 | 208 | **115** | 168 | 135 | **91** |
 | Monomer | 176 | 109 | **45** | 98 | 89 | **52** |
 | Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 |
 
@@ -107,19 +112,21 @@ the batch-mode runner.
    `collect_results.py` did not parse this format and reported it as missing.)
 2. **Boltz-2** is the best speed/accuracy tradeoff: top-tier pTM across the board and
    the fastest among accurate models.
-3. **Protenix** matches Boltz-2 accuracy for PPI/ligand/monomer but fails on RNA.
-4. **AF3** is the most reliable (23/23) but slowest due to local MSA. Sharded databases
-   bring it down from ~5 minutes to ~50 seconds of MSA time per case.
+3. **Protenix and Chai-1 do support RNA**. Earlier reports of FAIL on RNA were caused
+   by buggy inputs (`prepare_inputs.py` used wrong chain IDs and silently produced
+   protein homodimers labelled as protein-RNA pairs). After the fix, both models hit
+   pTM 0.88 average on real protein-RNA inputs.
+4. **AF3** is the most reliable across the board, slowest due to local JackHMMER MSA.
+   Sharded databases bring its MSA time down from ~5 min to ~50 s per case.
 5. **AlphaFast** matches AF3 accuracy (same weights, same architecture) and is **40-50%
    faster** than AF3 in batch mode. Single-case mode is actually *slower* than AF3 on
    4× 4090 — the speedup comes entirely from amortizing MMseqs2 GPU search and JAX
    compilation across multiple cases.
-6. **IntelliFold-2** handles all scenarios but with lower accuracy.
-7. **OpenFold3** failed on every case (0/23) on this hardware — ColabFold MSA server
+6. **IntelliFold-2** handles all scenarios but with consistently lower accuracy.
+7. **OpenFold3** failed on every case (0/22) on this hardware — ColabFold MSA server
    is unreliable from China and OpenFold3 has no built-in fallback. Not a fair test of
    the model itself, more a network-availability artifact.
-8. **RNA prediction** remains challenging — only AF3, Boltz-2, and IntelliFold-2 can
-   handle it reliably (Chai-1 succeeds 1/4, Protenix and OpenFold3 fail all).
+8. **RNA prediction** is now solved by all 6 working models (Boltz-2 leads at 0.90 avg).
 9. **Antibody-antigen** shows the largest accuracy spread between models.
 
 For the full per-case results table, see [results/benchmark_results.csv](results/benchmark_results.csv)
@@ -127,13 +134,13 @@ and [results/summary.md](results/summary.md).
 
 ---
 
-## Test Systems (5 scenarios × ~5 cases = 23 total)
+## Test Systems (5 scenarios = 22 total)
 
 | Scenario | Cases | Description |
 |----------|-------|-------------|
 | protein_protein | 4 | Homodimers (2PV7), heterodimers (1BRS, 1EMV, 3HFM) |
 | protein_ligand | 5 | HIV protease, CDK2, BRAF, SARS-CoV-2 Mpro/3CL |
-| protein_rna | 4 | tRNA synthetase, U1A-RNA, FUS-RRM |
+| protein_rna | 3 | 1ASY tRNA-synthetase + tRNA, 1URN U1A + RNA, 2AZ0 U1A + RNA hairpin |
 | monomer | 5 | Ubiquitin, crambin, myoglobin, GB1, Trp-cage |
 | antibody_antigen | 5 | Trastuzumab-HER2, RBD-neutralizing Ab, etc. |
 

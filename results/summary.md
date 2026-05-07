@@ -24,9 +24,9 @@
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold |
 |------|---|---|---|---|---|---|---|
-| 1ASY_tRNA_synthetase | pTM=0.88 522s | - | pTM=0.91 175s | 303s FAIL | pLDDT=88.8 pTM=0.93 243s | pTM=0.95 232s | pLDDT=0.8 pTM=0.83 161s |
-| 1URN_U1A_RNA | pTM=0.90 253s | - | pTM=0.94 89s | 127s FAIL | pLDDT=95.7 pTM=0.95 156s | pTM=0.96 89s | pLDDT=0.9 pTM=0.86 61s |
-| 2AZ0_U1A_RNA_hairpin | pTM=0.53 238s | - | pTM=0.86 80s | 95s FAIL | pLDDT=77.7 pTM=0.77 105s | pTM=0.73 83s | pLDDT=0.8 pTM=0.68 51s |
+| 1ASY_tRNA_synthetase | pTM=0.88 522s | pTM=0.88 208s | pTM=0.91 175s | 303s FAIL | pLDDT=88.8 pTM=0.93 243s | pTM=0.95 232s | pLDDT=0.8 pTM=0.83 161s |
+| 1URN_U1A_RNA | pTM=0.90 253s | pTM=0.90 208s | pTM=0.94 89s | 127s FAIL | pLDDT=95.7 pTM=0.95 156s | pTM=0.96 89s | pLDDT=0.9 pTM=0.86 61s |
+| 2AZ0_U1A_RNA_hairpin | pTM=0.53 238s | pTM=0.51 208s | pTM=0.86 80s | 95s FAIL | pLDDT=77.7 pTM=0.77 105s | pTM=0.73 83s | pLDDT=0.8 pTM=0.68 51s |
 
 ## monomer
 
