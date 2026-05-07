@@ -82,30 +82,23 @@ TEST_CASES = {
         },
     ],
     "protein_rna": [
+        # Verified against RCSB chain assignments 2026-05-07.
+        # Earlier versions had wrong chain IDs (e.g. 1ASY 'B' is protein, not RNA);
+        # 5V3F and 4TZX were RNA-only (no protein chain) and have been removed.
         {
             "name": "2AZ0_U1A_RNA_hairpin",
             "pdb_id": "2AZ0",
-            "chains": [("A", "protein"), ("B", "rna")],
+            "chains": [("A", "protein"), ("C", "rna")],
         },
         {
             "name": "1ASY_tRNA_synthetase",
             "pdb_id": "1ASY",
-            "chains": [("A", "protein"), ("B", "rna")],
-        },
-        {
-            "name": "5V3F_FUS_RRM_RNA",
-            "pdb_id": "5V3F",
-            "chains": [("A", "protein"), ("B", "rna")],
+            "chains": [("A", "protein"), ("R", "rna")],
         },
         {
             "name": "1URN_U1A_RNA",
             "pdb_id": "1URN",
-            "chains": [("A", "protein"), ("C", "rna")],
-        },
-        {
-            "name": "4TZX_PUM2_RNA",
-            "pdb_id": "4TZX",
-            "chains": [("A", "protein"), ("B", "rna")],
+            "chains": [("A", "protein"), ("P", "rna")],
         },
     ],
     "monomer": [

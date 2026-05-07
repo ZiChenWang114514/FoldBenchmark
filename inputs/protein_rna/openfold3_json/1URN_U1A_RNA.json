@@ -10,8 +10,8 @@
         },
         {
           "molecule_type": "rna",
-          "chain_ids": "C",
-          "sequence": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK"
+          "chain_ids": "P",
+          "sequence": "AAUCCAUUGCACUCCGGAUUU"
         }
       ]
     }
