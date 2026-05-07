@@ -19,7 +19,8 @@ CONDA_BASE=$(/data/zcwang/anaconda3/bin/conda info --base)
 mkdir -p "${OUTPUTS}" "$(dirname ${TIMING_FILE})"
 
 # Check if already done
-if [ -d "${OUTPUTS}/${CASE_NAME}" ] && [ "$(ls ${OUTPUTS}/${CASE_NAME}/*.cif 2>/dev/null | wc -l)" -gt 0 ]; then
+# Use recursive find for models that nest outputs (e.g. OpenFold3)
+if [ -d "${OUTPUTS}/${CASE_NAME}" ] && [ "$(find "${OUTPUTS}/${CASE_NAME}" -name "*.cif" 2>/dev/null | wc -l)" -gt 0 ]; then
     echo "[SKIP] ${MODEL}/${SCENARIO}/${CASE_NAME}: already done"
     exit 0
 fi
@@ -101,9 +102,18 @@ case "$MODEL" in
         export CUTLASS_PATH=/data2/zcwang/structure_prediction/openfold3/cutlass
         export TORCH_CUDA_ARCH_LIST="8.9"
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        # Give each case its own MSA tmp dir to avoid cross-contamination when
+        # multiple GPU instances run concurrently (shared /tmp causes race on
+        # raw/paired/ cleanup and stale tar.gz reuse).
+        OF3_MSA_DIR="/tmp/of3-of-zcwang/colabfold_msas_${CASE_NAME}_$$"
+        rm -rf "$OF3_MSA_DIR" 2>/dev/null || true
+        OF3_RUNNER_YAML="/tmp/of3_runner_${CASE_NAME}_$$.yml"
+        printf 'msa_computation_settings:\n  msa_output_directory: "%s"\n' "$OF3_MSA_DIR" > "$OF3_RUNNER_YAML"
+        trap 'rm -f "$OF3_RUNNER_YAML"' EXIT
         CUDA_VISIBLE_DEVICES=${GPU_ID} run_openfold predict \
             --query-json "$INPUT_JSON" \
             --output-dir "${OUTPUTS}/${CASE_NAME}" \
+            --runner-yaml "$OF3_RUNNER_YAML" \
             --inference-ckpt-path "${OPENFOLD_CACHE}/of3-p2-155k.pt" \
             --use-templates false \
             2>&1 || echo "FAILED: openfold3/${SCENARIO}/${CASE_NAME}"

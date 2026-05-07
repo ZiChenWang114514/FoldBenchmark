@@ -234,3 +234,12 @@ openfold3,antibody_antigen,1DVF_idiotope,195
 openfold3,protein_ligand,6LU7_Mpro_N3,78
 openfold3,protein_protein,1EMV_trypsin_inhibitor,82
 openfold3,protein_ligand,7RN1_3CL_inhibitor,80
+openfold3,protein_ligand,4LDE_BRAF_vemurafenib,144
+openfold3,protein_rna,1ASY_tRNA_synthetase,152
+openfold3,protein_ligand,7RN1_3CL_inhibitor,79
+openfold3,protein_ligand,6LU7_Mpro_N3,80
+openfold3,protein_protein,1EMV_trypsin_inhibitor,112
+openfold3,antibody_antigen,1DVF_idiotope,256
+openfold3,antibody_antigen,1AHW_ab_tissue_factor,245
+openfold3,protein_ligand,7RN1_3CL_inhibitor,113
+openfold3,protein_ligand,6LU7_Mpro_N3,111
