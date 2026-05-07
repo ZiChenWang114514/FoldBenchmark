@@ -85,6 +85,21 @@ case "$MODEL" in
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate openfold3
         export OPENFOLD_CACHE="/data2/zcwang/structure_prediction/openfold3/cache"
+        # OpenFold3 uses DeepSpeed4Science's EvoformerAttention, which JIT-compiles a
+        # CUDA C++ kernel via nvcc. Three things must be present:
+        #   (1) CUDA_HOME = a toolkit with nvcc (conda env ships only runtime libs)
+        #   (2) CUTLASS_PATH = NVIDIA CUTLASS template library at version >= 3.1.0
+        #       (DeepSpeed checks this and refuses to build without it; the only
+        #       error surfaced is "Unable to JIT load... due to hardware/software
+        #       issue. None" — misleading, the actual cause is is_compatible()=False
+        #       with verbose=False so the CUTLASS_PATH warning never prints)
+        #   (3) TORCH_CUDA_ARCH_LIST = the GPU's compute capability so nvcc generates
+        #       matching SASS (RTX 4090 = SM 8.9; the kernel only ships the standard
+        #       70/80/86/90 list which doesn't include 8.9)
+        export CUDA_HOME=/usr/local/cuda
+        export PATH=/usr/local/cuda/bin:$PATH
+        export CUTLASS_PATH=/data2/zcwang/structure_prediction/openfold3/cutlass
+        export TORCH_CUDA_ARCH_LIST="8.9"
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} run_openfold predict \
             --query-json "$INPUT_JSON" \

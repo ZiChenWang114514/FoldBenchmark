@@ -75,30 +75,30 @@ for details.)
 | Chai-1 | **22/22** | 0 | Now confirmed to support RNA after input bug fix |
 | IntelliFold-2 | **22/22** | 0 | All scenarios work |
 | AlphaFast v1.0 | **22/22** | 0 | RNA DB built locally from FASTAs (HF mirror download was unreliable) |
-| OpenFold3 v0.4.1 | **0/22** | 22 | ColabFold MSA unstable in China; every case ends with `Successful Queries: 0/1` |
+| OpenFold3 v0.4.1 | 15/22 | 7 | Mostly fixable env issues — see Notes below |
 
 ### Average pTM by Scenario (higher = better)
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
 |----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | FAIL |
-| Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | FAIL |
-| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | FAIL |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | FAIL |
-| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | FAIL |
+| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.48 (2/4) |
+| Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.37 (3/5) |
+| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.34 (2/3) |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 (5/5) |
+| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.77 (3/5) |
 
 AlphaFast and AF3 share the same model weights and produce essentially identical
 structures — small pTM differences are seed/MSA noise.
 
 ### Average Speed (seconds/system)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 |
-|----------|-----|-----------|---------|----------|--------|---------------|
-| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 |
-| Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 |
-| Protein-RNA | 338 | 208 | **115** | 168 | 135 | **91** |
-| Monomer | 176 | 109 | **45** | 98 | 89 | **52** |
-| Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|
+| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 | 128 |
+| Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 119 |
+| Protein-RNA | 338 | 208 | **115** | 168 | 135 | **91** | 100 |
+| Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 |
+| Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 | 184 |
 
 AlphaFast timings are amortized across the per-scenario batch (one MMseqs2 queryDB +
 JAX compilation cache shared across all cases in the scenario). See
@@ -123,9 +123,16 @@ the batch-mode runner.
    4× 4090 — the speedup comes entirely from amortizing MMseqs2 GPU search and JAX
    compilation across multiple cases.
 6. **IntelliFold-2** handles all scenarios but with consistently lower accuracy.
-7. **OpenFold3** failed on every case (0/22) on this hardware — ColabFold MSA server
-   is unreliable from China and OpenFold3 has no built-in fallback. Not a fair test of
-   the model itself, more a network-availability artifact.
+7. **OpenFold3** went from 0/22 to 15/22 after three fixes: (a) `CUDA_HOME=/usr/local/cuda`
+   so DeepSpeed can find nvcc for JIT; (b) `CUTLASS_PATH` set to a CUTLASS 3.5+ checkout
+   so the evoformer_attn fused kernel will JIT-compile; (c) `TORCH_CUDA_ARCH_LIST=8.9`
+   so the kernel targets RTX 4090 SM 8.9 (the kernel only ships 70/80/86/90 by default).
+   Earlier "all-22-fail" claim was misleading — it was an environment problem, not a
+   network/model issue. Remaining 7 fails on protein-pair / ligand / RNA cases hit a
+   numpy `DTypePromotionError` deep inside `colabfold_msa_server.preprocess_colabfold_msas`
+   (numpy 2.x type-promotion strictness vs structured arrays). Per-case OpenFold3 pTM is
+   noisy (0.18–0.87) — the model is research preview v0.4.1 and not as stable as the
+   others.
 8. **RNA prediction** is now solved by all 6 working models (Boltz-2 leads at 0.90 avg).
 9. **Antibody-antigen** shows the largest accuracy spread between models.
 
