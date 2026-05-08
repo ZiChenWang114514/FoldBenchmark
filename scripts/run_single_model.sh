@@ -102,9 +102,10 @@ case "$MODEL" in
         export CUTLASS_PATH=/data2/zcwang/structure_prediction/openfold3/cutlass
         export TORCH_CUDA_ARCH_LIST="8.9"
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
-        # Give each case its own MSA tmp dir to avoid cross-contamination when
-        # multiple GPU instances run concurrently (shared /tmp causes race on
-        # raw/paired/ cleanup and stale tar.gz reuse).
+        # Per-case MSA tmp dir. After the conda-env patches to colabfold_msa_server.py
+        # (PID-suffixed default) and run_openfold.py (try/finally cleanup), this
+        # explicit yaml is REDUNDANT for race avoidance — kept as defense-in-depth
+        # and to make per-case isolation explicit in the script.
         OF3_MSA_DIR="/tmp/of3-of-zcwang/colabfold_msas_${CASE_NAME}_$$"
         rm -rf "$OF3_MSA_DIR" 2>/dev/null || true
         OF3_RUNNER_YAML="/tmp/of3_runner_${CASE_NAME}_$$.yml"

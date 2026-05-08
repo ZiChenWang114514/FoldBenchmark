@@ -243,3 +243,11 @@ openfold3,antibody_antigen,1DVF_idiotope,256
 openfold3,antibody_antigen,1AHW_ab_tissue_factor,245
 openfold3,protein_ligand,7RN1_3CL_inhibitor,113
 openfold3,protein_ligand,6LU7_Mpro_N3,111
+openfold3,monomer,1L2Y_trpcage,104
+openfold3,antibody_antigen,1MLC_ab_lysozyme,247
+openfold3,protein_rna,2AZ0_U1A_RNA_hairpin,105
+openfold3,protein_protein,3HFM_lysozyme_fab,108
+openfold3,monomer,1L2Y_trpcage,104
+openfold3,antibody_antigen,1MLC_ab_lysozyme,143
+openfold3,protein_rna,2AZ0_U1A_RNA_hairpin,104
+openfold3,protein_protein,3HFM_lysozyme_fab,110
