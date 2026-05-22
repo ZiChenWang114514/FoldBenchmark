@@ -27,14 +27,13 @@ if [ ! -d "$INPUT_DIR" ]; then
     exit 1
 fi
 
-ALPHAFAST_DIR=/data2/zcwang/af3/alphafast
+# Load path configuration (supports FOLDBENCH_CONFIG override)
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "${FOLDBENCH_CONFIG:-${SCRIPTS_DIR}/config.sh}"
+
 ALPHAFAST_PYTHON=$ALPHAFAST_DIR/.venv/bin/python
 ALPHAFAST_RUN=$ALPHAFAST_DIR/run_alphafold.py
 MMSEQS_BIN=$ALPHAFAST_DIR/bin/bin/mmseqs
-ALPHAFAST_DB_DIR="${ALPHAFAST_DB_DIR:-/data2/zcwang/alphafast_db}"
-ALPHAFAST_MODEL_DIR="${ALPHAFAST_MODEL_DIR:-/data/zxhuang/Shared/Alphafold3params}"
-ALPHAFAST_GPUS="${ALPHAFAST_GPUS:-0,1,2,3}"
-ALPHAFAST_JAX_CACHE="${ALPHAFAST_JAX_CACHE:-/data2/zcwang/af3/alphafast/jax_cache}"
 mkdir -p "$ALPHAFAST_JAX_CACHE"
 
 # Stage only un-finished cases into a tmp dir so AlphaFast batches them

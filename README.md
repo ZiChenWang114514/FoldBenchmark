@@ -1,8 +1,7 @@
 # FoldBenchmark
 
-Systematic benchmark of biomolecular structure prediction methods across 5 application
-scenarios (23 test systems). Currently 6 models benchmarked; AlphaFast is integrated
-but the database download is in progress.
+Systematic benchmark of 7 biomolecular structure prediction models across 5 application
+scenarios (22 test systems).
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -14,147 +13,147 @@ but the database download is in progress.
 
 ## Quick Start
 
-If everything is already installed (e.g. on Zeus), running the benchmark end-to-end
-takes three commands:
+### 1. Configure paths (first-time setup)
+
+All model/database paths live in `scripts/config.sh`. The defaults point to the
+reference installation on Zeus (`/data2/zcwang/…`). If you are a **different user on
+the same machine**, copy and edit the file once — you will not need to touch it again:
 
 ```bash
-cd /data2/zcwang/FoldBenchmark
+cp scripts/config.sh scripts/config.local.sh   # gitignored
+# Edit scripts/config.local.sh — update CONDA_BASE and any paths that differ
+export FOLDBENCH_CONFIG=$PWD/scripts/config.local.sh
+```
 
-# 1. Generate inputs from PDB IDs (already done — only re-run if you add cases)
-python scripts/prepare_inputs.py
+Key variables to check in your copy:
 
-# 2. Run the benchmark (one model on one scenario shown here)
+| Variable | What it points to |
+|----------|-------------------|
+| `CONDA_BASE` | Your anaconda/miniconda root (auto-detected if `conda` is in PATH) |
+| `BOLTZ2_CU13_LIB` | `nvidia/cu13/lib` inside your `boltz2` conda env |
+| `OPENFOLD_CACHE` | Dir containing `of3-p2-155k.pt` |
+| `CUTLASS_PATH` | CUTLASS ≥3.5 checkout (required for OpenFold3 on RTX 4090) |
+| `ALPHAFAST_DIR` | AlphaFast native venv install |
+| `ALPHAFAST_DB_DIR` | MMseqs2 padded DBs (~388 GB protein + ~27 GB RNA) |
+| `AF3_*` | AF3 Docker volumes (models, databases, patched msa.py) |
+
+Shared resources on Zeus that **do not need to change** for any user:
+
+| Resource | Path |
+|----------|------|
+| AF3 / AlphaFast model weights | `/data/zxhuang/Shared/Alphafold3params/` |
+| Boltz-2 weights | `/data2/zxhuang/.boltz/` (symlinked) |
+
+### 2. Run the benchmark
+
+```bash
+cd /data2/zcwang/FoldBenchmark   # or your clone
+
+# Single model, single scenario — good sanity-check after fresh setup
+bash scripts/run_single_model.sh boltz2 monomer 1UBQ_ubiquitin 0
+
+# All models, all scenarios (one GPU, sequential)
+bash scripts/run_benchmark.sh --gpu 0
+
+# Filter by model or scenario
 bash scripts/run_benchmark.sh --model boltz2 --scenario monomer --gpu 0
 
-# 3. Collect results into CSV + summary
-python scripts/collect_results.py
+# AlphaFast: must use the batch runner (per-case mode is slower than AF3)
+bash scripts/run_alphafast_batch.sh protein_protein
 ```
 
-To run a single case for sanity-checking after a fresh install:
+### 3. Collect results
 
 ```bash
-bash scripts/run_single_model.sh boltz2 monomer 1UBQ_ubiquitin 0
+python scripts/collect_results.py
+# → results/benchmark_results.csv
+# → results/timing.csv
+# → results/summary.md
 ```
-
-For the full setup-from-scratch path including conda envs and Docker, see
-[docs/INSTALL.md](docs/INSTALL.md).
 
 ---
 
 ## Models
 
-| Model | Version | Status | Backend | MSA Method | License |
-|-------|---------|--------|---------|------------|---------|
-| AlphaFold 3 | v3.0.2 | benchmarked | Docker | JackHMMER (sharded local DB) | CC BY-NC-SA 4.0 |
-| Boltz-2 | v2.2.1 | benchmarked | conda `boltz2` | ColabFold server | MIT |
-| OpenFold3 | v0.4.1 | benchmarked | conda `openfold3` | ColabFold server | Apache 2.0 |
-| Protenix | latest | benchmarked | conda `protenix` | Local MSA | Apache 2.0 |
-| Chai-1 | latest | benchmarked | conda `chai1` | ColabFold server | Apache 2.0 |
-| IntelliFold-2 | latest | benchmarked | conda `intellifold` | ColabFold server | Apache 2.0 |
-| AlphaFast | v1.0 (commit 2026-04) | benchmarked | native uv venv | MMseqs2 GPU (5 padded DBs, 4× 4090 sharded) | CC BY-NC-SA 4.0 |
+| Model | Version | Backend | MSA method | License |
+|-------|---------|---------|------------|---------|
+| AlphaFold 3 | v3.0.2 | Docker `alphafold3` | JackHMMER (sharded local DB) | CC BY-NC-SA 4.0 |
+| AlphaFast | v1.0 (2026-04) | native uv venv | MMseqs2 GPU (5 padded DBs, 4× 4090 sharded) | CC BY-NC-SA 4.0 |
+| Boltz-2 | v2.2.1 | conda `boltz2` | ColabFold server | MIT |
+| Protenix | latest | conda `protenix` | Local MSA | Apache 2.0 |
+| Chai-1 | latest | conda `chai1` | ColabFold server | Apache 2.0 |
+| IntelliFold-2 | latest | conda `intellifold` | ColabFold server | Apache 2.0 |
+| OpenFold3 | v0.4.1 | conda `openfold3` | ColabFold server | Apache 2.0 |
 
-See [docs/MODELS.md](docs/MODELS.md) for the verified-working CLI command, input format,
-and gotchas of each model.
+See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and
+per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
 
 ---
 
 ## Results Summary
 
-### Completion Rate
+### Completion rate (2026-05-07, 22 cases)
 
-22 test cases total (5 scenarios; protein_rna trimmed from 5 cases to 3 — 5V3F and
-4TZX were RNA-only PDB entries with no protein chain; the original `prepare_inputs.py`
-also had wrong RNA chain IDs for the rest. See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
-for details.)
+| Model | Success | Notes |
+|-------|---------|-------|
+| AlphaFold 3 v3.0.2 | **22/22** | Gold standard |
+| AlphaFast v1.0 | **22/22** | RNA DB built locally from FASTAs (HF mirror unreliable) |
+| Boltz-2 v2.2.1 | **22/22** | Best speed/accuracy tradeoff |
+| Protenix | **22/22** | RNA support confirmed after input bug fix |
+| Chai-1 | **22/22** | RNA support confirmed after input bug fix |
+| IntelliFold-2 | **22/22** | All scenarios |
+| OpenFold3 v0.4.1 | **22/22** | Requires 6 source patches — see [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) |
 
-| Model | Success | Failed | Notes |
-|-------|---------|--------|-------|
-| AlphaFold 3 v3.0.2 | **22/22** | 0 | Gold standard |
-| Boltz-2 v2.2.1 | **22/22** | 0 | Best speed + top-tier pTM |
-| Protenix | **22/22** | 0 | Now confirmed to support RNA after input bug fix |
-| Chai-1 | **22/22** | 0 | Now confirmed to support RNA after input bug fix |
-| IntelliFold-2 | **22/22** | 0 | All scenarios work |
-| AlphaFast v1.0 | **22/22** | 0 | RNA DB built locally from FASTAs (HF mirror download was unreliable) |
-| OpenFold3 v0.4.1 | 15/22 | 7 | Mostly fixable env issues — see Notes below |
-
-### Average pTM by Scenario (higher = better)
+### Average pTM by scenario (higher = better)
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
 |----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.64 (3/4) |
-| Protein-Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.55 (2/5) |
-| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.34 (2/3) |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 (5/5) |
-| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.77 (3/5) |
+| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 |
+| Protein-Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.74 |
+| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 |
+| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 |
 
-AlphaFast and AF3 share the same model weights and produce essentially identical
-structures — small pTM differences are seed/MSA noise.
-
-### Average Speed (seconds/system)
+### Average speed (seconds/case)
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
 |----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 | 128 |
+| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 | 126 |
 | Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 119 |
 | Protein-RNA | 338 | 208 | **115** | 168 | 135 | **91** | 100 |
 | Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 |
 | Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 | 184 |
 
 AlphaFast timings are amortized across the per-scenario batch (one MMseqs2 queryDB +
-JAX compilation cache shared across all cases in the scenario). See
-[docs/MODELS.md § AlphaFast](docs/MODELS.md#2-alphafast-af3--gpu-mmseqs2-msa) for
-the batch-mode runner.
+JAX compilation cache shared across all cases). Per-case mode is *slower* than AF3.
 
-### Key Findings
+### Key findings
 
-1. **Chai-1** posts the highest pTM on PPI / ligand / monomer scenarios — slightly above
-   Boltz-2 and Protenix. (Score read from `scores.model_idx_0.npz`; earlier runs of
-   `collect_results.py` did not parse this format and reported it as missing.)
-2. **Boltz-2** is the best speed/accuracy tradeoff: top-tier pTM across the board and
-   the fastest among accurate models.
-3. **Protenix and Chai-1 do support RNA**. Earlier reports of FAIL on RNA were caused
-   by buggy inputs (`prepare_inputs.py` used wrong chain IDs and silently produced
-   protein homodimers labelled as protein-RNA pairs). After the fix, both models hit
-   pTM 0.88 average on real protein-RNA inputs.
-4. **AF3** is the most reliable across the board, slowest due to local JackHMMER MSA.
-   Sharded databases bring its MSA time down from ~5 min to ~50 s per case.
-5. **AlphaFast** matches AF3 accuracy (same weights, same architecture) and is **40-50%
-   faster** than AF3 in batch mode. Single-case mode is actually *slower* than AF3 on
-   4× 4090 — the speedup comes entirely from amortizing MMseqs2 GPU search and JAX
-   compilation across multiple cases.
-6. **IntelliFold-2** handles all scenarios but with consistently lower accuracy.
-7. **OpenFold3** went from 0/22 to 15/22 after four fixes:
-   (a) `CUDA_HOME=/usr/local/cuda` so DeepSpeed can find nvcc for JIT;
-   (b) `CUTLASS_PATH` set to a CUTLASS 3.5+ checkout so the evoformer_attn fused
-       kernel will JIT-compile;
-   (c) `TORCH_CUDA_ARCH_LIST=8.9` so the kernel targets RTX 4090 SM 8.9 (the kernel
-       only ships 70/80/86/90 by default);
-   (d) Patched `openfold3/core/data/pipelines/sample_processing/msa.py:307` to skip
-       the void-view `np.isin` dedup when paired-MSA width != main-MSA width
-       (numpy 2.x rejects different-length void promotion). Without this, every
-       multi-chain protein-pair case crashes immediately.
+1. **Chai-1** posts the highest pTM on PPI, ligand, and monomer scenarios.
+2. **Boltz-2** is the best speed/accuracy tradeoff: fastest accurate model, top-tier
+   pTM across all scenarios including RNA and antibody-antigen.
+3. **AlphaFast** matches AF3 accuracy (same weights) and is 40–54% faster in batch mode.
+4. **Protenix and Chai-1 do support RNA** — earlier failures were caused by wrong chain
+   IDs in `prepare_inputs.py` (silently produced protein homodimers labelled as RNA pairs).
+5. **OpenFold3** reaches 22/22 after six source patches (see Troubleshooting); pTM is
+   10–20% lower than other models but the pipeline is now fully stable.
 
-   Remaining 7 fails are deeper bugs in OpenFold3 v0.4.1's MSA → token mapping
-   (`map_msas_to_tokens` IndexError) that the patch surfaces — these would need
-   actual code changes in OpenFold3, not just env tweaks. Where the patch does
-   succeed, pTM is decent (0.64 PPI, 0.77 antibody, 0.59 monomer).
-8. **RNA prediction** is now solved by all 6 working models (Boltz-2 leads at 0.90 avg).
-9. **Antibody-antigen** shows the largest accuracy spread between models.
-
-For the full per-case results table, see [results/benchmark_results.csv](results/benchmark_results.csv)
+Full per-case results: [results/benchmark_results.csv](results/benchmark_results.csv)
 and [results/summary.md](results/summary.md).
 
 ---
 
-## Test Systems (5 scenarios = 22 total)
+## Test Systems
 
-| Scenario | Cases | Description |
-|----------|-------|-------------|
-| protein_protein | 4 | Homodimers (2PV7), heterodimers (1BRS, 1EMV, 3HFM) |
-| protein_ligand | 5 | HIV protease, CDK2, BRAF, SARS-CoV-2 Mpro/3CL |
-| protein_rna | 3 | 1ASY tRNA-synthetase + tRNA, 1URN U1A + RNA, 2AZ0 U1A + RNA hairpin |
-| monomer | 5 | Ubiquitin, crambin, myoglobin, GB1, Trp-cage |
-| antibody_antigen | 5 | Trastuzumab-HER2, RBD-neutralizing Ab, etc. |
+22 cases across 5 scenarios:
+
+| Scenario | Cases | Examples |
+|----------|-------|---------|
+| protein_protein | 4 | 1BRS barnase-barstar, 2PV7 homodimer, 3HFM lysozyme-Fab |
+| protein_ligand | 5 | 1HSG HIV protease, 6LU7 Mpro-N3, 4LDE BRAF-vemurafenib |
+| protein_rna | 3 | 1ASY tRNA-synthetase, 1URN U1A, 2AZ0 U1A-hairpin |
+| monomer | 5 | 1UBQ ubiquitin, 1CRN crambin, 1MBN myoglobin |
+| antibody_antigen | 5 | 4FQI trastuzumab-HER2, 7N4I RBD-neutralizing Ab |
 
 Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 
@@ -164,61 +163,57 @@ Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 
 ```
 FoldBenchmark/
-├── README.md                            # this file
+├── README.md
 ├── docs/
-│   ├── INSTALL.md                       # how to set up all 7 models
-│   ├── MODELS.md                        # per-model CLI + gotchas
-│   ├── INPUT_FORMATS.md                 # 5 input formats side-by-side
-│   └── TROUBLESHOOTING.md               # known issues + fixes
-├── inputs/                              # all model-specific input files
+│   ├── INSTALL.md              # set up all 7 models from scratch
+│   ├── MODELS.md               # per-model CLI + gotchas
+│   ├── INPUT_FORMATS.md        # 5 input formats side-by-side
+│   └── TROUBLESHOOTING.md      # known issues + fixes
+├── inputs/
 │   └── {scenario}/
-│       ├── af3_json/                    # AF3 + AlphaFast
-│       ├── boltz2_yaml/                 # Boltz-2 + IntelliFold-2
-│       ├── chai1_fasta/                 # Chai-1
-│       ├── protenix_json/               # Protenix
-│       └── openfold3_json/              # OpenFold3
-├── outputs/                             # raw model outputs (gitignored)
+│       ├── af3_json/           # AF3 + AlphaFast
+│       ├── boltz2_yaml/        # Boltz-2 + IntelliFold-2
+│       ├── chai1_fasta/        # Chai-1
+│       ├── protenix_json/      # Protenix
+│       └── openfold3_json/     # OpenFold3
+├── outputs/                    # raw model outputs (gitignored)
 │   └── {model}/{scenario}/{case}/
 ├── scripts/
-│   ├── prepare_inputs.py                # PDB → all 5 input formats
-│   ├── run_benchmark.sh                 # master runner
-│   ├── run_single_model.sh              # single (model, scenario, case)
-│   └── collect_results.py               # outputs/ → CSV + summary
+│   ├── config.sh               # all machine-specific paths (edit once per user)
+│   ├── prepare_inputs.py       # PDB → all 5 input formats
+│   ├── run_benchmark.sh        # master runner (all models / all scenarios)
+│   ├── run_single_model.sh     # single (model, scenario, case, gpu)
+│   ├── run_alphafast_batch.sh  # AlphaFast scenario-batch runner (required for perf)
+│   └── collect_results.py      # outputs/ → CSV + summary
 └── results/
-    ├── timing.csv                       # per-case wall clock
-    ├── benchmark_results.csv            # pTM, pLDDT, ranking_score, timing
-    └── summary.md                       # human-readable summary
+    ├── benchmark_results.csv
+    ├── timing.csv
+    └── summary.md
 ```
 
 ---
 
 ## Adding new models or test cases
 
-- **New test case**: Add an entry to `TEST_CASES` in `scripts/prepare_inputs.py`,
-  rerun `python scripts/prepare_inputs.py`. The script auto-fetches sequences from
-  RCSB and writes all 5 input formats. See
-  [docs/INPUT_FORMATS.md](docs/INPUT_FORMATS.md#auto-conversion) for the schema.
-
-- **New model**: Add a `case` branch in `scripts/run_single_model.sh`. Make sure
-  the model writes a `.cif` file to its output directory, otherwise the "already done"
-  detection in the runner will rerun it forever. See
-  [docs/MODELS.md](docs/MODELS.md) for the structure of the existing branches.
-
-- **New scenario**: Create `inputs/{new_scenario}/` and add a corresponding entry
-  to `TEST_CASES`. The runner auto-discovers any directory under `inputs/`.
+- **New test case**: Add an entry to `TEST_CASES` in `scripts/prepare_inputs.py` and
+  rerun it. **Always verify chain IDs against RCSB** — wrong chain IDs silently produce
+  bunk inputs (past bug: RNA chains pointed at protein chains).
+- **New model**: Add a `case` branch in `scripts/run_single_model.sh`. The model must
+  write a `.cif` file to its output directory (used by the skip-detection logic).
+- **New scenario**: Create `inputs/{new_scenario}/` and add entries to `TEST_CASES`.
 
 ---
 
 ## Hardware (reference setup)
 
 - 4× NVIDIA RTX 4090 (48 GB each)
-- 64 CPU cores (Intel Xeon Silver 4514Y)
+- 2× Intel Xeon Silver 4514Y (64 threads total)
 - 314 GB RAM
-- AF3 sharded databases: 397 GB on NVMe SSD (`/data2`)
-- AlphaFast MMseqs2 database (planned): ~800 GB on HDD (`/hdd01`)
+- ~400 GB NVMe for AF3 sharded databases
+- ~415 GB for AlphaFast MMseqs2 databases (388 GB protein + 27 GB RNA)
 
-The benchmark scales linearly with GPU count if you run different models on different
-GPUs in parallel. With 4 GPUs the full 6-model × 23-case benchmark takes ~2 hours.
+With 4 GPUs, running all 7 models × 22 cases sequentially takes roughly 3–4 hours.
+Models can be parallelized across GPUs with `--gpu N` flags.
 
 ---
 
@@ -226,5 +221,5 @@ GPUs in parallel. With 4 GPUs the full 6-model × 23-case benchmark takes ~2 hou
 
 Code in this repository: MIT.
 
-Each model's outputs are governed by that model's license — see the Models table above.
+Each model's outputs are governed by that model's license (see Models table).
 AF3 and AlphaFast outputs in particular are CC BY-NC-SA 4.0 (non-commercial only).

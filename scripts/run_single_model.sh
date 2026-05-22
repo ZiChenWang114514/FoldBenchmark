@@ -14,7 +14,10 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 INPUTS="${PROJECT_ROOT}/inputs/${SCENARIO}"
 OUTPUTS="${PROJECT_ROOT}/outputs/${MODEL}/${SCENARIO}"
 TIMING_FILE="${PROJECT_ROOT}/results/timing.csv"
-CONDA_BASE=$(/data/zcwang/anaconda3/bin/conda info --base)
+
+# Load path configuration (supports FOLDBENCH_CONFIG override)
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "${FOLDBENCH_CONFIG:-${SCRIPTS_DIR}/config.sh}"
 
 mkdir -p "${OUTPUTS}" "$(dirname ${TIMING_FILE})"
 
@@ -36,11 +39,11 @@ case "$MODEL" in
         docker run --rm \
             --volume "$(dirname $(realpath $INPUT_JSON))":/root/af_input \
             --volume "${OUTPUTS}/${CASE_NAME}":/root/af_output \
-            --volume /data2/zcwang/af3/models:/root/models \
-            --volume /data2/zcwang/af3/databases_sharded:/root/public_databases \
-            --volume /data2/zcwang/af3/databases/mmcif_files:/root/public_databases/mmcif_files:ro \
-            --volume /data2/zcwang/af3/databases/pdb_seqres_2022_09_28.fasta:/root/public_databases/pdb_seqres_2022_09_28.fasta:ro \
-            --volume /data2/zcwang/af3/alphafold3/src/alphafold3/data/msa.py:/app/alphafold/src/alphafold3/data/msa.py:ro \
+            --volume "${AF3_MODELS_DIR}":/root/models \
+            --volume "${AF3_DB_DIR}":/root/public_databases \
+            --volume "${AF3_MMCIF_DIR}":/root/public_databases/mmcif_files:ro \
+            --volume "${AF3_SEQRES_FASTA}":/root/public_databases/pdb_seqres_2022_09_28.fasta:ro \
+            --volume "${AF3_SRC_MSA_PY}":/app/alphafold/src/alphafold3/data/msa.py:ro \
             --gpus "device=${GPU_ID}" \
             alphafold3 \
             python3 run_alphafold.py \
@@ -73,7 +76,7 @@ case "$MODEL" in
         [ ! -f "$INPUT_YAML" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate boltz2
-        export LD_LIBRARY_PATH="/data/zcwang/anaconda3/envs/boltz2/lib/python3.11/site-packages/nvidia/cu13/lib:${LD_LIBRARY_PATH}"
+        export LD_LIBRARY_PATH="${BOLTZ2_CU13_LIB}:${LD_LIBRARY_PATH}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} boltz predict "$INPUT_YAML" \
             --out_dir "${OUTPUTS}/${CASE_NAME}" \
             --use_msa_server \
@@ -85,7 +88,7 @@ case "$MODEL" in
         [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate openfold3
-        export OPENFOLD_CACHE="/data2/zcwang/structure_prediction/openfold3/cache"
+        # OPENFOLD_CACHE and CUTLASS_PATH come from config.sh
         # OpenFold3 uses DeepSpeed4Science's EvoformerAttention, which JIT-compiles a
         # CUDA C++ kernel via nvcc. Three things must be present:
         #   (1) CUDA_HOME = a toolkit with nvcc (conda env ships only runtime libs)
@@ -99,14 +102,14 @@ case "$MODEL" in
         #       70/80/86/90 list which doesn't include 8.9)
         export CUDA_HOME=/usr/local/cuda
         export PATH=/usr/local/cuda/bin:$PATH
-        export CUTLASS_PATH=/data2/zcwang/structure_prediction/openfold3/cutlass
+        export CUTLASS_PATH="${CUTLASS_PATH}"
         export TORCH_CUDA_ARCH_LIST="8.9"
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
         # Per-case MSA tmp dir. After the conda-env patches to colabfold_msa_server.py
         # (PID-suffixed default) and run_openfold.py (try/finally cleanup), this
         # explicit yaml is REDUNDANT for race avoidance — kept as defense-in-depth
         # and to make per-case isolation explicit in the script.
-        OF3_MSA_DIR="/tmp/of3-of-zcwang/colabfold_msas_${CASE_NAME}_$$"
+        OF3_MSA_DIR="/tmp/of3-of-${USER}/colabfold_msas_${CASE_NAME}_$$"
         rm -rf "$OF3_MSA_DIR" 2>/dev/null || true
         OF3_RUNNER_YAML="/tmp/of3_runner_${CASE_NAME}_$$.yml"
         printf 'msa_computation_settings:\n  msa_output_directory: "%s"\n' "$OF3_MSA_DIR" > "$OF3_RUNNER_YAML"
@@ -162,13 +165,10 @@ case "$MODEL" in
         [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
 
-        ALPHAFAST_DIR=/data2/zcwang/af3/alphafast
+        # All ALPHAFAST_* vars come from config.sh
         ALPHAFAST_PYTHON=$ALPHAFAST_DIR/.venv/bin/python
         ALPHAFAST_RUN=$ALPHAFAST_DIR/run_alphafold.py
         MMSEQS_BIN=$ALPHAFAST_DIR/bin/bin/mmseqs
-        # DB on /hdd01 by default; pass ALPHAFAST_DB_DIR=... to override (e.g. NVMe)
-        ALPHAFAST_DB_DIR="${ALPHAFAST_DB_DIR:-/hdd01/zcwang/alphafast_db}"
-        ALPHAFAST_MODEL_DIR="${ALPHAFAST_MODEL_DIR:-/data/zxhuang/Shared/Alphafold3params}"
 
         # Runtime gotchas (verified during smoke test + 4090 OOM workaround):
         # 1. cpp.so was built with system GCC 13 → needs newer libstdc++
@@ -181,8 +181,6 @@ case "$MODEL" in
         #    .venv/lib/.../alphafold3/data/tools/{mmseqs,mmseqs_batch,
         #    mmseqs_template,foldseek}.py allows MMSEQS_USE_ALL_GPUS=1 to bypass
         #    the single-GPU CUDA_VISIBLE_DEVICES override.
-        ALPHAFAST_GPUS="${ALPHAFAST_GPUS:-0,1,2,3}"
-        ALPHAFAST_JAX_CACHE="${ALPHAFAST_JAX_CACHE:-/data2/zcwang/af3/alphafast/jax_cache}"
         mkdir -p "$ALPHAFAST_JAX_CACHE"
         # NOTE: per-case mode. For best perf use scripts/run_alphafast_batch.sh
         # which batches all cases in a scenario through a single MMseqs2 queryDB
