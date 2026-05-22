@@ -288,6 +288,34 @@ def generate_protenix_json(af3_json: dict) -> list:
     return [{"name": af3_json["name"], "sequences": seqs, "modelSeeds": af3_json.get("modelSeeds", [1])}]
 
 
+def generate_rf3_json(af3_json: dict) -> list:
+    """Convert AF3 JSON to RoseTTAFold3 (Foundry) format.
+
+    RF3 uses a flat list of dicts, each with 'name' and 'components'.
+    Each component is a dict with 'seq'+'chain_id' (protein/RNA/DNA) or
+    'smiles'/'ccd_code' (ligand).  MSA paths are optional ('msa_path').
+    """
+    components = []
+    for entry in af3_json["sequences"]:
+        if "protein" in entry:
+            components.append({
+                "seq": entry["protein"]["sequence"],
+                "chain_id": entry["protein"]["id"][0],
+            })
+        elif "rna" in entry:
+            components.append({
+                "seq": entry["rna"]["sequence"],
+                "chain_id": entry["rna"]["id"][0],
+            })
+        elif "ligand" in entry:
+            lig = entry["ligand"]
+            if "smiles" in lig:
+                components.append({"smiles": lig["smiles"]})
+            elif "ccdCodes" in lig:
+                components.append({"ccd_code": lig["ccdCodes"][0]})
+    return {"name": af3_json["name"], "components": components}
+
+
 def generate_openfold3_json(af3_json: dict) -> dict:
     """Convert AF3 JSON to OpenFold3 query format."""
     chains = []
@@ -359,6 +387,13 @@ def main():
             of3_path = of3_dir / f"{case['name']}.json"
             with open(of3_path, "w") as f:
                 json.dump(generate_openfold3_json(af3_json), f, indent=2)
+
+            # Save RF3 JSON
+            rf3_dir = INPUTS_DIR / scenario / "rf3_json"
+            rf3_dir.mkdir(parents=True, exist_ok=True)
+            rf3_path = rf3_dir / f"{case['name']}.json"
+            with open(rf3_path, "w") as f:
+                json.dump(generate_rf3_json(af3_json), f, indent=2)
 
             # Save Boltz-2 YAML
             yaml_dir = INPUTS_DIR / scenario / "boltz2_yaml"

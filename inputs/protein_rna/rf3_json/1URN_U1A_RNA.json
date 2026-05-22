@@ -1,0 +1,13 @@
+{
+  "name": "1URN_U1A_RNA",
+  "components": [
+    {
+      "seq": "AVPETRPNHTIYINNLNEKIKKDELKKSLHAIFSRFGQILDILVSRSLKMRGQAFVIFKEVSSATNALRSMQGFPFYDKPMRIQYAKTDSDIIAKMK",
+      "chain_id": "A"
+    },
+    {
+      "seq": "AAUCCAUUGCACUCCGGAUUU",
+      "chain_id": "P"
+    }
+  ]
+}

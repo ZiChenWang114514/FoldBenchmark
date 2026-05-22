@@ -1,0 +1,13 @@
+{
+  "name": "2AZ0_U1A_RNA_hairpin",
+  "components": [
+    {
+      "seq": "MPSKLALIQELPDRIQTAVEAAMGMSYQDAPNNVRRDLDNLHACLNKAKLTVSRMVTSLLEKPSVVAYLEGKA",
+      "chain_id": "A"
+    },
+    {
+      "seq": "GCAUGGACGCGUCCAUGC",
+      "chain_id": "C"
+    }
+  ]
+}

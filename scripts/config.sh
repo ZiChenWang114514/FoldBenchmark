@@ -43,6 +43,11 @@
 # Patched msa.py with z_value fix (volume-mounted into the container).
 : "${AF3_SRC_MSA_PY:=/data2/zcwang/af3/alphafold3/src/alphafold3/data/msa.py}"
 
+# ── RoseTTAFold3 (Foundry) ─────────────────────────────────────────────
+# Model checkpoint. Download with: foundry install base-models --checkpoint-dir <dir>
+# or wget http://files.ipd.uw.edu/pub/rf3/rf3_foundry_01_24_latest_remapped.ckpt
+: "${RF3_CKPT_PATH:=/data2/zcwang/structure_prediction/RoseTTAFold3/weights/rf3_foundry_01_24_latest_remapped.ckpt}"
+
 # ── AlphaFast ─────────────────────────────────────────────────────────
 # Native uv-venv install of AlphaFast.
 : "${ALPHAFAST_DIR:=/data2/zcwang/af3/alphafast}"

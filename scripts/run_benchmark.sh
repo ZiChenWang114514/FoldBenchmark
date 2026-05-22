@@ -26,7 +26,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-ALL_MODELS="af3 alphafast boltz2 openfold3 protenix chai1 intellifold"
+ALL_MODELS="af3 alphafast boltz2 openfold3 protenix chai1 intellifold rf3"
 ALL_SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen"
 
 MODELS=${MODEL_FILTER:-$ALL_MODELS}

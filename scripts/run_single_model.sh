@@ -201,9 +201,24 @@ case "$MODEL" in
             --run_inference=True \
             2>&1 || echo "FAILED: alphafast/${SCENARIO}/${CASE_NAME}"
         ;;
+    rf3)
+        # RoseTTAFold3 via Foundry (Baker Lab, BSD license)
+        # Uses its own JSON format with 'components' array.
+        # MSA (.a3m) is optional but recommended for accuracy.
+        INPUT_JSON="${INPUTS}/rf3_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        source "${CONDA_BASE}/etc/profile.d/conda.sh"
+        conda activate rf3
+        mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        CUDA_VISIBLE_DEVICES=${GPU_ID} rf3 fold \
+            inputs="$(realpath "$INPUT_JSON")" \
+            out_dir="${OUTPUTS}/${CASE_NAME}" \
+            ckpt_path="${RF3_CKPT_PATH}" \
+            2>&1 || echo "FAILED: rf3/${SCENARIO}/${CASE_NAME}"
+        ;;
     *)
         echo "Unknown model: $MODEL"
-        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold"
+        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold, rf3"
         exit 1
         ;;
 esac

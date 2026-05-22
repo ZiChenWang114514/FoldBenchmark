@@ -80,10 +80,11 @@ python scripts/collect_results.py
 | AlphaFold 3 | v3.0.2 | Docker `alphafold3` | JackHMMER (sharded local DB) | CC BY-NC-SA 4.0 |
 | AlphaFast | v1.0 (2026-04) | native uv venv | MMseqs2 GPU (5 padded DBs, 4× 4090 sharded) | CC BY-NC-SA 4.0 |
 | Boltz-2 | v2.2.1 | conda `boltz2` | ColabFold server | MIT |
-| Protenix | latest | conda `protenix` | Local MSA | Apache 2.0 |
+| Protenix | v2.0.0 | conda `protenix` | Local MSA | Apache 2.0 |
 | Chai-1 | latest | conda `chai1` | ColabFold server | Apache 2.0 |
 | IntelliFold-2 | latest | conda `intellifold` | ColabFold server | Apache 2.0 |
 | OpenFold3 | v0.4.1 | conda `openfold3` | ColabFold server | Apache 2.0 |
+| RoseTTAFold3 | v0.1.12 (Foundry) | conda `rf3` | Pre-computed .a3m (no built-in MSA) | BSD-3-Clause |
 
 See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and
 per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
@@ -175,12 +176,13 @@ FoldBenchmark/
 │       ├── boltz2_yaml/        # Boltz-2 + IntelliFold-2
 │       ├── chai1_fasta/        # Chai-1
 │       ├── protenix_json/      # Protenix
-│       └── openfold3_json/     # OpenFold3
+│       ├── openfold3_json/     # OpenFold3
+│       └── rf3_json/           # RoseTTAFold3
 ├── outputs/                    # raw model outputs (gitignored)
 │   └── {model}/{scenario}/{case}/
 ├── scripts/
 │   ├── config.sh               # all machine-specific paths (edit once per user)
-│   ├── prepare_inputs.py       # PDB → all 5 input formats
+│   ├── prepare_inputs.py       # PDB → all 6 input formats (AF3/Protenix/OF3/Boltz2/Chai1/RF3)
 │   ├── run_benchmark.sh        # master runner (all models / all scenarios)
 │   ├── run_single_model.sh     # single (model, scenario, case, gpu)
 │   ├── run_alphafast_batch.sh  # AlphaFast scenario-batch runner (required for perf)
@@ -212,7 +214,7 @@ FoldBenchmark/
 - ~400 GB NVMe for AF3 sharded databases
 - ~415 GB for AlphaFast MMseqs2 databases (388 GB protein + 27 GB RNA)
 
-With 4 GPUs, running all 7 models × 22 cases sequentially takes roughly 3–4 hours.
+With 4 GPUs, running all 8 models × 22 cases sequentially takes roughly 4–5 hours.
 Models can be parallelized across GPUs with `--gpu N` flags.
 
 ---

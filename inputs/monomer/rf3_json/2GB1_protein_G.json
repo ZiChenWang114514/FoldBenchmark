@@ -1,0 +1,9 @@
+{
+  "name": "2GB1_protein_G",
+  "components": [
+    {
+      "seq": "MTYKLILNGKTLKGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE",
+      "chain_id": "A"
+    }
+  ]
+}
