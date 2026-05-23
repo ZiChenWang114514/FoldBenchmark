@@ -1,6 +1,6 @@
 ---
 name: fold-models
-description: Run individual open-source structure prediction models (AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2) on user-provided inputs. TRIGGER when the user asks to predict a structure with a specific non-AF3 model, run AlphaFast/Boltz-2/Chai/Protenix/OpenFold/IntelliFold on a protein, or compare a specific model's output. DO NOT TRIGGER for AF3 (use af3-local) or for cross-model benchmarks (use fold-bench).
+description: Run individual open-source structure prediction models (AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3) on user-provided inputs. TRIGGER when the user asks to predict a structure with a specific non-AF3 model, run AlphaFast/Boltz-2/Chai/Protenix/OpenFold/IntelliFold/RF3 on a protein, or compare a specific model's output. DO NOT TRIGGER for AF3 (use af3-local) or for cross-model benchmarks (use fold-bench).
 ---
 
 # fold-models
@@ -15,8 +15,9 @@ Run open-source structure prediction models at `/data2/zcwang/structure_predicti
 - "OpenFold3 预测这个序列"
 - "IntelliFold 跑一下抗体-抗原"
 - "AlphaFast 加速 AF3 / GPU MMseqs2"
+- "RoseTTAFold3 / RF3 跑一下这个结构"
 
-## 6 Models — Verified Working Commands
+## 7 Models — Verified Working Commands
 
 ### Boltz-2 (recommended: fastest + top-tier accuracy)
 
@@ -202,18 +203,51 @@ After patches 5-6, the FoldBenchmark per-case `--runner-yaml` workaround in `run
 
 **Status (2026-05-07)**: 22/22 on FoldBenchmark; concurrent multi-GPU invocations verified race-free.
 
+### RoseTTAFold3 (Baker Lab Foundry — pre-computed MSA, no built-in MSA pipeline)
+
+```bash
+conda activate rf3
+CUDA_VISIBLE_DEVICES=0 rf3 fold \
+    inputs=/path/to/input.json \
+    out_dir=/path/to/output/ \
+    ckpt_path=/data2/zcwang/structure_prediction/RoseTTAFold3/weights/rf3_foundry_01_24_latest_remapped.ckpt
+```
+
+**Input JSON** (RF3 components format, distinct from all other models):
+```json
+{
+  "name": "my_complex",
+  "components": [
+    {"seq": "MTEE...", "chain_id": "A"},
+    {"seq": "MARL...", "chain_id": "B"}
+  ]
+}
+```
+
+Ligand (SMILES): `{"smiles": "O=C(C(N...)..."}` — no `chain_id` needed.
+RNA: `{"seq": "AUGC...", "chain_id": "B", "molecule_type": "rna"}`.
+
+**Note on MSA**: RF3 Foundry uses pre-computed .a3m MSA files. It does NOT have a built-in MSA search pipeline. For the FoldBenchmark (standard test cases), pre-computed MSAs are not needed since RF3 can run in "no-MSA" mode.
+
+**Weights**: Two checkpoints available:
+- `rf3_foundry_01_24_latest_remapped.ckpt` (recommended)
+- `rf3_foundry_01_24_latest.ckpt`
+Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
+
+**Install status (2026-05-22)**: `rc-foundry` being installed in conda `rf3` (Python 3.12). Installation in progress — torch 2.12.0 + dependencies being installed via proxy.
+
 ## Benchmark Results (FoldBenchmark, 2026-05-07, 22 cases)
 
-| Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
-|---------|-----------|---------|----------|--------|---------------|-----------|
-| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 |
-| Ligand pTM | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 |
-| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 |
-| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 |
-| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 |
-| Speed PPI | 142s | **53s** | 377s | 364s | 84s | 126s |
-| Stability | 22/22 | **22/22** | 22/22 | 22/22 | 22/22 | **22/22** |
-| License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 |
+| Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
+|---------|-----------|---------|----------|--------|---------------|-----------|-----|
+| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 | pending |
+| Ligand pTM | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | pending |
+| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 | pending |
+| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | pending |
+| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | pending |
+| Speed PPI | 142s | **53s** | 377s | 364s | 84s | 126s | pending |
+| Stability | 22/22 | **22/22** | 22/22 | 22/22 | 22/22 | **22/22** | pending |
+| License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 | BSD-3 |
 
 **Recommendation**:
 - **General default**: Boltz-2 — fastest accurate model, best on RNA/antibody.
@@ -221,6 +255,7 @@ After patches 5-6, the FoldBenchmark per-case `--runner-yaml` workaround in `run
 - **AF3-style outputs (5 samples + ranking)**: Protenix or AlphaFast.
 - **Need GPU MSA speedup over AF3**: AlphaFast batch mode (40-50% faster than AF3 sharded JackHMMER). Skip on RTX 4090 if you don't have all 4 GPUs to shard DBs.
 - **OpenFold3 status (2026-05-07)**: 22/22 with the four patches above; pTM still ~10-20% lower than other models on most scenarios. Use only if you specifically need its outputs (e.g. multimer ranking, AF3-style 5-sample diffusion).
+- **RF3 status (2026-05-22)**: install in progress, benchmark results pending.
 
 ## Directory layout
 
@@ -256,3 +291,6 @@ After patches 5-6, the FoldBenchmark per-case `--runner-yaml` workaround in `run
 11. **OpenFold3 parallel runs**: with patches 5+6 applied, concurrent invocations are race-free out of the box (each process gets its own `/tmp/of3-of-<user>/colabfold_msas_<pid>/`). Without those patches, must pass per-case `--runner-yaml` setting `msa_computation_settings.msa_output_directory` to a unique tmpdir.
 12. **ColabFold server proxy**: `HTTPS_PROXY=http://127.0.0.1:7892` already in env globally (Boltz-2/Chai-1/IntelliFold/OpenFold3 inherit).
 13. **First-run downloads**: Boltz-2 (~7.6G), Chai-1 (~1.2G ESM2), IntelliFold (~2G), OpenFold3 (~2.2G) auto-download weights on first run.
+14. **RF3 CLI**: command is `rf3 fold`, uses Hydra config syntax (`inputs=...` not `--inputs`). Positional-style key=value args.
+15. **RF3 no built-in MSA**: unlike all other models, RF3 does not search MSAs internally. For best accuracy, provide pre-computed .a3m files per chain via `msa_files=[chainA.a3m,chainB.a3m]`. For benchmark comparisons, can run without MSA.
+16. **RF3 install (2026-05-22)**: conda `rf3` (Python 3.12) with `rc-foundry[all]`. Install was in progress at session end; verify with `conda activate rf3 && rf3 --help`.

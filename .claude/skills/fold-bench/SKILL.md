@@ -1,11 +1,11 @@
 ---
 name: fold-bench
-description: Run the FoldBenchmark comparative benchmark across 7 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead.
+description: Run the FoldBenchmark comparative benchmark across 8 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead.
 ---
 
 # fold-bench
 
-Systematic benchmark of **7** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
+Systematic benchmark of **8** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
 **GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `13364aa`)
 
 ## When this skill applies
@@ -32,49 +32,51 @@ Systematic benchmark of **7** biomolecular structure prediction models at `/data
 | Chai-1 | **22/22** | Confirmed RNA support after input bug fix |
 | IntelliFold-2 | **22/22** | All scenarios work |
 | OpenFold3 v0.4.1 | **22/22** | 6 source patches: msa-dedup width / ordinal-rank res_id / makedirs / template-remap try-except / try-finally cleanup / PID-namespaced default tmpdir |
+| RoseTTAFold3 v0.1.12 (Foundry) | pending | conda `rf3`; installing torch+rc-foundry (2026-05-22) |
 
 ### pTM by Scenario
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 |
-|----------|-----|-----------|---------|----------|--------|-------------|-----------|
-| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 |
-| Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 |
-| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 |
-| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
+|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
+| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 | pending |
+| Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | pending |
+| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 | pending |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | pending |
+| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | pending |
 
 ### Speed (s/case)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 |
-|----------|-----|-----------|---------|----------|--------|-------------|-----------|
-| PPI | 236 | 142 | **53** | 377 | 364 | 84 | 126 |
-| Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 130 |
-| RNA | 338 | 208 | **115** | 168 | 135 | **91** | 122 |
-| Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 |
-| Antibody | 392 | 179 | **68** | 392 | 379 | 129 | 211 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
+|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
+| PPI | 236 | 142 | **53** | 377 | 364 | 84 | 126 | pending |
+| Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 130 | pending |
+| RNA | 338 | 208 | **115** | 168 | 135 | **91** | 122 | pending |
+| Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 | pending |
+| Antibody | 392 | 179 | **68** | 392 | 379 | 129 | 211 | pending |
 
 ## Project layout
 
 ```
 /data2/zcwang/FoldBenchmark/
-├── inputs/{scenario}/{af3_json,boltz2_yaml,chai1_fasta,protenix_json,openfold3_json}/
+├── inputs/{scenario}/{af3_json,boltz2_yaml,chai1_fasta,protenix_json,openfold3_json,rf3_json}/
 ├── outputs/{model}/{scenario}/{case}/
 ├── scripts/
+│   ├── config.sh                # Machine-specific paths (Zeus defaults; copy to config.local.sh for other users)
 │   ├── prepare_inputs.py        # PDB → all input formats (RNA chain IDs verified)
-│   ├── run_benchmark.sh         # Master runner (per-case)
+│   ├── run_benchmark.sh         # Master runner (per-case, includes rf3)
 │   ├── run_single_model.sh      # Per-model runner with all env workarounds
 │   ├── run_alphafast_batch.sh   # AlphaFast scenario-batch runner (REQUIRED for perf)
 │   └── collect_results.py       # Results → CSV + summary (reads Chai-1 .npz)
 ├── docs/
-│   ├── INSTALL.md               # 7 models setup
+│   ├── INSTALL.md               # 8 models setup
 │   ├── MODELS.md                # per-model CLI + gotchas
-│   ├── INPUT_FORMATS.md         # 5 input formats side-by-side
+│   ├── INPUT_FORMATS.md         # 6 input formats side-by-side
 │   └── TROUBLESHOOTING.md       # known issues + fixes
 ├── results/{timing.csv, benchmark_results.csv, summary.md}
 └── .gitignore
 ```
 
-## 7 Models — Verified CLI
+## 8 Models — Verified CLI
 
 | Model | Env | CLI | Input format |
 |-------|-----|-----|-------------|
@@ -85,6 +87,7 @@ Systematic benchmark of **7** biomolecular structure prediction models at `/data
 | **Protenix** | conda `protenix` | `protenix pred -i input.json` | Protenix JSON |
 | **Chai-1** | conda `chai1` | `chai-lab fold input.fasta output/` | FASTA |
 | **IntelliFold-2** | conda `intellifold` | `intellifold predict input.yaml --out_dir` + `--use_msa_server` | YAML (Boltz-2 format) |
+| **RoseTTAFold3** | conda `rf3` | `rf3 fold inputs=input.json out_dir=output/ ckpt_path=...` | RF3 JSON (components list) |
 
 **Per-model input format** (each is incompatible with the others):
 - AF3 JSON: `{"sequences": [{"protein": {"id": ["A"], "sequence": "..."}}], ...}`
@@ -92,15 +95,17 @@ Systematic benchmark of **7** biomolecular structure prediction models at `/data
 - OpenFold3 JSON: `{"queries": {"name": {"chains": [{"molecule_type": "protein", "chain_ids": "A", "sequence": "..."}]}}}`
 - Boltz-2/IntelliFold YAML: `sequences: [{protein: {id: A, sequence: ...}}]`
 - Chai-1 FASTA: `>protein|name=chain_A\nSEQUENCE`
+- RF3 JSON: `{"name": "case", "components": [{"seq": "...", "chain_id": "A"}, {"smiles": "..."}]}`
 
 ## Running the benchmark
 
 ```bash
 cd /data2/zcwang/FoldBenchmark
 
-# Per-case across all 6 non-AlphaFast models
+# Per-case across all 7 non-AlphaFast models (includes rf3)
 bash scripts/run_benchmark.sh --gpu 0
 bash scripts/run_benchmark.sh --model af3 --gpu 3
+bash scripts/run_benchmark.sh --model rf3 --gpu 0
 bash scripts/run_benchmark.sh --scenario monomer --gpu 0
 
 # AlphaFast: must use batch runner (per-case is slower than AF3)
