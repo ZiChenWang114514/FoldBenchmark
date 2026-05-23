@@ -32,27 +32,29 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 | Chai-1 | **22/22** | Confirmed RNA support after input bug fix |
 | IntelliFold-2 | **22/22** | All scenarios work |
 | OpenFold3 v0.4.1 | **22/22** | 6 source patches: msa-dedup width / ordinal-rank res_id / makedirs / template-remap try-except / try-finally cleanup / PID-namespaced default tmpdir |
-| RoseTTAFold3 v0.1.12 (Foundry) | pending | conda `rf3`; installing torch+rc-foundry (2026-05-22) |
+| RoseTTAFold3 v0.1.12 (Foundry) | **22/22** | Zero-shot (no paired MSA); multi-chain pTM lower as expected |
 
 ### pTM by Scenario
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
 |----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 | pending |
-| Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | pending |
-| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 | pending |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | pending |
-| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | pending |
+| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.32† |
+| Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | 0.45† |
+| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.61 | 0.56† |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.61† |
+| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | 0.53† |
+
+† RF3 zero-shot (no MSA); pTM metric may differ from AF3-style; multi-chain depressed by lack of paired MSA.
 
 ### Speed (s/case)
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
 |----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 236 | 142 | **53** | 377 | 364 | 84 | 126 | pending |
-| Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 130 | pending |
-| RNA | 338 | 208 | **115** | 168 | 135 | **91** | 122 | pending |
-| Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 | pending |
-| Antibody | 392 | 179 | **68** | 392 | 379 | 129 | 211 | pending |
+| PPI | 236 | 142 | **53** | 376 | 364 | 83 | 127 | 65 |
+| Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 129 | 63 |
+| RNA | 338 | 208 | **115** | 168 | 134 | 91 | 122 | 71 |
+| Monomer | 176 | 109 | **45** | 98 | 88 | 52 | 102 | **42** |
+| Antibody | 392 | 179 | **68** | 392 | 379 | 129 | 204 | 95 |
 
 ## Project layout
 

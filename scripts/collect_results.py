@@ -35,7 +35,7 @@ def find_output_files(model_dir: Path) -> dict:
             with open(conf_file) as f:
                 conf = json.load(f)
             result["ptm"] = conf.get("ptm", conf.get("pTM"))
-            result["plddt"] = conf.get("atom_plddts_mean", conf.get("plddt"))
+            result["plddt"] = conf.get("atom_plddts_mean", conf.get("plddt", conf.get("overall_plddt")))
             if "ranking_score" in conf:
                 result["ranking_score"] = conf["ranking_score"]
         except Exception:

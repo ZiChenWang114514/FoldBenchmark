@@ -93,7 +93,7 @@ per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions
 
 ## Results Summary
 
-### Completion rate (2026-05-07, 22 cases)
+### Completion rate (2026-05-22, 22 cases)
 
 | Model | Success | Notes |
 |-------|---------|-------|
@@ -104,26 +104,32 @@ per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions
 | Chai-1 | **22/22** | RNA support confirmed after input bug fix |
 | IntelliFold-2 | **22/22** | All scenarios |
 | OpenFold3 v0.4.1 | **22/22** | Requires 6 source patches — see [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) |
+| RoseTTAFold3 v0.1.12 (Foundry) | **22/22** | Zero-shot (no MSA); pTM lower on multi-chain due to no paired MSA |
 
 ### Average pTM by scenario (higher = better)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 |
-| Protein-Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.74 |
-| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 |
-| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 |
+> **Note on RF3**: RoseTTAFold3 Foundry runs zero-shot (no MSA search). Multi-chain pTM
+> is lower because no paired MSA is provided; with pre-computed paired .a3m this would improve.
+
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3† |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|------|
+| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.32 |
+| Protein-Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.74 | 0.45 |
+| Protein-RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.61 | 0.56 |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.61 |
+| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | 0.53 |
+
+† RF3 zero-shot (Foundry v0.1.12, no MSA); pTM metric computed by RF3 may differ from AF3-style pTM.
 
 ### Average speed (seconds/case)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|
-| Protein-Protein | 236 | 142 | **53** | 377 | 364 | 84 | 126 |
-| Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 119 |
-| Protein-RNA | 338 | 208 | **115** | 168 | 135 | **91** | 100 |
-| Monomer | 176 | 109 | **45** | 98 | 89 | **52** | 102 |
-| Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 | 184 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|-----|
+| Protein-Protein | 236 | 142 | **53** | 376 | 364 | 83 | 127 | 65 |
+| Protein-Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 129 | 63 |
+| Protein-RNA | 338 | 208 | **115** | 168 | 134 | 91 | 122 | 71 |
+| Monomer | 176 | 109 | **45** | 98 | 88 | 52 | 102 | **42** |
+| Antibody-Antigen | 392 | 179 | **68** | 392 | 379 | 129 | 204 | 95 |
 
 AlphaFast timings are amortized across the per-scenario batch (one MMseqs2 queryDB +
 JAX compilation cache shared across all cases). Per-case mode is *slower* than AF3.
@@ -138,6 +144,10 @@ JAX compilation cache shared across all cases). Per-case mode is *slower* than A
    IDs in `prepare_inputs.py` (silently produced protein homodimers labelled as RNA pairs).
 5. **OpenFold3** reaches 22/22 after six source patches (see Troubleshooting); pTM is
    10–20% lower than other models but the pipeline is now fully stable.
+6. **RoseTTAFold3** (Foundry v0.1.12) completes 22/22 zero-shot. It is the fastest model
+   for monomers (42 s/case) but multi-chain pTM is lower because no paired MSA is used.
+   Chain-level pTM values (chain_ptm in summary_confidences.json) are more meaningful
+   for single-chain quality assessment.
 
 Full per-case results: [results/benchmark_results.csv](results/benchmark_results.csv)
 and [results/summary.md](results/summary.md).

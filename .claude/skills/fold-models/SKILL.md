@@ -234,20 +234,23 @@ RNA: `{"seq": "AUGC...", "chain_id": "B", "molecule_type": "rna"}`.
 - `rf3_foundry_01_24_latest.ckpt`
 Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 
-**Install status (2026-05-22)**: `rc-foundry` being installed in conda `rf3` (Python 3.12). Installation in progress — torch 2.12.0 + dependencies being installed via proxy.
+**Install status (2026-05-22)**: ✓ Installed. `conda activate rf3 && rf3 fold ...` works. 22/22 benchmark complete.
 
 ## Benchmark Results (FoldBenchmark, 2026-05-07, 22 cases)
 
 | Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
 |---------|-----------|---------|----------|--------|---------------|-----------|-----|
-| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.70 | pending |
-| Ligand pTM | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | pending |
-| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.53 | pending |
-| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | pending |
-| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | pending |
-| Speed PPI | 142s | **53s** | 377s | 364s | 84s | 126s | pending |
-| Stability | 22/22 | **22/22** | 22/22 | 22/22 | 22/22 | **22/22** | pending |
+| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.32† |
+| Ligand pTM | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | 0.45† |
+| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.61 | 0.56† |
+| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.61† |
+| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | 0.53† |
+| Speed PPI | 142s | **53s** | 376s | 364s | 83s | 127s | 65s |
+| Speed Monomer | 109s | **44s** | 98s | 88s | 52s | 102s | **42s** |
+| Stability | 22/22 | **22/22** | 22/22 | 22/22 | 22/22 | **22/22** | **22/22** |
 | License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 | BSD-3 |
+
+† RF3 zero-shot (no paired MSA); multi-chain pTM depressed; single-chain pTM meaningful.
 
 **Recommendation**:
 - **General default**: Boltz-2 — fastest accurate model, best on RNA/antibody.
