@@ -5,45 +5,45 @@
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold | rf3 |
 |------|---|---|---|---|---|---|---|---|
-| 1BRS_barnase_barstar | pTM=0.94 248s | pTM=0.94 142s | pTM=0.97 56s | pTM=0.94 139s | pLDDT=95.8 pTM=0.96 115s | pTM=0.97 905s | pLDDT=0.9 pTM=0.88 69s | pLDDT=0.7 pTM=0.32 52s |
-| 1EMV_trypsin_inhibitor | pTM=0.92 244s | pTM=0.93 142s | pTM=0.96 49s | pTM=0.89 112s | pLDDT=95.2 pTM=0.96 110s | pTM=0.96 178s | pLDDT=0.9 pTM=0.85 68s | pLDDT=0.7 pTM=0.34 55s |
-| 2PV7_homodimer | pTM=0.86 276s | pTM=0.84 142s | pTM=0.87 61s | pTM=0.79 150s | pLDDT=89.9 pTM=0.86 1173s | pTM=0.91 285s | pLDDT=0.9 pTM=0.83 140s | pLDDT=0.7 pTM=0.30 110s |
-| 3HFM_lysozyme_fab | pTM=0.94 176s | pTM=0.92 142s | pTM=0.96 47s | pTM=0.91 110s | pLDDT=96.7 pTM=0.96 108s | pTM=0.98 88s | pLDDT=1.0 pTM=0.86 57s | pLDDT=0.7 pTM=0.33 46s |
+| 1BRS_barnase_barstar | pTM=0.94 260s | pTM=0.94 75s | pTM=0.97 107s | pTM=0.94 576s | pLDDT=95.8 pTM=0.96 127s | pTM=0.97 133s | pLDDT=0.9 pTM=0.88 95s | pLDDT=0.7 pTM=0.29 34s |
+| 1EMV_trypsin_inhibitor | pTM=0.92 268s | pTM=0.93 75s | pTM=0.96 91s | pTM=0.89 107s | pLDDT=95.2 pTM=0.96 108s | pTM=0.96 126s | pLDDT=0.9 pTM=0.85 75s | pLDDT=0.7 pTM=0.46 34s |
+| 2PV7_homodimer | pTM=0.86 295s | pTM=0.84 75s | pTM=0.87 66s | pTM=0.78 139s | pLDDT=89.7 pTM=0.86 131s | pTM=0.91 404s | pLDDT=0.9 pTM=0.83 186s | pLDDT=0.7 pTM=0.32 69s |
+| 3HFM_lysozyme_fab | pTM=0.95 192s | pTM=0.92 75s | pTM=0.96 53s | pTM=0.91 98s | pLDDT=96.7 pTM=0.96 113s | pTM=0.98 116s | pLDDT=0.9 pTM=0.86 71s | pLDDT=0.7 pTM=0.33 32s |
 
 ## protein_ligand
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold | rf3 |
 |------|---|---|---|---|---|---|---|---|
-| 1HSG_HIV_protease_indinavir | pTM=0.96 184s | pTM=0.95 135s | pTM=0.97 48s | pTM=0.21 169s | pLDDT=97.3 pTM=0.98 106s | pTM=0.98 126s | pLDDT=0.9 pTM=0.89 63s | pLDDT=0.7 pTM=0.47 52s |
-| 3HTB_CDK2_inhibitor | pTM=0.85 186s | pTM=0.91 135s | pTM=0.96 48s | pTM=0.89 112s | pLDDT=96.1 pTM=0.95 108s | pTM=0.91 132s | pLDDT=1.0 pTM=0.83 62s | pLDDT=0.8 pTM=0.69 50s |
-| 4LDE_BRAF_vemurafenib | pTM=0.74 329s | pTM=0.76 135s | pTM=0.85 64s | pTM=0.72 144s | pLDDT=88.5 pTM=0.84 122s | pTM=0.83 160s | pLDDT=0.9 pTM=0.74 118s | pLDDT=0.7 pTM=0.43 88s |
-| 6LU7_Mpro_N3 | pTM=0.94 292s | pTM=0.94 135s | pTM=0.98 48s | pTM=0.95 111s | pLDDT=96.5 pTM=0.97 103s | pTM=0.99 117s | pLDDT=1.0 pTM=0.89 92s | pLDDT=0.7 pTM=0.33 65s |
-| 7RN1_3CL_inhibitor | pTM=0.96 286s | pTM=0.96 135s | pTM=0.98 48s | pTM=0.96 113s | pLDDT=96.9 pTM=0.97 112s | pTM=0.98 115s | pLDDT=1.0 pTM=0.89 87s | pLDDT=0.7 pTM=0.34 63s |
+| 1HSG_HIV_protease_indinavir | pTM=0.96 207s | pTM=0.95 75s | pTM=0.98 58s | pTM=0.95 103s | pLDDT=97.3 pTM=0.98 109s | pTM=0.98 157s | pLDDT=0.9 pTM=0.89 75s | pLDDT=0.7 pTM=0.47 35s |
+| 3HTB_CDK2_inhibitor | pTM=0.85 209s | pTM=0.91 75s | pTM=0.97 86s | pTM=0.90 103s | pLDDT=96.1 pTM=0.95 106s | pTM=0.91 113s | pLDDT=1.0 pTM=0.83 71s | pLDDT=0.8 pTM=0.68 35s |
+| 4LDE_BRAF_vemurafenib | pTM=0.75 358s | pTM=0.76 75s | pTM=0.85 179s | pTM=0.67 135s | pLDDT=88.5 pTM=0.84 153s | pTM=0.83 216s | pLDDT=0.9 pTM=0.73 124s | pLDDT=0.7 pTM=0.44 55s |
+| 6LU7_Mpro_N3 | pTM=0.94 310s | pTM=0.94 75s | pTM=0.98 47s | pTM=0.95 111s | pLDDT=96.5 pTM=0.97 112s | pTM=0.99 151s | pLDDT=1.0 pTM=0.89 90s | pLDDT=0.7 pTM=0.34 44s |
+| 7RN1_3CL_inhibitor | pTM=0.96 309s | pTM=0.96 75s | pTM=0.98 48s | pTM=0.96 108s | pLDDT=96.9 pTM=0.97 108s | pTM=0.98 122s | pLDDT=1.0 pTM=0.89 88s | pLDDT=0.7 pTM=0.34 40s |
 
 ## protein_rna
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold | rf3 |
 |------|---|---|---|---|---|---|---|---|
-| 1ASY_tRNA_synthetase | pTM=0.88 522s | pTM=0.88 208s | pTM=0.91 175s | pTM=0.92 152s | pLDDT=88.8 pTM=0.93 243s | pTM=0.95 232s | pLDDT=0.8 pTM=0.83 161s | pLDDT=0.7 pTM=0.35 119s |
-| 1URN_U1A_RNA | pTM=0.90 253s | pTM=0.90 208s | pTM=0.94 89s | pTM=0.23 110s | pLDDT=95.7 pTM=0.95 156s | pTM=0.96 89s | pLDDT=0.9 pTM=0.86 61s | pLDDT=0.8 pTM=0.81 50s |
-| 2AZ0_U1A_RNA_hairpin | pTM=0.53 238s | pTM=0.51 208s | pTM=0.86 80s | pTM=0.69 104s | pLDDT=77.7 pTM=0.77 105s | pTM=0.73 83s | pLDDT=0.8 pTM=0.68 51s | pLDDT=0.8 pTM=0.54 45s |
+| 1ASY_tRNA_synthetase | pTM=0.88 511s | pTM=0.88 75s | pTM=0.92 178s | pTM=0.92 152s | pLDDT=88.8 pTM=0.93 144s | pTM=0.95 350s | pLDDT=0.8 pTM=0.82 165s | pLDDT=0.7 pTM=0.36 75s |
+| 1URN_U1A_RNA | pTM=0.90 266s | pTM=0.90 75s | pTM=0.94 50s | pTM=0.90 108s | pLDDT=95.7 pTM=0.95 126s | pTM=0.96 110s | pLDDT=0.9 pTM=0.86 64s | pLDDT=0.8 pTM=0.84 37s |
+| 2AZ0_U1A_RNA_hairpin | pTM=0.54 247s | pTM=0.51 75s | pTM=0.83 72s | pTM=0.69 101s | pLDDT=77.6 pTM=0.77 106s | pTM=0.74 108s | pLDDT=0.8 pTM=0.68 55s | pLDDT=0.8 pTM=0.52 34s |
 
 ## monomer
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold | rf3 |
 |------|---|---|---|---|---|---|---|---|
-| 1CRN_crambin | pTM=0.78 162s | pTM=0.79 109s | pTM=0.88 43s | pTM=0.57 97s | pLDDT=96.8 pTM=0.90 98s | pTM=0.95 85s | pLDDT=0.9 pTM=0.72 50s | pLDDT=0.7 pTM=0.47 41s |
-| 1L2Y_trpcage | pTM=0.12 170s | pTM=0.13 109s | pTM=0.48 44s | pTM=0.15 104s | pLDDT=93.8 pTM=0.46 96s | pTM=0.44 84s | pLDDT=0.9 pTM=0.12 45s | pLDDT=0.8 pTM=0.46 40s |
-| 1MBN_myoglobin | pTM=0.85 184s | pTM=0.91 109s | pTM=0.95 44s | pTM=0.87 98s | pLDDT=94.0 pTM=0.95 102s | pTM=0.96 93s | pLDDT=0.9 pTM=0.83 60s | pLDDT=0.7 pTM=0.35 47s |
-| 1UBQ_ubiquitin | pTM=0.85 196s | pTM=0.86 109s | pTM=0.92 47s | pTM=0.68 114s | pLDDT=94.1 pTM=0.92 102s | pTM=0.92 91s | pLDDT=0.9 pTM=0.78 57s | pLDDT=0.9 pTM=0.90 |
-| 2GB1_protein_G | pTM=0.83 168s | pTM=0.82 109s | pTM=0.92 45s | pTM=0.67 98s | pLDDT=95.4 pTM=0.92 94s | pTM=0.91 90s | pLDDT=0.9 pTM=0.78 50s | pLDDT=0.8 pTM=0.88 41s |
+| 1CRN_crambin | pTM=0.78 192s | pTM=0.79 75s | pTM=0.88 63s | pTM=0.57 99s | pLDDT=96.8 pTM=0.90 117s | pTM=0.95 107s | pLDDT=0.9 pTM=0.72 51s | pLDDT=0.7 pTM=0.46 29s |
+| 1L2Y_trpcage | pTM=0.12 185s | pTM=0.13 75s | pTM=0.48 49s | pTM=0.15 99s | pLDDT=93.8 pTM=0.46 101s | pTM=0.44 108s | pLDDT=0.9 pTM=0.12 46s | pLDDT=0.8 pTM=0.46 28s |
+| 1MBN_myoglobin | pTM=0.85 208s | pTM=0.91 75s | pTM=0.95 76s | pTM=0.89 102s | pLDDT=94.0 pTM=0.95 109s | pTM=0.96 108s | pLDDT=0.9 pTM=0.83 63s | pLDDT=0.7 pTM=0.39 32s |
+| 1UBQ_ubiquitin | pTM=0.85 216s | pTM=0.86 75s | pTM=0.92 64s | pTM=0.68 109s | pLDDT=94.1 pTM=0.92 122s | pTM=0.92 115s | pLDDT=0.9 pTM=0.78 64s | pLDDT=0.9 pTM=0.90 31s |
+| 2GB1_protein_G | pTM=0.83 191s | pTM=0.82 75s | pTM=0.92 46s | pTM=0.67 97s | pLDDT=95.4 pTM=0.92 139s | pTM=0.91 107s | pLDDT=0.9 pTM=0.78 48s | pLDDT=0.8 pTM=0.88 28s |
 
 ## antibody_antigen
 
 | Case | af3 | alphafast | boltz2 | openfold3 | protenix | chai1 | intellifold | rf3 |
 |------|---|---|---|---|---|---|---|---|
-| 1AHW_ab_tissue_factor | pTM=0.83 428s | pTM=0.81 179s | pTM=0.96 74s | pTM=0.63 245s | pLDDT=88.4 pTM=0.69 130s | pTM=0.90 470s | pLDDT=0.9 pTM=0.63 161s | pLDDT=0.8 pTM=0.51 119s |
-| 1DVF_idiotope | pTM=0.40 420s | pTM=0.51 179s | pTM=0.92 61s | pTM=0.70 256s | pLDDT=86.9 pTM=0.57 124s | pTM=0.72 385s | pLDDT=0.9 pTM=0.72 113s | pLDDT=0.8 pTM=0.70 88s |
-| 1MLC_ab_lysozyme | pTM=0.76 429s | pTM=0.75 179s | pTM=0.82 68s | pTM=0.74 143s | pLDDT=91.4 pTM=0.80 126s | pTM=0.80 346s | pLDDT=0.9 pTM=0.69 146s | pLDDT=0.8 pTM=0.54 101s |
-| 4FQI_trastuzumab_HER2 | pTM=0.81 357s | pTM=0.82 179s | pTM=0.86 75s | pTM=0.74 157s | pLDDT=87.3 pTM=0.84 113s | pTM=0.89 357s | pLDDT=0.9 pTM=0.66 115s | pLDDT=0.7 pTM=0.22 90s |
-| 7N4I_RBD_neutralizing_ab | pTM=0.84 327s | pTM=0.86 179s | pTM=0.91 61s | pTM=0.83 221s | pLDDT=95.0 pTM=0.91 1468s | pTM=0.90 337s | pLDDT=0.9 pTM=0.84 110s | pLDDT=0.8 pTM=0.68 79s |
+| 1AHW_ab_tissue_factor | pTM=0.82 509s | pTM=0.81 75s | pTM=0.97 82s | pTM=0.63 227s | pLDDT=88.3 pTM=0.68 209s | pTM=0.86 358s | pLDDT=0.9 pTM=0.65 168s | pLDDT=0.8 pTM=0.52 73s |
+| 1DVF_idiotope | pTM=0.40 445s | pTM=0.51 75s | pTM=0.91 303s | pTM=0.40 206s | pLDDT=86.9 pTM=0.57 204s | pTM=0.70 249s | pLDDT=0.9 pTM=0.72 122s | pLDDT=0.8 pTM=0.70 51s |
+| 1MLC_ab_lysozyme | pTM=0.76 437s | pTM=0.75 75s | pTM=0.82 273s | pTM=0.75 221s | pLDDT=91.3 pTM=0.80 193s | pTM=0.82 360s | pLDDT=0.9 pTM=0.69 160s | pLDDT=0.8 pTM=0.54 65s |
+| 4FQI_trastuzumab_HER2 | pTM=0.81 356s | pTM=0.82 75s | pTM=0.86 208s | pTM=0.76 198s | pLDDT=87.1 pTM=0.83 144s | pTM=0.89 217s | pLDDT=0.9 pTM=0.66 125s | pLDDT=0.7 pTM=0.22 60s |
+| 7N4I_RBD_neutralizing_ab | pTM=0.84 334s | pTM=0.86 75s | pTM=0.91 261s | pTM=0.85 135s | pLDDT=95.0 pTM=0.91 174s | pTM=0.88 206s | pLDDT=0.9 pTM=0.84 113s | pLDDT=0.8 pTM=0.68 52s |

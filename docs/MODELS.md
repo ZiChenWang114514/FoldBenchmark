@@ -14,12 +14,13 @@ For known issues see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 | Model | Conda env | Command | Input |
 |-------|-----------|---------|-------|
 | AF3 | (Docker) | `docker run alphafold3 python3 run_alphafold.py ...` | AF3 JSON |
-| AlphaFast | (native uv venv at `/data2/zcwang/af3/alphafast/.venv`) | `LD_PRELOAD=... python run_alphafold.py ...` | AF3 JSON |
+| AlphaFast | (native uv venv at `/data2/zcwang/af3/alphafast/.venv`) | `bash scripts/run_alphafast_all_in_one.sh` | AF3 JSON |
 | Boltz-2 | `boltz2` | `boltz predict input.yaml --use_msa_server` | YAML |
 | OpenFold3 | `openfold3` | `run_openfold predict --query-json input.json` | OpenFold3 JSON |
 | Protenix | `protenix` | `protenix pred -i input.json -o output/` | Protenix JSON |
 | Chai-1 | `chai1` | `chai-lab fold input.fasta output/ --use-msa-server` | FASTA |
 | IntelliFold-2 | `intellifold` | `intellifold predict input.yaml --out_dir output/ --use_msa_server` | YAML |
+| RoseTTAFold3 | `rf3` | `rf3 fold inputs=input.json out_dir=output/ ckpt_path=...` | RF3 JSON |
 
 ---
 
@@ -54,9 +55,9 @@ docker run --rm \
         --rfam_z_value=138.115553 \
         --rna_central_database_path="/root/public_databases/rnacentral_active_seq_id_90_cov_80_linclust.fasta@64" \
         --rna_central_z_value=13271.415730 \
-        --jackhmmer_n_cpu=1 \
+        --jackhmmer_n_cpu=4 \
         --jackhmmer_max_parallel_shards=16 \
-        --nhmmer_n_cpu=1 \
+        --nhmmer_n_cpu=4 \
         --nhmmer_max_parallel_shards=16
 ```
 
@@ -152,17 +153,19 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 \
    for all cases in the batch (one combined queryDB), which is what makes AlphaFast
    actually faster than AF3 on this hardware.
 
-### Measured speed on 4× 4090 (2026-05-02 benchmark)
+### Measured speed on 4× 4090 (2026-05-23 benchmark)
 
-| Scenario | AF3 (sharded JackHMMER) | AlphaFast (batch, 4-GPU mmseqs) | Δ |
+| Scenario | AF3 (n_cpu=4 sharded) | AlphaFast (all-in-one batch) | Δ |
 |----------|---:|---:|---:|
-| Monomer (5 cases) | 176 s/case | **109 s/case** | 38% faster |
-| Protein-Protein (4) | 236 s/case | **142 s/case** | 40% faster |
-| Protein-Ligand (5) | 255 s/case | **135 s/case** | 47% faster |
-| Antibody-Antigen (5) | 392 s/case | **179 s/case** | 54% faster |
+| Monomer (5 cases) | 198 s/case | **75 s/case** | 62% faster |
+| Protein-Protein (4) | 254 s/case | **75 s/case** | 70% faster |
+| Protein-Ligand (5) | 279 s/case | **75 s/case** | 73% faster |
+| Protein-RNA (3) | 341 s/case | **75 s/case** | 78% faster |
+| Antibody-Antigen (5) | 416 s/case | **75 s/case** | 82% faster |
 
-Per-case mode (no batching) gave 525-1000 s/case — slower than AF3. The speedup is
-entirely from amortizing MMseqs2 search across cases plus warm JAX kernel cache.
+All-in-one batch mode (`run_alphafast_all_in_one.sh`) stages all 22 cases together —
+one MMseqs2 queryDB, one JAX warm-up — yielding flat **75 s/case** across every scenario.
+Per-case mode gave 525-1000 s/case (slower than AF3); per-scenario batch gave ~200 s/case.
 
 **Output**: same structure as AF3 (`.cif` + `*_summary_confidences.json` + `*_ranking_scores.csv`).
 
@@ -192,7 +195,7 @@ CUDA_VISIBLE_DEVICES=0 boltz predict input.yaml \
 **Output**: `output/boltz_results_<name>/predictions/<name>/<name>_model_0.cif` plus
 confidence JSON containing pTM, ipTM, ranking_score.
 
-**Speed**: ~50 seconds per typical PPI (fastest of all 7 models).
+**Speed**: ~79 seconds per typical PPI (fastest accurate model after AlphaFast batch).
 
 ---
 
@@ -244,7 +247,7 @@ CUDA_VISIBLE_DEVICES=0 protenix pred \
    the `CCD_` prefix, e.g. `"ligand": "CCD_ATP"`.
 4. Protenix uses **local** MSA (no proxy needed) — this is rare among the open-source
    tools.
-5. **RNA scenarios fail**: Protenix does not currently support RNA prediction.
+5. RNA is supported (pTM 0.88 avg across 3 RNA cases in benchmark).
 
 **Output**: `output/<name>/predictions/<name>_seed_1_sample_0.cif` plus
 `<name>_seed_1_sample_0_confidence.json`.
@@ -271,7 +274,7 @@ CUDA_VISIBLE_DEVICES=0 chai-lab fold \
    flag.
 3. Note the dashes: `--use-msa-server` (Chai-1 / OpenFold3) versus `--use_msa_server`
    (Boltz-2 / IntelliFold). Easy to confuse.
-4. **RNA scenarios fail**: Chai-1 does not currently support RNA in FASTA inputs.
+4. RNA is supported (pTM 0.88 avg across 3 RNA cases in benchmark).
 
 **Output**: `output/pred.model_idx_0.cif` and confidence file.
 
@@ -296,8 +299,8 @@ CUDA_VISIBLE_DEVICES=0 intellifold predict \
    command errors out on missing MSA files. There is no built-in MSA mode.
 2. Input format is **identical** to Boltz-2 YAML — you can reuse Boltz-2 input files
    directly.
-3. IntelliFold-2 handles RNA (one of only 3 models in this benchmark that does — the
-   others are AF3 and Boltz-2).
+3. IntelliFold-2 handles RNA (one of 5 models in this benchmark that do — AF3, AlphaFast,
+   Boltz-2, Protenix, and Chai-1 also support RNA).
 
 **Output**: `output/intellifold_results/<name>/<name>_pred_0.cif` plus confidence JSON.
 
@@ -305,17 +308,44 @@ CUDA_VISIBLE_DEVICES=0 intellifold predict \
 
 ---
 
+## 8. RoseTTAFold3 v0.1.12 (Foundry)
+
+```bash
+conda activate rf3
+
+CUDA_VISIBLE_DEVICES=0 rf3 fold \
+    inputs="$(realpath input.json)" \
+    out_dir=output/ \
+    ckpt_path="${RF3_CKPT_PATH}"
+```
+
+**Critical gotchas**:
+
+1. `inputs=` must be an **absolute path** (`$(realpath ...)`). Relative paths silently
+   produce empty output.
+2. RF3 runs **zero-shot** — no MSA search is performed. Multi-chain pTM is lower
+   because no paired MSA is used. For single-chain quality, `chain_ptm` in
+   `summary_confidences.json` is more meaningful than the complex-level pTM.
+3. The JSON format uses a `components` array (RF3-specific). Not AF3-compatible.
+4. Model weights live at `${RF3_CKPT_PATH}` (set in `scripts/config.sh`).
+
+**Output**: `output/<name>/<name>_pred_0.cif` plus `*_summary_confidences.json`.
+
+**Speed**: **30–60 s/case** — fastest model overall. Monomers ~30s, antibody-antigen ~60s.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |
 |----------|-------------------|-----|
-| General PPI | **Boltz-2** | Highest pTM (0.94), fastest (~50s) |
-| Protein-ligand | **Boltz-2** or Protenix | Both at pTM 0.94-0.95 |
-| Protein-RNA | **AF3** or Boltz-2 | Only AF3/Boltz-2/IntelliFold support RNA |
-| Antibody-antigen | **Boltz-2** | Best pTM (0.89) on Ab-Ag scenario |
-| AF3 reproduction (dev) | **Protenix** | Closest implementation to AF3 |
-| Need GPU MSA speedup | **AlphaFast** | MMseqs2 GPU, drop-in AF3 replacement |
-| Reproducible / publication | **AF3** | Gold standard, deterministic, JackHMMER MSA |
-| Cluster-friendly minimal | **Chai-1** | Lightest weights (1.2 GB), simplest input |
+| General PPI | **Boltz-2** | Best pTM (0.94), ~79s/case |
+| Protein-ligand | **Boltz-2** or Chai-1 | pTM 0.95 / 0.94, ~84-152s |
+| Protein-RNA | **Boltz-2** or Chai-1 | pTM 0.90 / 0.88; all 8 models support RNA |
+| Antibody-antigen | **Boltz-2** | Best pTM (0.89) |
+| High-throughput screening | **RF3** | 30-60s zero-shot, no MSA needed |
+| AF3 batch speedup | **AlphaFast** | 75s/case (flat), 3-5× faster than AF3 |
+| Reproducible / publication | **AF3** | Gold standard, JackHMMER MSA |
+| Cluster-friendly minimal | **Chai-1** | Lightest weights, simplest input |
 
 See [results/summary.md](../results/summary.md) for full benchmark numbers.

@@ -65,9 +65,9 @@ case "$MODEL" in
                 --rfam_z_value=138.115553 \
                 --rna_central_database_path="/root/public_databases/rnacentral_active_seq_id_90_cov_80_linclust.fasta@64" \
                 --rna_central_z_value=13271.415730 \
-                --jackhmmer_n_cpu=1 \
+                --jackhmmer_n_cpu=4 \
                 --jackhmmer_max_parallel_shards=16 \
-                --nhmmer_n_cpu=1 \
+                --nhmmer_n_cpu=4 \
                 --nhmmer_max_parallel_shards=16 \
             2>&1 || echo "FAILED: af3/${SCENARIO}/${CASE_NAME}"
         ;;

@@ -83,7 +83,7 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 | Model | Env | CLI | Input format |
 |-------|-----|-----|-------------|
 | **AF3** | Docker `alphafold3` | `python3 run_alphafold.py` | AF3 JSON |
-| **AlphaFast** | native uv venv `/data2/zcwang/af3/alphafast/.venv` | `bash scripts/run_alphafast_batch.sh <scenario>` | AF3 JSON (batch) |
+| **AlphaFast** | native uv venv `/data2/zcwang/af3/alphafast/.venv` | `bash scripts/run_alphafast_all_in_one.sh` | AF3 JSON (all-in-one batch, 推荐) |
 | **Boltz-2** | conda `boltz2` | `boltz predict input.yaml` | YAML |
 | **OpenFold3** | conda `openfold3` | `run_openfold predict --query-json` | OpenFold3 JSON |
 | **Protenix** | conda `protenix` | `protenix pred -i input.json` | Protenix JSON |
@@ -110,10 +110,10 @@ bash scripts/run_benchmark.sh --model af3 --gpu 3
 bash scripts/run_benchmark.sh --model rf3 --gpu 0
 bash scripts/run_benchmark.sh --scenario monomer --gpu 0
 
-# AlphaFast: must use batch runner (per-case is slower than AF3)
-bash scripts/run_alphafast_batch.sh monomer
-bash scripts/run_alphafast_batch.sh protein_protein
-# ...etc per scenario
+# AlphaFast: 推荐 all-in-one batch（22个case单次DB扫描，最快）
+bash scripts/run_alphafast_all_in_one.sh        # 全部22 cases，DB只扫一遍，75s/case
+# 若只跑某个scenario（次优，DB扫5次）：
+# bash scripts/run_alphafast_batch.sh monomer
 
 # Collect (parses Chai-1 .npz too)
 python scripts/collect_results.py
@@ -132,7 +132,7 @@ python scripts/collect_results.py
 
 ### AlphaFast
 2. **DBs don't fit on a single 4090**: uniref90_padded 49G, mgnify_padded 108G > 48G. **Must** shard across 4 GPUs via `CUDA_VISIBLE_DEVICES=0,1,2,3` + `MMSEQS_USE_ALL_GPUS=1`. Latter requires patch in `src/alphafold3/data/tools/{mmseqs,mmseqs_batch,mmseqs_template,foldseek}.py` to honor the env var (vanilla AlphaFast hardcodes single-GPU).
-3. **Per-case mode is SLOWER than AF3**: only batch mode (one MMseqs2 queryDB + JAX cache shared across whole scenario) gives the 38-54% speedup. Use `run_alphafast_batch.sh`.
+3. **All-in-one batch 最快**: 22个case放入单次batch，DB只扫一遍，实测 75s/case（摊销）。per-scenario batch（`run_alphafast_batch.sh`）扫5次，约200s/case。per-case mode 最慢（每次扫全库）。**默认用 `run_alphafast_all_in_one.sh`**。
 4. **HF mirror download is unreliable**: stale `.incomplete` files reassemble into corrupt zst. Built RNA DBs locally instead from `/data/zxhuang/Shared/genetic_database/{nt_rna,rfam,rnacentral}*.fasta` via `mmseqs createdb --dbtype 2` + `mmseqs makepaddedseqdb`. 22 min total.
 5. **GLIBCXX**: `LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6` mandatory (cpp.so built with system GCC 13).
 

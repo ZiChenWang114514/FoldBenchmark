@@ -46,11 +46,16 @@ RNA: `- rna: { id: B, sequence: AUGC... }`.
 
 ### AlphaFast (AF3 weights + GPU MMseqs2 — only fast in batch mode)
 
-**CRITICAL**: per-case mode is SLOWER than vanilla AF3 on 4× 4090. Only batch mode (one MMseqs2 queryDB + JAX cache amortized across N cases) gives the speedup.
+**CRITICAL**: per-case mode is SLOWER than vanilla AF3 on 4× 4090. 速度由快到慢：
+- **All-in-one batch（推荐）**: 全部 N 个 case 放入单次 batch，DB 只扫一遍 → **75s/case**（实测22 cases）
+- **Per-scenario batch**: 每个 scenario 一次 batch，DB 扫 5 遍 → ~200s/case
+- **Per-case mode**: 每个 case 单独扫全库 → 比 AF3 还慢，不要用
 
-**Batch mode (recommended)**: see FoldBenchmark `scripts/run_alphafast_batch.sh` — stages multiple AF3-format JSONs into a temp dir, runs once with `--input_dir` + `--batch_size=N`.
+**All-in-one batch（推荐，多 case 场景）**: 使用 FoldBenchmark `scripts/run_alphafast_all_in_one.sh` — 收集所有 JSONs 入单一 temp dir，一次性运行，输出自动归位到 `outputs/alphafast/{scenario}/{case}/`。
 
-**Per-case mode (one-off prediction)**:
+**Per-scenario batch（仅运行单个 scenario 时用）**: `scripts/run_alphafast_batch.sh <scenario>`
+
+**Per-case mode（单个 case 一次性预测，不建议）**:
 ```bash
 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
 MMSEQS_USE_ALL_GPUS=1 \
