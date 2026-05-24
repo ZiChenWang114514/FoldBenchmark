@@ -1,0 +1,39 @@
+{
+  "queries": {
+    "2SOD_superoxide_dismutase_CU_ZN": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "G",
+          "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "A",
+          "ccd_codes": "CU"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "ZN"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "D",
+          "ccd_codes": "CU"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "F",
+          "ccd_codes": "ZN"
+        }
+      ]
+    }
+  }
+}

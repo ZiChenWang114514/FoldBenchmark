@@ -1,0 +1,17 @@
+{
+  "name": "1BL0_MarA_DNA",
+  "components": [
+    {
+      "seq": "MTMSRRNTDAITIHSILDWIEDNLESPLSLEKVSERSGYSKWHLQRMFKKETGHSLGQYIRSRKMTEIAQKLKESNEPILYLAERYGFESQQTLTRTFKNYFDVPPHKYRMTNMQGESRFLHPLNHYNS",
+      "chain_id": "A"
+    },
+    {
+      "seq": "GGGGATTTAGCAAAACGTGGCATC",
+      "chain_id": "B"
+    },
+    {
+      "seq": "CCGATGCCACGTTTTGCTAAATCC",
+      "chain_id": "C"
+    }
+  ]
+}

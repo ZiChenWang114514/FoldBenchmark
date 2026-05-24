@@ -23,7 +23,7 @@ ALPHAFAST_RUN=$ALPHAFAST_DIR/run_alphafold.py
 MMSEQS_BIN=$ALPHAFAST_DIR/bin/bin/mmseqs
 mkdir -p "$ALPHAFAST_JAX_CACHE"
 
-SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen"
+SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod"
 
 # ---- 1. 收集所有22个case，建立 case→scenario 映射 ----
 TMPDIR_INPUT=$(mktemp -d -t alphafast_all_XXXXXX)

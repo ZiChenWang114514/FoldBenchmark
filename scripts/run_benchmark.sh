@@ -27,7 +27,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 ALL_MODELS="af3 alphafast boltz2 openfold3 protenix chai1 intellifold rf3"
-ALL_SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen"
+ALL_SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod"
 
 MODELS=${MODEL_FILTER:-$ALL_MODELS}
 SCENARIOS=${SCENARIO_FILTER:-$ALL_SCENARIOS}

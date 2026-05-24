@@ -1,0 +1,24 @@
+{
+  "queries": {
+    "1BL0_MarA_DNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MTMSRRNTDAITIHSILDWIEDNLESPLSLEKVSERSGYSKWHLQRMFKKETGHSLGQYIRSRKMTEIAQKLKESNEPILYLAERYGFESQQTLTRTFKNYFDVPPHKYRMTNMQGESRFLHPLNHYNS"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "B",
+          "sequence": "GGGGATTTAGCAAAACGTGGCATC"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "C",
+          "sequence": "CCGATGCCACGTTTTGCTAAATCC"
+        }
+      ]
+    }
+  }
+}

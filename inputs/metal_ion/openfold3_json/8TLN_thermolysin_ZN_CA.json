@@ -1,0 +1,39 @@
+{
+  "queries": {
+    "8TLN_thermolysin_ZN_CA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "E",
+          "sequence": "ITGTSTVGVGRGVLGDQKNINTTYSTYYYLQDNTRGDGIFTYDAKYRTTLPGSLWADADNQFFASYDAPAVDAHYYAGVTYDYYKNVHNRLSYDGNNAAIRSSVHYSQGYNNAFWNGSEMVYGDGDGQTFIPLSGGIDVVAHELTHAVTDYTAGLIYQNESGAINEAISDIFGTLVEFYANKNPDWEIGEDVYTPGISGDSLRSMSDPAKYGDPDHYSKRYTGTQDNGGVHINSGIINKAAYLISQGGTHYGVSVVGIGRDKLGKIFYRALTQYLTPTSNFSQLRAAAVQSATDLYGSTSQEVASVKQAFDAVGVK"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "A",
+          "ccd_codes": "ZN"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "ccd_codes": "CA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "CA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "D",
+          "ccd_codes": "CA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "F",
+          "ccd_codes": "CA"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "6OIM_KRAS_G12C_sotorasib",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MKHHHHHHHDEVDGMTEYKLVVVGACGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETSLLDILDTAGQEEYSAMRDQYMRTGEGFLLVFAINNTKSFEDIHHYREQIKRVKDSEDVPMVLVGNKSDLPSRTVDTKQAQDLARSYGIPFIETSAKTRQGVDDAFYTLVREIRKHKEK",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_MOV",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_MG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_GDP",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

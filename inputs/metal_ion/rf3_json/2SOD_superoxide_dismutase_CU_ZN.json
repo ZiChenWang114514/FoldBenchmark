@@ -1,0 +1,25 @@
+{
+  "name": "2SOD_superoxide_dismutase_CU_ZN",
+  "components": [
+    {
+      "seq": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK",
+      "chain_id": "B"
+    },
+    {
+      "seq": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK",
+      "chain_id": "G"
+    },
+    {
+      "ccd_code": "CU"
+    },
+    {
+      "ccd_code": "ZN"
+    },
+    {
+      "ccd_code": "CU"
+    },
+    {
+      "ccd_code": "ZN"
+    }
+  ]
+}

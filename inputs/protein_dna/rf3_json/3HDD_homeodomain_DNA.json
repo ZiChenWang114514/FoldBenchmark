@@ -1,0 +1,21 @@
+{
+  "name": "3HDD_homeodomain_DNA",
+  "components": [
+    {
+      "seq": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+      "chain_id": "A"
+    },
+    {
+      "seq": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+      "chain_id": "B"
+    },
+    {
+      "seq": "TTTTGCCATGTAATTACCTAA",
+      "chain_id": "C"
+    },
+    {
+      "seq": "ATTAGGTAATTACATGGCAAA",
+      "chain_id": "D"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "3HDD_homeodomain_DNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "C",
+          "sequence": "TTTTGCCATGTAATTACCTAA"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "D",
+          "sequence": "ATTAGGTAATTACATGGCAAA"
+        }
+      ]
+    }
+  }
+}

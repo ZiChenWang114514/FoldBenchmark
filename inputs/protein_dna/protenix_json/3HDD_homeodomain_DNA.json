@@ -1,0 +1,34 @@
+[
+  {
+    "name": "3HDD_homeodomain_DNA",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+          "count": 1
+        }
+      },
+      {
+        "dnaSequence": {
+          "sequence": "TTTTGCCATGTAATTACCTAA",
+          "count": 1
+        }
+      },
+      {
+        "dnaSequence": {
+          "sequence": "ATTAGGTAATTACATGGCAAA",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

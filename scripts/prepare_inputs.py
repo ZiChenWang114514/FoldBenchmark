@@ -155,6 +155,100 @@ TEST_CASES = {
             "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
         },
     ],
+    # ── New scenarios (added 2026-05-24) ──────────────────────────
+    # Chain IDs verified against RCSB polymer_entity API.
+    "protein_dna": [
+        {
+            "name": "3HDD_homeodomain_DNA",
+            "pdb_id": "3HDD",
+            # Engrailed homeodomain homodimer + double-stranded DNA
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "dna"), ("D", "dna")],
+        },
+        {
+            "name": "1BL0_MarA_DNA",
+            "pdb_id": "1BL0",
+            # MarA transcription factor + double-stranded DNA
+            "chains": [("A", "protein"), ("B", "dna"), ("C", "dna")],
+        },
+        {
+            "name": "1LMB_lambda_repressor_DNA",
+            "pdb_id": "1LMB",
+            # Lambda CI repressor homodimer + operator DNA (numeric chain IDs)
+            "chains": [("3", "protein"), ("4", "protein"), ("1", "dna"), ("2", "dna")],
+        },
+        {
+            "name": "1J1V_DnaA_DNA",
+            "pdb_id": "1J1V",
+            # DnaA domain IV + DnaA box DNA
+            "chains": [("A", "protein"), ("B", "dna"), ("C", "dna")],
+        },
+    ],
+    "homo_multimer": [
+        {
+            "name": "1HTI_TIM_homodimer",
+            "pdb_id": "1HTI",
+            # Human triosephosphate isomerase homodimer (248 aa × 2)
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "1SAK_p53_TET_tetramer",
+            "pdb_id": "1SAK",
+            # p53 tetramerization domain homotetramer (42 aa × 4, NMR)
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein")],
+        },
+        {
+            "name": "14GS_GST_homodimer",
+            "pdb_id": "14GS",
+            # Glutathione S-transferase P1-1 homodimer
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+    ],
+    "metal_ion": [
+        {
+            "name": "1CA2_carbonic_anhydrase_ZN",
+            "pdb_id": "1CA2",
+            # Human carbonic anhydrase II + catalytic zinc (259 aa + 1 ZN)
+            "chains": [("A", "protein")],
+            "ligands": [("B", "ZN")],
+        },
+        {
+            "name": "8TLN_thermolysin_ZN_CA",
+            "pdb_id": "8TLN",
+            # Thermolysin: 1 catalytic ZN + 4 structural CA
+            "chains": [("E", "protein")],
+            "ligands": [("A", "ZN"), ("B", "CA"), ("C", "CA"), ("D", "CA"), ("F", "CA")],
+        },
+        {
+            "name": "2SOD_superoxide_dismutase_CU_ZN",
+            "pdb_id": "2SOD",
+            # Cu/Zn SOD dimer (2 of 4 ASU chains) + 2 CU + 2 ZN
+            "chains": [("B", "protein"), ("G", "protein")],
+            "ligands": [("A", "CU"), ("C", "ZN"), ("D", "CU"), ("F", "ZN")],
+        },
+    ],
+    "covalent_mod": [
+        {
+            "name": "5P9J_BTK_ibrutinib",
+            "pdb_id": "5P9J",
+            # BTK kinase + ibrutinib (covalent at Cys481), CCD=8E8
+            "chains": [("A", "protein")],
+            "ligands": [("B", "8E8")],
+        },
+        {
+            "name": "4G5J_EGFR_afatinib",
+            "pdb_id": "4G5J",
+            # EGFR kinase + afatinib/BIBW2992 (covalent at Cys797), CCD=0WN
+            "chains": [("A", "protein")],
+            "ligands": [("B", "0WN")],
+        },
+        {
+            "name": "6OIM_KRAS_G12C_sotorasib",
+            "pdb_id": "6OIM",
+            # KRAS G12C + AMG 510/sotorasib (covalent at Cys12) + MG + GDP
+            "chains": [("A", "protein")],
+            "ligands": [("B", "MOV"), ("C", "MG"), ("D", "GDP")],
+        },
+    ],
 }
 
 
@@ -235,6 +329,10 @@ def generate_boltz2_yaml(af3_json: dict) -> str:
             lines.append(f"  - rna:")
             lines.append(f"      id: {entry['rna']['id'][0]}")
             lines.append(f"      sequence: {entry['rna']['sequence']}")
+        elif "dna" in entry:
+            lines.append(f"  - dna:")
+            lines.append(f"      id: {entry['dna']['id'][0]}")
+            lines.append(f"      sequence: {entry['dna']['sequence']}")
         elif "ligand" in entry:
             lines.append(f"  - ligand:")
             lines.append(f"      id: {entry['ligand']['id'][0]}")
@@ -257,6 +355,10 @@ def generate_chai1_fasta(af3_json: dict) -> str:
             chain_id = entry["rna"]["id"][0]
             lines.append(f">rna|name=chain_{chain_id}")
             lines.append(entry["rna"]["sequence"])
+        elif "dna" in entry:
+            chain_id = entry["dna"]["id"][0]
+            lines.append(f">dna|name=chain_{chain_id}")
+            lines.append(entry["dna"]["sequence"])
         elif "ligand" in entry:
             chain_id = entry["ligand"]["id"][0]
             if "smiles" in entry["ligand"]:
@@ -277,6 +379,11 @@ def generate_protenix_json(af3_json: dict) -> list:
         elif "rna" in entry:
             seqs.append({"rnaSequence": {
                 "sequence": entry["rna"]["sequence"],
+                "count": 1,
+            }})
+        elif "dna" in entry:
+            seqs.append({"dnaSequence": {
+                "sequence": entry["dna"]["sequence"],
                 "count": 1,
             }})
         elif "ligand" in entry:
@@ -307,6 +414,11 @@ def generate_rf3_json(af3_json: dict) -> list:
                 "seq": entry["rna"]["sequence"],
                 "chain_id": entry["rna"]["id"][0],
             })
+        elif "dna" in entry:
+            components.append({
+                "seq": entry["dna"]["sequence"],
+                "chain_id": entry["dna"]["id"][0],
+            })
         elif "ligand" in entry:
             lig = entry["ligand"]
             if "smiles" in lig:
@@ -331,6 +443,12 @@ def generate_openfold3_json(af3_json: dict) -> dict:
                 "molecule_type": "rna",
                 "chain_ids": entry["rna"]["id"][0],
                 "sequence": entry["rna"]["sequence"],
+            })
+        elif "dna" in entry:
+            chains.append({
+                "molecule_type": "dna",
+                "chain_ids": entry["dna"]["id"][0],
+                "sequence": entry["dna"]["sequence"],
             })
         elif "ligand" in entry:
             lig = entry["ligand"]

@@ -1,0 +1,66 @@
+{
+  "name": "2SOD_superoxide_dismutase_CU_ZN",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "G"
+        ],
+        "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "A"
+        ],
+        "ccdCodes": [
+          "CU"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "C"
+        ],
+        "ccdCodes": [
+          "ZN"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "D"
+        ],
+        "ccdCodes": [
+          "CU"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "F"
+        ],
+        "ccdCodes": [
+          "ZN"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

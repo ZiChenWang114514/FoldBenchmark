@@ -39,7 +39,7 @@ fi
 source "${CONDA_BASE}/etc/profile.d/conda.sh"
 conda activate af3
 
-SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen"
+SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod"
 TOTAL=0
 DONE=0
 FAILED=0

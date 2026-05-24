@@ -1,0 +1,24 @@
+{
+  "queries": {
+    "1J1V_DnaA_DNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "VTIDNIQKTVAEYYKIKVADLLSKRRSRSVARPRQMAMALAKELTNHSLPEIGDAFGGRDHTTVLHACRKIEQLREESHDIKEDFSNLIRTLSS"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "B",
+          "sequence": "TGTTATCCACAGG"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "C",
+          "sequence": "CCTGTGGATAACA"
+        }
+      ]
+    }
+  }
+}

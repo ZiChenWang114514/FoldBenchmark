@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "1LMB_lambda_repressor_DNA": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "3",
+          "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "4",
+          "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "1",
+          "sequence": "AATACCACTGGCGGTGATAT"
+        },
+        {
+          "molecule_type": "dna",
+          "chain_ids": "2",
+          "sequence": "TATATCACCGCCAGTGGTAT"
+        }
+      ]
+    }
+  }
+}

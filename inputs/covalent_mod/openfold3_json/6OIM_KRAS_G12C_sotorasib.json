@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "6OIM_KRAS_G12C_sotorasib": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MKHHHHHHHDEVDGMTEYKLVVVGACGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETSLLDILDTAGQEEYSAMRDQYMRTGEGFLLVFAINNTKSFEDIHHYREQIKRVKDSEDVPMVLVGNKSDLPSRTVDTKQAQDLARSYGIPFIETSAKTRQGVDDAFYTLVREIRKHKEK"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "ccd_codes": "MOV"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "MG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "D",
+          "ccd_codes": "GDP"
+        }
+      ]
+    }
+  }
+}

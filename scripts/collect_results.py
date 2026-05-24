@@ -14,7 +14,8 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 TIMING_FILE = RESULTS_DIR / "timing.csv"
 
 MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intellifold", "rf3"]
-SCENARIOS = ["protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen"]
+SCENARIOS = ["protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen",
+             "protein_dna", "homo_multimer", "metal_ion", "covalent_mod"]
 
 
 def find_output_files(model_dir: Path) -> dict:

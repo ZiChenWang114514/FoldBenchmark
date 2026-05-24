@@ -1,0 +1,42 @@
+{
+  "name": "1LMB_lambda_repressor_DNA",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "3"
+        ],
+        "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "4"
+        ],
+        "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
+      }
+    },
+    {
+      "dna": {
+        "id": [
+          "1"
+        ],
+        "sequence": "AATACCACTGGCGGTGATAT"
+      }
+    },
+    {
+      "dna": {
+        "id": [
+          "2"
+        ],
+        "sequence": "TATATCACCGCCAGTGGTAT"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

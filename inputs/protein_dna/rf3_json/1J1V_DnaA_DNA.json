@@ -1,0 +1,17 @@
+{
+  "name": "1J1V_DnaA_DNA",
+  "components": [
+    {
+      "seq": "VTIDNIQKTVAEYYKIKVADLLSKRRSRSVARPRQMAMALAKELTNHSLPEIGDAFGGRDHTTVLHACRKIEQLREESHDIKEDFSNLIRTLSS",
+      "chain_id": "A"
+    },
+    {
+      "seq": "TGTTATCCACAGG",
+      "chain_id": "B"
+    },
+    {
+      "seq": "CCTGTGGATAACA",
+      "chain_id": "C"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "1SAK_p53_TET_tetramer": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "C",
+          "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "D",
+          "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "1SAK_p53_TET_tetramer",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "C"
+        ],
+        "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "D"
+        ],
+        "sequence": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

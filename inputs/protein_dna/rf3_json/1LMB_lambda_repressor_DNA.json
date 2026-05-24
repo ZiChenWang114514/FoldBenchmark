@@ -1,0 +1,21 @@
+{
+  "name": "1LMB_lambda_repressor_DNA",
+  "components": [
+    {
+      "seq": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
+      "chain_id": "3"
+    },
+    {
+      "seq": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
+      "chain_id": "4"
+    },
+    {
+      "seq": "AATACCACTGGCGGTGATAT",
+      "chain_id": "1"
+    },
+    {
+      "seq": "TATATCACCGCCAGTGGTAT",
+      "chain_id": "2"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "8TLN_thermolysin_ZN_CA",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "ITGTSTVGVGRGVLGDQKNINTTYSTYYYLQDNTRGDGIFTYDAKYRTTLPGSLWADADNQFFASYDAPAVDAHYYAGVTYDYYKNVHNRLSYDGNNAAIRSSVHYSQGYNNAFWNGSEMVYGDGDGQTFIPLSGGIDVVAHELTHAVTDYTAGLIYQNESGAINEAISDIFGTLVEFYANKNPDWEIGEDVYTPGISGDSLRSMSDPAKYGDPDHYSKRYTGTQDNGGVHINSGIINKAAYLISQGGTHYGVSVVGIGRDKLGKIFYRALTQYLTPTSNFSQLRAAAVQSATDLYGSTSQEVASVKQAFDAVGVK",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_ZN",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_CA",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_CA",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_CA",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_CA",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

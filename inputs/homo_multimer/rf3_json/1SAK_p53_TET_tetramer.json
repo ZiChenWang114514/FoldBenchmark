@@ -1,0 +1,21 @@
+{
+  "name": "1SAK_p53_TET_tetramer",
+  "components": [
+    {
+      "seq": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG",
+      "chain_id": "A"
+    },
+    {
+      "seq": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG",
+      "chain_id": "B"
+    },
+    {
+      "seq": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG",
+      "chain_id": "C"
+    },
+    {
+      "seq": "KKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG",
+      "chain_id": "D"
+    }
+  ]
+}
