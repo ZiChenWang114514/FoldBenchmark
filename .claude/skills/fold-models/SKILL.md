@@ -241,29 +241,29 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 
 **Install status (2026-05-22)**: ✓ Installed. `conda activate rf3 && rf3 fold ...` works. 22/22 benchmark complete.
 
-## Benchmark Results (FoldBenchmark, 2026-05-07, 22 cases)
+## Benchmark Results (FoldBenchmark, 2026-05-23, 22 cases)
 
 | Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
 |---------|-----------|---------|----------|--------|---------------|-----------|-----|
-| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.32† |
-| Ligand pTM | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | 0.45† |
-| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.61 | 0.56† |
-| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.61† |
-| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | 0.53† |
-| Speed PPI | 142s | **53s** | 376s | 364s | 83s | 127s | 65s |
-| Speed Monomer | 109s | **44s** | 98s | 88s | 52s | 102s | **42s** |
+| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.35† |
+| Ligand pTM | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.89 | 0.45† |
+| RNA pTM | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.84 | 0.57† |
+| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | 0.62† |
+| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.68 | 0.53† |
+| Speed PPI | **75s** | 79s | 120s | 195s | 107s | 230s | 42s |
+| Speed Monomer | **75s** | 60s | 118s | 109s | 54s | 101s | **30s** |
 | Stability | 22/22 | **22/22** | 22/22 | 22/22 | 22/22 | **22/22** | **22/22** |
 | License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 | BSD-3 |
 
 † RF3 zero-shot (no paired MSA); multi-chain pTM depressed; single-chain pTM meaningful.
 
 **Recommendation**:
-- **General default**: Boltz-2 — fastest accurate model, best on RNA/antibody.
-- **Highest PPI/ligand/monomer pTM**: Chai-1.
+- **General default**: Boltz-2 — top pTM across all scenarios, ~79s PPI.
+- **Highest PPI/monomer pTM**: Chai-1 (0.96 / 0.84).
+- **Fastest throughput**: AlphaFast all-in-one batch — flat **75s/case** across every scenario (3-5× faster than AF3).
+- **Zero-shot fast screening**: RF3 — 30-60s/case, no MSA needed.
 - **AF3-style outputs (5 samples + ranking)**: Protenix or AlphaFast.
-- **Need GPU MSA speedup over AF3**: AlphaFast batch mode (40-50% faster than AF3 sharded JackHMMER). Skip on RTX 4090 if you don't have all 4 GPUs to shard DBs.
-- **OpenFold3 status (2026-05-07)**: 22/22 with the four patches above; pTM still ~10-20% lower than other models on most scenarios. Use only if you specifically need its outputs (e.g. multimer ranking, AF3-style 5-sample diffusion).
-- **RF3 status (2026-05-22)**: install in progress, benchmark results pending.
+- **OpenFold3**: 22/22 with six patches; competitive on RNA (0.84) and ligand (0.89).
 
 ## Directory layout
 
@@ -289,7 +289,7 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 1. **Boltz-2 CUDA**: MUST set `LD_LIBRARY_PATH` to `nvidia/cu13/lib/`.
 2. **Boltz-2 ligand YAML**: Entity type is `ligand:` with `smiles:` sub-field. NOT `smiles:` as top-level.
 3. **AlphaFast multi-GPU**: `CUDA_VISIBLE_DEVICES=0,1,2,3` + `MMSEQS_USE_ALL_GPUS=1` + the 4 patched files in `src/alphafold3/data/tools/`. Without all three, OOM on uniref90 (49G > 48G single-GPU).
-4. **AlphaFast batch mode**: per-case mode runs MMseqs2 once per case = slower than AF3. Use `run_alphafast_batch.sh` for real perf.
+4. **AlphaFast batch mode**: per-case mode runs MMseqs2 once per case = slower than AF3. Use `run_alphafast_all_in_one.sh` for best perf (all 22 cases, one DB scan, 75s/case).
 5. **Protenix JSON format**: Uses `proteinChain`/`rnaSequence` NOT `protein`/`rna`. CCD ligands need `CCD_` prefix.
 6. **Protenix checkpoint**: Must be 1.4G. If 476M, corrupted — re-download.
 7. **Chai-1 CLI**: `chai-lab fold` not `chai fold`. Positional args, not `--input`.
@@ -301,4 +301,4 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 13. **First-run downloads**: Boltz-2 (~7.6G), Chai-1 (~1.2G ESM2), IntelliFold (~2G), OpenFold3 (~2.2G) auto-download weights on first run.
 14. **RF3 CLI**: command is `rf3 fold`, uses Hydra config syntax (`inputs=...` not `--inputs`). Positional-style key=value args.
 15. **RF3 no built-in MSA**: unlike all other models, RF3 does not search MSAs internally. For best accuracy, provide pre-computed .a3m files per chain via `msa_files=[chainA.a3m,chainB.a3m]`. For benchmark comparisons, can run without MSA.
-16. **RF3 install (2026-05-22)**: conda `rf3` (Python 3.12) with `rc-foundry[all]`. Install was in progress at session end; verify with `conda activate rf3 && rf3 --help`.
+16. **RF3 (2026-05-23)**: 22/22 benchmark complete. `conda activate rf3 && rf3 fold ...` verified working.

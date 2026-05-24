@@ -6,7 +6,7 @@ description: Run the FoldBenchmark comparative benchmark across 8 structure pred
 # fold-bench
 
 Systematic benchmark of **8** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
-**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `13364aa`)
+**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `c316f5d`)
 
 ## When this skill applies
 
@@ -16,7 +16,7 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 - "哪个模型在 PPI 上最好"
 - Any cross-model comparison of structure prediction accuracy or speed
 
-## Latest Benchmark Results (2026-05-07)
+## Latest Benchmark Results (2026-05-23)
 
 22 test cases total: 4 PPI + 5 ligand + 3 RNA + 5 monomer + 5 antibody.
 (Original 23 trimmed to 22 — 5V3F and 4TZX were RNA-only PDB entries with no protein chain.)
@@ -38,11 +38,11 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
 |----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.32† |
-| Ligand | 0.89 | 0.90 | 0.95 | 0.94 | **0.94** | 0.85 | 0.74 | 0.45† |
-| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.61 | 0.56† |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.61† |
-| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.84 | 0.71 | 0.73 | 0.53† |
+| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.35† |
+| Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.89 | 0.45† |
+| RNA | 0.77 | 0.76 | **0.90** | 0.88 | 0.88 | 0.79 | 0.84 | 0.57† |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | 0.62† |
+| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.68 | 0.53† |
 
 † RF3 zero-shot (no MSA); pTM metric may differ from AF3-style; multi-chain depressed by lack of paired MSA.
 
@@ -50,11 +50,11 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 
 | Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
 |----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 236 | 142 | **53** | 376 | 364 | 83 | 127 | 65 |
-| Ligand | 255 | 135 | **51** | 110 | 130 | 84 | 129 | 63 |
-| RNA | 338 | 208 | **115** | 168 | 134 | 91 | 122 | 71 |
-| Monomer | 176 | 109 | **45** | 98 | 88 | 52 | 102 | **42** |
-| Antibody | 392 | 179 | **68** | 392 | 379 | 129 | 204 | 95 |
+| PPI | 254 | **75** | 79 | 120 | 195 | 107 | 230 | 42 |
+| Ligand | 279 | **75** | 84 | 118 | 152 | 90 | 112 | 42 |
+| RNA | 341 | **75** | 100 | 125 | 189 | 95 | 120 | 49 |
+| Monomer | 198 | **75** | 60 | 118 | 109 | 54 | 101 | **30** |
+| Antibody | 416 | **75** | 225 | 185 | 278 | 138 | 197 | 60 |
 
 ## Project layout
 
