@@ -14,8 +14,21 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 TIMING_FILE = RESULTS_DIR / "timing.csv"
 
 MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intellifold", "rf3"]
-SCENARIOS = ["protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen",
-             "protein_dna", "homo_multimer", "metal_ion", "covalent_mod"]
+# Benchmark scenarios — fixed order for reproducible CSV/summary layout.
+# "screening" is appended automatically when inputs/screening/af3_json/ exists.
+_BENCHMARK_SCENARIOS = [
+    "protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen",
+    "protein_dna", "homo_multimer", "metal_ion", "covalent_mod",
+]
+
+
+def get_scenarios() -> list:
+    """Return benchmark scenarios + any extra dirs (e.g. 'screening') that have af3_json/."""
+    extra = sorted(
+        d.name for d in (PROJECT_ROOT / "inputs").iterdir()
+        if d.is_dir() and (d / "af3_json").exists() and d.name not in _BENCHMARK_SCENARIOS
+    )
+    return _BENCHMARK_SCENARIOS + extra
 
 
 def find_output_files(model_dir: Path) -> dict:
@@ -119,9 +132,11 @@ def main():
     RESULTS_DIR.mkdir(exist_ok=True)
     timing = load_timing()
 
+    scenarios = get_scenarios()
+
     # Collect all results
     rows = []
-    for scenario in SCENARIOS:
+    for scenario in scenarios:
         input_dir = PROJECT_ROOT / "inputs" / scenario / "af3_json"
         if not input_dir.exists():
             continue
@@ -152,7 +167,7 @@ def main():
 
     # Generate summary
     summary_lines = ["# FoldBenchmark Results\n"]
-    for scenario in SCENARIOS:
+    for scenario in scenarios:
         summary_lines.append(f"\n## {scenario}\n")
         scenario_rows = [r for r in rows if r["scenario"] == scenario]
         if not scenario_rows:

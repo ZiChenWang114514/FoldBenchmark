@@ -307,3 +307,12 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 15. **RF3 no built-in MSA**: unlike all other models, RF3 does not search MSAs internally. For best accuracy, provide pre-computed .a3m files per chain via `msa_files=[chainA.a3m,chainB.a3m]`. For benchmark comparisons, can run without MSA.
 16. **RF3 (2026-05-23)**: 35/35 benchmark complete. `conda activate rf3 && rf3 fold ...` verified working.
 17. **Protenix JIT overhead on new entity types (DNA, homo-multimer)**: First case with a new entity combination triggers CUDA kernel compilation (+800–1400 s). Subsequent cases complete in ~100–130 s normally. Re-time after warmup if needed (`scripts/rerun_protenix_anomalous.sh`).
+18. **新序列快速上手**：无需手动写 JSON/YAML/FASTA。用 `prepare_inputs_from_fasta.py` 输入 Chai-1 style FASTA，一键生成全部 6 种格式到 `inputs/screening/`，然后用 `run_benchmark.sh --fasta ...` 直接跑任意模型组合。自动检测场景类型（monomer / protein_protein / homo_multimer / protein_ligand / protein_rna / protein_dna）；Chain IDs 自动分配 A/B/C/...（最多 26 条链）。
+    ```bash
+    # FASTA → 6 格式
+    python scripts/prepare_inputs_from_fasta.py --fasta my.fasta --name my_complex
+    # 端到端：FASTA + 预测 + top-N + 报告
+    bash scripts/run_benchmark.sh --fasta my.fasta --models "boltz2,rf3" --gpu 0 --top-n 5 --report
+    # UniProt ID 列表（一行一个 ID；两个 ID 空格分隔 → PPI）
+    bash scripts/run_benchmark.sh --uniprot targets.txt --models "rf3" --gpu 0
+    ```

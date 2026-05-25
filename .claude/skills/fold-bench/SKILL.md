@@ -71,13 +71,15 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 ├── outputs/{model}/{scenario}/{case}/
 ├── scripts/
 │   ├── config.sh                # Machine-specific paths (Zeus defaults; copy to config.local.sh for other users)
-│   ├── prepare_inputs.py        # PDB → all input formats (RNA chain IDs verified)
-│   ├── run_benchmark.sh         # Master runner (per-case, includes rf3)
-│   ├── run_single_model.sh      # Per-model runner with all env workarounds
-│   ├── run_alphafast_batch.sh   # AlphaFast scenario-batch runner (REQUIRED for perf)
-│   ├── master_benchmark.sh              # 一键重跑全部 35×8
-│   ├── rerun_protenix_anomalous.sh      # 重跑 Protenix JIT 异常 case
-│   └── collect_results.py       # Results → CSV + summary (reads Chai-1 .npz)
+│   ├── prepare_inputs.py               # PDB → 6 格式（含 chain ID auto-remap）
+│   ├── prepare_inputs_from_fasta.py    # FASTA/UniProt → 6 格式 → inputs/screening/
+│   ├── screen.py                       # 过滤+排名+共识分+CIF复制+Markdown报告
+│   ├── run_benchmark.sh                # 主运行器（+8 新参数，含 FASTA/screening）
+│   ├── run_single_model.sh             # 单模型运行器（含全部 env 补丁）
+│   ├── run_alphafast_batch.sh          # AlphaFast 场景批处理（REQUIRED for perf）
+│   ├── master_benchmark.sh             # 一键重跑全部 35×8
+│   ├── rerun_protenix_anomalous.sh     # 重跑 Protenix JIT 异常 case
+│   └── collect_results.py             # outputs/ → CSV + summary（动态扫描 screening/）
 ├── docs/
 │   ├── INSTALL.md               # 8 models setup
 │   ├── MODELS.md                # per-model CLI + gotchas
@@ -129,6 +131,83 @@ bash scripts/master_benchmark.sh               # 一键重跑全部35×8，含�
 # Collect (parses Chai-1 .npz too)
 python scripts/collect_results.py
 ```
+
+## Batch Screening Mode (新序列 / 快速筛选)
+
+### 新序列输入 (FASTA)
+
+Chai-1 style FASTA — 与 Chai-1 fold 输入格式完全兼容：
+```
+>protein|name=chain_A
+MTEYKLVVVGA...
+>protein|name=chain_B
+MARLKASEE...
+>ligand|name=L1|smiles=O=C(NC...)...
+>ligand|name=L2|ccd=ATP
+>dna|name=D1
+ATCGATCG
+>rna|name=R1
+AUGCAUGC
+```
+
+UniProt ID 列表（`--uniprot`）：每行一个 ID → monomer；两个空格分隔 → PPI。
+
+```bash
+# 独立生成 6 种格式到 inputs/screening/（可自定义 --name、--scenario）
+python scripts/prepare_inputs_from_fasta.py --fasta proteins.fasta --name my_complex
+
+# 端到端：FASTA + 预测 + top-N + 报告（一条命令）
+bash scripts/run_benchmark.sh \
+  --fasta proteins.fasta \
+  --models "alphafast,boltz2" \
+  --gpu 0 \
+  --top-n 5 \
+  --report
+
+# UniProt ID 列表
+bash scripts/run_benchmark.sh --uniprot targets.txt --models "rf3" --gpu 0
+```
+
+自动场景检测：`monomer` / `protein_protein` / `homo_multimer` / `protein_ligand` / `protein_rna` / `protein_dna`。Chain IDs 自动分配 A/B/C/...（最多 26 条链）。
+
+### 结果筛选 (screen.py)
+
+```bash
+# 对已有结果排名，不重跑预测
+bash scripts/run_benchmark.sh --screen-only --top-n 10 --by ptm --report
+
+# 直接调用（更多控制）
+python scripts/screen.py \
+  --models boltz2,chai1 \
+  --scenarios protein_ligand \
+  --top-n 5 \
+  --by ptm \           # ptm / plddt / ranking_score
+  --copy-cif \         # 复制到 results/top_N/{case_name}/
+  --report results/screen_report.md
+
+# Benchmark case 子集
+bash scripts/run_benchmark.sh \
+  --cases "1BRS_barnase_barstar,1HSG_HIV_protease_indinavir" \
+  --models "af3,boltz2" --gpu 0
+```
+
+### run_benchmark.sh 完整参数表
+
+| 参数 | 说明 | 默认 |
+|------|------|------|
+| `--model NAME` | 单模型（旧用法） | 全部 |
+| `--models "a,b"` | 多模型，逗号分隔（优先于 --model） | 全部 |
+| `--scenario NAME` | 场景过滤 | 全部 |
+| `--gpu N` | GPU 编号 | 0 |
+| `--fasta FILE` | 新序列 FASTA 输入 | — |
+| `--uniprot FILE` | UniProt ID 列表 | — |
+| `--cases "a,b"` | case 名过滤，逗号分隔 | 全部 |
+| `--top-n N` | 后处理：top-N 排名 + CIF 复制 | — |
+| `--by METRIC` | 排序：ptm / plddt / ranking_score | ptm |
+| `--report` | 生成 Markdown 报告 | 不生成 |
+| `--screen-only` | 仅筛选，不跑预测 | 不跳过 |
+
+---
 
 ## Adding new test cases / models
 
