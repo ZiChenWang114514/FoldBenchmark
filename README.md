@@ -53,7 +53,7 @@ cd /data2/zcwang/FoldBenchmark   # or your clone
 bash scripts/run_single_model.sh boltz2 monomer 1UBQ_ubiquitin 0
 
 # All models, all scenarios (one GPU, sequential)
-bash scripts/run_benchmark.sh --gpu 0  # AlphaFast all-in-one batch (all 35 cases)
+bash scripts/run_benchmark.sh --gpu 0
 
 # Filter by model or scenario
 bash scripts/run_benchmark.sh --model boltz2 --scenario monomer --gpu 0
@@ -69,6 +69,43 @@ python scripts/collect_results.py
 # → results/benchmark_results.csv
 # → results/timing.csv
 # → results/summary.md
+```
+
+### 4. New sequence prediction (batch screening mode)
+
+```bash
+# Predict a new FASTA with AlphaFast + Boltz-2, output top-5, generate report
+bash scripts/run_benchmark.sh \
+  --fasta my_proteins.fasta \
+  --models "alphafast,boltz2" \
+  --gpu 0 \
+  --top-n 5 \
+  --report
+
+# UniProt ID list (one ID per line = monomer; two IDs = PPI)
+bash scripts/run_benchmark.sh \
+  --uniprot targets.txt \
+  --models "rf3,boltz2" \
+  --gpu 0 \
+  --top-n 10 \
+  --report
+
+# Benchmark case sub-set only
+bash scripts/run_benchmark.sh \
+  --cases "1BRS_barnase_barstar,1HSG_HIV_protease_indinavir" \
+  --models "af3,boltz2" \
+  --gpu 0
+
+# Screen/rank existing results without re-running predictions
+bash scripts/run_benchmark.sh --screen-only --top-n 10 --by ptm --report
+
+# screen.py directly (more control)
+python scripts/screen.py \
+  --models boltz2,chai1 \
+  --top-n 5 \
+  --by ptm \
+  --copy-cif \
+  --report results/screen_report.md
 ```
 
 ---
@@ -205,17 +242,20 @@ FoldBenchmark/
 ├── outputs/                    # raw model outputs (gitignored)
 │   └── {model}/{scenario}/{case}/
 ├── scripts/
-│   ├── config.sh               # all machine-specific paths (edit once per user)
-│   ├── prepare_inputs.py       # PDB → all 6 input formats (AF3/Protenix/OF3/Boltz2/Chai1/RF3)
-│   ├── master_benchmark.sh         # one-shot runner: clears outputs, runs all 8 models in order
-│   ├── run_benchmark.sh        # master runner (all models / all scenarios)
-│   ├── run_single_model.sh     # single (model, scenario, case, gpu)
-│   ├── run_alphafast_all_in_one.sh # AlphaFast all-in-one batch (all 35 cases, one DB scan)
-│   └── collect_results.py      # outputs/ → CSV + summary
+│   ├── config.sh                       # machine-specific paths (edit once per user)
+│   ├── prepare_inputs.py               # PDB → all 6 input formats
+│   ├── prepare_inputs_from_fasta.py    # FASTA/UniProt → all 6 input formats (new sequences)
+│   ├── screen.py                       # filter, rank, consensus score, Markdown report
+│   ├── master_benchmark.sh             # one-shot runner (all 8 models, all 35 cases)
+│   ├── run_benchmark.sh                # main runner (+FASTA/UniProt/--top-n/--report)
+│   ├── run_single_model.sh             # single (model, scenario, case, gpu)
+│   ├── run_alphafast_all_in_one.sh     # AlphaFast batch (all 35 cases, one DB scan)
+│   └── collect_results.py             # outputs/ → CSV + summary
 └── results/
     ├── benchmark_results.csv
     ├── timing.csv
-    └── summary.md
+    ├── summary.md
+    └── top_N/                          # top-N CIFs (created by --top-n flag)
 ```
 
 ---
