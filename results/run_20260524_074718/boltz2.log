@@ -1,0 +1,118 @@
+============================================
+FoldBenchmark
+Models: boltz2
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod
+GPU: 0
+Start: Sun May 24 08:46:03 AM PDT 2026
+============================================
+
+[0/1] boltz2 / protein_protein / 1BRS_barnase_barstar
+  OK (73s)
+
+[1/2] boltz2 / protein_protein / 1EMV_trypsin_inhibitor
+  OK (57s)
+
+[2/3] boltz2 / protein_protein / 2PV7_homodimer
+  OK (72s)
+
+[3/4] boltz2 / protein_protein / 3HFM_lysozyme_fab
+  OK (55s)
+
+[4/5] boltz2 / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (56s)
+
+[5/6] boltz2 / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (54s)
+
+[6/7] boltz2 / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (98s)
+
+[7/8] boltz2 / protein_ligand / 6LU7_Mpro_N3
+  OK (57s)
+
+[8/9] boltz2 / protein_ligand / 7RN1_3CL_inhibitor
+  OK (50s)
+
+[9/10] boltz2 / protein_rna / 1ASY_tRNA_synthetase
+  OK (105s)
+
+[10/11] boltz2 / protein_rna / 1URN_U1A_RNA
+  OK (63s)
+
+[11/12] boltz2 / protein_rna / 2AZ0_U1A_RNA_hairpin
+  OK (53s)
+
+[12/13] boltz2 / monomer / 1CRN_crambin
+  OK (50s)
+
+[13/14] boltz2 / monomer / 1L2Y_trpcage
+  OK (51s)
+
+[14/15] boltz2 / monomer / 1MBN_myoglobin
+  OK (55s)
+
+[15/16] boltz2 / monomer / 1UBQ_ubiquitin
+  OK (72s)
+
+[16/17] boltz2 / monomer / 2GB1_protein_G
+  OK (59s)
+
+[17/18] boltz2 / antibody_antigen / 1AHW_ab_tissue_factor
+  OK (145s)
+
+[18/19] boltz2 / antibody_antigen / 1DVF_idiotope
+  OK (106s)
+
+[19/20] boltz2 / antibody_antigen / 1MLC_ab_lysozyme
+  OK (107s)
+
+[20/21] boltz2 / antibody_antigen / 4FQI_trastuzumab_HER2
+  OK (100s)
+
+[21/22] boltz2 / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  OK (94s)
+
+[22/23] boltz2 / protein_dna / 1BL0_MarA_DNA
+  OK (105s)
+
+[23/24] boltz2 / protein_dna / 1J1V_DnaA_DNA
+  OK (87s)
+
+[24/25] boltz2 / protein_dna / 1LMB_lambda_repressor_DNA
+  OK (79s)
+
+[25/26] boltz2 / protein_dna / 3HDD_homeodomain_DNA
+  OK (81s)
+
+[26/27] boltz2 / homo_multimer / 14GS_GST_homodimer
+  OK (67s)
+
+[27/28] boltz2 / homo_multimer / 1HTI_TIM_homodimer
+  OK (131s)
+
+[28/29] boltz2 / homo_multimer / 1SAK_p53_TET_tetramer
+  OK (58s)
+
+[29/30] boltz2 / metal_ion / 1CA2_carbonic_anhydrase_ZN
+  OK (77s)
+
+[30/31] boltz2 / metal_ion / 2SOD_superoxide_dismutase_CU_ZN
+  OK (92s)
+
+[31/32] boltz2 / metal_ion / 8TLN_thermolysin_ZN_CA
+  OK (109s)
+
+[32/33] boltz2 / covalent_mod / 4G5J_EGFR_afatinib
+  OK (186s)
+
+[33/34] boltz2 / covalent_mod / 5P9J_BTK_ibrutinib
+  OK (165s)
+
+[34/35] boltz2 / covalent_mod / 6OIM_KRAS_G12C_sotorasib
+  OK (115s)
+
+============================================
+BENCHMARK COMPLETE: Sun May 24 09:36:22 AM PDT 2026
+Total: 35 | Done: 35 | Failed: 0
+Results: /data2/zcwang/FoldBenchmark/results/timing.csv
+============================================

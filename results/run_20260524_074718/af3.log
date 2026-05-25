@@ -1,0 +1,118 @@
+============================================
+FoldBenchmark
+Models: af3
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod
+GPU: 0
+Start: Sun May 24 04:03:31 PM PDT 2026
+============================================
+
+[0/1] af3 / protein_protein / 1BRS_barnase_barstar
+  OK (310s)
+
+[1/2] af3 / protein_protein / 1EMV_trypsin_inhibitor
+  OK (294s)
+
+[2/3] af3 / protein_protein / 2PV7_homodimer
+  OK (315s)
+
+[3/4] af3 / protein_protein / 3HFM_lysozyme_fab
+  OK (213s)
+
+[4/5] af3 / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (211s)
+
+[5/6] af3 / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (224s)
+
+[6/7] af3 / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (399s)
+
+[7/8] af3 / protein_ligand / 6LU7_Mpro_N3
+  OK (335s)
+
+[8/9] af3 / protein_ligand / 7RN1_3CL_inhibitor
+  OK (335s)
+
+[9/10] af3 / protein_rna / 1ASY_tRNA_synthetase
+  OK (486s)
+
+[10/11] af3 / protein_rna / 1URN_U1A_RNA
+  OK (290s)
+
+[11/12] af3 / protein_rna / 2AZ0_U1A_RNA_hairpin
+  OK (277s)
+
+[12/13] af3 / monomer / 1CRN_crambin
+  OK (198s)
+
+[13/14] af3 / monomer / 1L2Y_trpcage
+  OK (197s)
+
+[14/15] af3 / monomer / 1MBN_myoglobin
+  OK (217s)
+
+[15/16] af3 / monomer / 1UBQ_ubiquitin
+  OK (235s)
+
+[16/17] af3 / monomer / 2GB1_protein_G
+  OK (202s)
+
+[17/18] af3 / antibody_antigen / 1AHW_ab_tissue_factor
+  OK (529s)
+
+[18/19] af3 / antibody_antigen / 1DVF_idiotope
+  OK (497s)
+
+[19/20] af3 / antibody_antigen / 1MLC_ab_lysozyme
+  OK (504s)
+
+[20/21] af3 / antibody_antigen / 4FQI_trastuzumab_HER2
+  OK (403s)
+
+[21/22] af3 / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  OK (379s)
+
+[22/23] af3 / protein_dna / 1BL0_MarA_DNA
+  OK (225s)
+
+[23/24] af3 / protein_dna / 1J1V_DnaA_DNA
+  OK (202s)
+
+[24/25] af3 / protein_dna / 1LMB_lambda_repressor_DNA
+  OK (202s)
+
+[25/26] af3 / protein_dna / 3HDD_homeodomain_DNA
+  OK (196s)
+
+[26/27] af3 / homo_multimer / 14GS_GST_homodimer
+  OK (259s)
+
+[27/28] af3 / homo_multimer / 1HTI_TIM_homodimer
+  OK (264s)
+
+[28/29] af3 / homo_multimer / 1SAK_p53_TET_tetramer
+  OK (194s)
+
+[29/30] af3 / metal_ion / 1CA2_carbonic_anhydrase_ZN
+  OK (266s)
+
+[30/31] af3 / metal_ion / 2SOD_superoxide_dismutase_CU_ZN
+  OK (243s)
+
+[31/32] af3 / metal_ion / 8TLN_thermolysin_ZN_CA
+  OK (286s)
+
+[32/33] af3 / covalent_mod / 4G5J_EGFR_afatinib
+  OK (638s)
+
+[33/34] af3 / covalent_mod / 5P9J_BTK_ibrutinib
+  OK (631s)
+
+[34/35] af3 / covalent_mod / 6OIM_KRAS_G12C_sotorasib
+  OK (338s)
+
+============================================
+BENCHMARK COMPLETE: Sun May 24 07:07:15 PM PDT 2026
+Total: 35 | Done: 35 | Failed: 0
+Results: /data2/zcwang/FoldBenchmark/results/timing.csv
+============================================

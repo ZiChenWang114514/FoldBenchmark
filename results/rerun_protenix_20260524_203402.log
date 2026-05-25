@@ -1,0 +1,185 @@
+[RUN] protenix/protein_dna/1LMB_lambda_repressor_DNA on GPU 0
+2026-05-24 20:34:08,147 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:835] INFO runner.batch_inference: Run infer with input=/data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/1LMB_lambda_repressor_DNA.json, out_dir=/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA, sample=5
+2026-05-24 20:34:08,148 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:863] INFO runner.batch_inference: Using default params for model protenix_base_default_v1.0.0: cycle=10, step=200, use_msa=True
+2026-05-24 20:34:08,148 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:511] INFO runner.batch_inference: Will infer with 1 jsons
+2026-05-24 20:34:08,314 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:413] INFO runner.batch_inference: Inference by Protenix: model_size: base, with_feature: default, model_version: v1.0.0, dtype: bf16
+2026-05-24 20:34:08,314 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:418] INFO runner.batch_inference: Triangle_multiplicative kernel: cuequivariance, Triangle_attention kernel: cuequivariance
+2026-05-24 20:34:08,314 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:422] INFO runner.batch_inference: enable_diffusion_shared_vars_cache: True, enable_efficient_fusion: True, enable_tf32: True
+2026-05-24 20:34:08,314 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Distributed environment: world size: 1, global rank: 0, local rank: 0
+2026-05-24 20:34:08,315 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:98] INFO root: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2026-05-24 20:34:08,315 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:123] INFO root: Kernels will be compiled when fast_layernorm is first called.
+2026-05-24 20:34:08,315 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:127] INFO root: Finished environment initialization.
+2026-05-24 20:35:21,061 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Loading from /home/zcwang/checkpoint/protenix_base_default_v1.0.0.pt, strict: True
+2026-05-24 20:35:21,737 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Sampled key: module.input_embedder.atom_attention_encoder.linear_no_bias_ref_pos.weight
+2026-05-24 20:35:21,841 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Finish loading checkpoint.
+2026-05-24 20:35:21,850 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Model parameters: 368.48M
+train scheduler 16.0
+inference scheduler 16.0
+Diffusion Module has 16.0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-05-24 20:35:21,856 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:225] INFO runner.msa_search: starting to update msa result for task 0 in /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/1LMB_lambda_repressor_DNA.json
+2026-05-24 20:35:21,857 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/web_service/colab_request_utils.py:209] INFO protenix.web_service.colab_request_utils: Msa server is running.
+
+  0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+SUBMIT:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE:   0%|          | 0/100 [elapsed: 00:01 estimate remaining: ?][A
+COMPLETE: 100%|██████████| 100/100 [elapsed: 00:01 estimate remaining: 00:00][ACOMPLETE: 100%|██████████| 100/100 [elapsed: 00:03 estimate remaining: 00:00]
+2026-05-24 20:35:25,635 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:240] INFO runner.msa_search: update msa result success and save to /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/1LMB_lambda_repressor_DNA-update-msa.json
+2026-05-24 20:35:25,635 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:428] INFO runner.inference: Loading data from /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/1LMB_lambda_repressor_DNA-update-msa.json
+2026-05-24 20:35:25,637 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/inference/infer_dataloader.py:283] INFO protenix.data.inference.infer_dataloader: Featurizing 1LMB_lambda_repressor_DNA...
+2026-05-24 20:35:32,823 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/constraint/constraint_featurizer.py:392] INFO protenix.data.constraint.constraint_featurizer: Loaded constraint feature: #atom contact:0 #contact:0 #pocket:0
+2026-05-24 20:35:33,136 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/template/template_featurizer.py:684] INFO protenix.data.template.template_featurizer: Calling InferenceTemplateFeaturizer.make_template_feature
+2026-05-24 20:35:33,215 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:478] INFO runner.inference: [Rank 0 (1/1)] 1LMB_lambda_repressor_DNA [seed:101]: N_asym 4, N_token 224, N_atom 2242, N_msa 4767
+2026-05-24 20:35:46,410 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:500] INFO runner.inference: [Rank 0] 1LMB_lambda_repressor_DNA [seed:101] succeeded. Model forward time: 13.19s. Results saved to /data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA
+2026-05-24 20:35:46,428 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:520] INFO runner.inference: [Rank 0] Seed 101 completed in 20.79s.
+2026-05-24 20:35:46,428 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:532] INFO runner.inference: [Rank 0] Job completed in 20.79s.
+100%|██████████| 1/1 [00:24<00:00, 24.57s/it]100%|██████████| 1/1 [00:24<00:00, 24.57s/it]
+Files downloaded and extracted successfully.
+[DONE] protenix/protein_dna/1LMB_lambda_repressor_DNA in 106s
+[RUN] protenix/protein_dna/3HDD_homeodomain_DNA on GPU 0
+2026-05-24 20:35:54,390 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:835] INFO runner.batch_inference: Run infer with input=/data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/3HDD_homeodomain_DNA.json, out_dir=/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA, sample=5
+2026-05-24 20:35:54,390 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:863] INFO runner.batch_inference: Using default params for model protenix_base_default_v1.0.0: cycle=10, step=200, use_msa=True
+2026-05-24 20:35:54,390 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:511] INFO runner.batch_inference: Will infer with 1 jsons
+2026-05-24 20:35:54,557 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:413] INFO runner.batch_inference: Inference by Protenix: model_size: base, with_feature: default, model_version: v1.0.0, dtype: bf16
+2026-05-24 20:35:54,557 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:418] INFO runner.batch_inference: Triangle_multiplicative kernel: cuequivariance, Triangle_attention kernel: cuequivariance
+2026-05-24 20:35:54,557 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:422] INFO runner.batch_inference: enable_diffusion_shared_vars_cache: True, enable_efficient_fusion: True, enable_tf32: True
+2026-05-24 20:35:54,558 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Distributed environment: world size: 1, global rank: 0, local rank: 0
+2026-05-24 20:35:54,558 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:98] INFO root: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2026-05-24 20:35:54,558 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:123] INFO root: Kernels will be compiled when fast_layernorm is first called.
+2026-05-24 20:35:54,558 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:127] INFO root: Finished environment initialization.
+2026-05-24 20:37:03,616 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Loading from /home/zcwang/checkpoint/protenix_base_default_v1.0.0.pt, strict: True
+2026-05-24 20:37:04,270 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Sampled key: module.input_embedder.atom_attention_encoder.linear_no_bias_ref_pos.weight
+2026-05-24 20:37:04,375 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Finish loading checkpoint.
+2026-05-24 20:37:04,383 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Model parameters: 368.48M
+train scheduler 16.0
+inference scheduler 16.0
+Diffusion Module has 16.0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-05-24 20:37:04,390 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:225] INFO runner.msa_search: starting to update msa result for task 0 in /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/3HDD_homeodomain_DNA.json
+2026-05-24 20:37:04,390 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/web_service/colab_request_utils.py:209] INFO protenix.web_service.colab_request_utils: Msa server is running.
+
+  0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+SUBMIT:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE: 100%|██████████| 100/100 [elapsed: 00:00 estimate remaining: 00:00][ACOMPLETE: 100%|██████████| 100/100 [elapsed: 00:03 estimate remaining: 00:00]
+2026-05-24 20:37:08,499 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:240] INFO runner.msa_search: update msa result success and save to /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/3HDD_homeodomain_DNA-update-msa.json
+2026-05-24 20:37:08,499 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:428] INFO runner.inference: Loading data from /data2/zcwang/FoldBenchmark/inputs/protein_dna/protenix_json/3HDD_homeodomain_DNA-update-msa.json
+2026-05-24 20:37:08,502 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/inference/infer_dataloader.py:283] INFO protenix.data.inference.infer_dataloader: Featurizing 3HDD_homeodomain_DNA...
+2026-05-24 20:37:15,620 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/constraint/constraint_featurizer.py:392] INFO protenix.data.constraint.constraint_featurizer: Loaded constraint feature: #atom contact:0 #contact:0 #pocket:0
+2026-05-24 20:37:16,330 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/template/template_featurizer.py:684] INFO protenix.data.template.template_featurizer: Calling InferenceTemplateFeaturizer.make_template_feature
+2026-05-24 20:37:16,367 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:478] INFO runner.inference: [Rank 0 (1/1)] 3HDD_homeodomain_DNA [seed:101]: N_asym 4, N_token 162, N_atom 1895, N_msa 13321
+2026-05-24 20:37:29,200 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:500] INFO runner.inference: [Rank 0] 3HDD_homeodomain_DNA [seed:101] succeeded. Model forward time: 12.83s. Results saved to /data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA
+2026-05-24 20:37:29,214 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:520] INFO runner.inference: [Rank 0] Seed 101 completed in 20.71s.
+2026-05-24 20:37:29,214 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:532] INFO runner.inference: [Rank 0] Job completed in 20.71s.
+100%|██████████| 1/1 [00:24<00:00, 24.83s/it]100%|██████████| 1/1 [00:24<00:00, 24.83s/it]
+Files downloaded and extracted successfully.
+[DONE] protenix/protein_dna/3HDD_homeodomain_DNA in 102s
+[RUN] protenix/homo_multimer/1HTI_TIM_homodimer on GPU 0
+2026-05-24 20:37:37,617 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:835] INFO runner.batch_inference: Run infer with input=/data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1HTI_TIM_homodimer.json, out_dir=/data2/zcwang/FoldBenchmark/outputs/protenix/homo_multimer/1HTI_TIM_homodimer, sample=5
+2026-05-24 20:37:37,617 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:863] INFO runner.batch_inference: Using default params for model protenix_base_default_v1.0.0: cycle=10, step=200, use_msa=True
+2026-05-24 20:37:37,617 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:511] INFO runner.batch_inference: Will infer with 1 jsons
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:413] INFO runner.batch_inference: Inference by Protenix: model_size: base, with_feature: default, model_version: v1.0.0, dtype: bf16
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:418] INFO runner.batch_inference: Triangle_multiplicative kernel: cuequivariance, Triangle_attention kernel: cuequivariance
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:422] INFO runner.batch_inference: enable_diffusion_shared_vars_cache: True, enable_efficient_fusion: True, enable_tf32: True
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Distributed environment: world size: 1, global rank: 0, local rank: 0
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:98] INFO root: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:123] INFO root: Kernels will be compiled when fast_layernorm is first called.
+2026-05-24 20:37:37,785 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:127] INFO root: Finished environment initialization.
+2026-05-24 20:38:47,995 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Loading from /home/zcwang/checkpoint/protenix_base_default_v1.0.0.pt, strict: True
+2026-05-24 20:38:48,646 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Sampled key: module.input_embedder.atom_attention_encoder.linear_no_bias_ref_pos.weight
+2026-05-24 20:38:48,748 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Finish loading checkpoint.
+2026-05-24 20:38:48,756 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Model parameters: 368.48M
+train scheduler 16.0
+inference scheduler 16.0
+Diffusion Module has 16.0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-05-24 20:38:48,762 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:225] INFO runner.msa_search: starting to update msa result for task 0 in /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1HTI_TIM_homodimer.json
+2026-05-24 20:38:48,763 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/web_service/colab_request_utils.py:209] INFO protenix.web_service.colab_request_utils: Msa server is running.
+
+  0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+SUBMIT:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE: 100%|██████████| 100/100 [elapsed: 00:00 estimate remaining: 00:00][ACOMPLETE: 100%|██████████| 100/100 [elapsed: 00:04 estimate remaining: 00:00]
+2026-05-24 20:38:53,368 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:240] INFO runner.msa_search: update msa result success and save to /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1HTI_TIM_homodimer-update-msa.json
+2026-05-24 20:38:53,368 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:428] INFO runner.inference: Loading data from /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1HTI_TIM_homodimer-update-msa.json
+2026-05-24 20:38:53,370 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/inference/infer_dataloader.py:283] INFO protenix.data.inference.infer_dataloader: Featurizing 1HTI_TIM_homodimer...
+2026-05-24 20:39:01,610 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/constraint/constraint_featurizer.py:392] INFO protenix.data.constraint.constraint_featurizer: Loaded constraint feature: #atom contact:0 #contact:0 #pocket:0
+2026-05-24 20:39:03,474 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/template/template_featurizer.py:684] INFO protenix.data.template.template_featurizer: Calling InferenceTemplateFeaturizer.make_template_feature
+2026-05-24 20:39:03,974 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:478] INFO runner.inference: [Rank 0 (1/1)] 1HTI_TIM_homodimer [seed:101]: N_asym 2, N_token 496, N_atom 3736, N_msa 16384
+2026-05-24 20:39:29,061 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:500] INFO runner.inference: [Rank 0] 1HTI_TIM_homodimer [seed:101] succeeded. Model forward time: 25.09s. Results saved to /data2/zcwang/FoldBenchmark/outputs/protenix/homo_multimer/1HTI_TIM_homodimer
+2026-05-24 20:39:29,099 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:520] INFO runner.inference: [Rank 0] Seed 101 completed in 35.73s.
+2026-05-24 20:39:29,100 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:532] INFO runner.inference: [Rank 0] Job completed in 35.73s.
+100%|██████████| 1/1 [00:40<00:00, 40.34s/it]100%|██████████| 1/1 [00:40<00:00, 40.34s/it]
+Files downloaded and extracted successfully.
+[DONE] protenix/homo_multimer/1HTI_TIM_homodimer in 119s
+[RUN] protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN on GPU 0
+2026-05-24 20:39:37,365 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:835] INFO runner.batch_inference: Run infer with input=/data2/zcwang/FoldBenchmark/inputs/metal_ion/protenix_json/2SOD_superoxide_dismutase_CU_ZN.json, out_dir=/data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN, sample=5
+2026-05-24 20:39:37,365 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:863] INFO runner.batch_inference: Using default params for model protenix_base_default_v1.0.0: cycle=10, step=200, use_msa=True
+2026-05-24 20:39:37,365 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:511] INFO runner.batch_inference: Will infer with 1 jsons
+2026-05-24 20:39:37,519 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:413] INFO runner.batch_inference: Inference by Protenix: model_size: base, with_feature: default, model_version: v1.0.0, dtype: bf16
+2026-05-24 20:39:37,519 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:418] INFO runner.batch_inference: Triangle_multiplicative kernel: cuequivariance, Triangle_attention kernel: cuequivariance
+2026-05-24 20:39:37,519 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:422] INFO runner.batch_inference: enable_diffusion_shared_vars_cache: True, enable_efficient_fusion: True, enable_tf32: True
+2026-05-24 20:39:37,520 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Distributed environment: world size: 1, global rank: 0, local rank: 0
+2026-05-24 20:39:37,520 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:98] INFO root: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2026-05-24 20:39:37,520 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:123] INFO root: Kernels will be compiled when fast_layernorm is first called.
+2026-05-24 20:39:37,520 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:127] INFO root: Finished environment initialization.
+2026-05-24 20:40:43,803 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Loading from /home/zcwang/checkpoint/protenix_base_default_v1.0.0.pt, strict: True
+2026-05-24 20:40:44,448 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Sampled key: module.input_embedder.atom_attention_encoder.linear_no_bias_ref_pos.weight
+2026-05-24 20:40:44,550 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Finish loading checkpoint.
+2026-05-24 20:40:44,559 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Model parameters: 368.48M
+train scheduler 16.0
+inference scheduler 16.0
+Diffusion Module has 16.0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-05-24 20:40:44,564 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:225] INFO runner.msa_search: starting to update msa result for task 0 in /data2/zcwang/FoldBenchmark/inputs/metal_ion/protenix_json/2SOD_superoxide_dismutase_CU_ZN.json
+2026-05-24 20:40:44,565 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/web_service/colab_request_utils.py:209] INFO protenix.web_service.colab_request_utils: Msa server is running.
+
+  0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+SUBMIT:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE:   0%|          | 0/100 [elapsed: 00:01 estimate remaining: ?][A
+COMPLETE: 100%|██████████| 100/100 [elapsed: 00:01 estimate remaining: 00:00][ACOMPLETE: 100%|██████████| 100/100 [elapsed: 00:03 estimate remaining: 00:00]
+2026-05-24 20:40:48,514 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:240] INFO runner.msa_search: update msa result success and save to /data2/zcwang/FoldBenchmark/inputs/metal_ion/protenix_json/2SOD_superoxide_dismutase_CU_ZN-update-msa.json
+2026-05-24 20:40:48,514 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:428] INFO runner.inference: Loading data from /data2/zcwang/FoldBenchmark/inputs/metal_ion/protenix_json/2SOD_superoxide_dismutase_CU_ZN-update-msa.json
+2026-05-24 20:40:48,517 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/inference/infer_dataloader.py:283] INFO protenix.data.inference.infer_dataloader: Featurizing 2SOD_superoxide_dismutase_CU_ZN...
+2026-05-24 20:40:56,383 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/constraint/constraint_featurizer.py:392] INFO protenix.data.constraint.constraint_featurizer: Loaded constraint feature: #atom contact:0 #contact:0 #pocket:0
+2026-05-24 20:40:57,524 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/template/template_featurizer.py:684] INFO protenix.data.template.template_featurizer: Calling InferenceTemplateFeaturizer.make_template_feature
+2026-05-24 20:40:57,671 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:478] INFO runner.inference: [Rank 0 (1/1)] 2SOD_superoxide_dismutase_CU_ZN [seed:101]: N_asym 6, N_token 308, N_atom 2200, N_msa 14459
+2026-05-24 20:41:12,352 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:500] INFO runner.inference: [Rank 0] 2SOD_superoxide_dismutase_CU_ZN [seed:101] succeeded. Model forward time: 14.68s. Results saved to /data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN
+2026-05-24 20:41:12,373 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:520] INFO runner.inference: [Rank 0] Seed 101 completed in 23.86s.
+2026-05-24 20:41:12,374 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:532] INFO runner.inference: [Rank 0] Job completed in 23.86s.
+100%|██████████| 1/1 [00:27<00:00, 27.81s/it]100%|██████████| 1/1 [00:27<00:00, 27.81s/it]
+Files downloaded and extracted successfully.
+[DONE] protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN in 102s
+[RUN] protenix/homo_multimer/1SAK_p53_TET_tetramer on GPU 0
+2026-05-24 20:41:20,233 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:835] INFO runner.batch_inference: Run infer with input=/data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1SAK_p53_TET_tetramer.json, out_dir=/data2/zcwang/FoldBenchmark/outputs/protenix/homo_multimer/1SAK_p53_TET_tetramer, sample=5
+2026-05-24 20:41:20,233 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:863] INFO runner.batch_inference: Using default params for model protenix_base_default_v1.0.0: cycle=10, step=200, use_msa=True
+2026-05-24 20:41:20,233 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:511] INFO runner.batch_inference: Will infer with 1 jsons
+2026-05-24 20:41:20,388 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:413] INFO runner.batch_inference: Inference by Protenix: model_size: base, with_feature: default, model_version: v1.0.0, dtype: bf16
+2026-05-24 20:41:20,388 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:418] INFO runner.batch_inference: Triangle_multiplicative kernel: cuequivariance, Triangle_attention kernel: cuequivariance
+2026-05-24 20:41:20,388 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/batch_inference.py:422] INFO runner.batch_inference: enable_diffusion_shared_vars_cache: True, enable_efficient_fusion: True, enable_tf32: True
+2026-05-24 20:41:20,388 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Distributed environment: world size: 1, global rank: 0, local rank: 0
+2026-05-24 20:41:20,389 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:98] INFO root: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2026-05-24 20:41:20,389 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:123] INFO root: Kernels will be compiled when fast_layernorm is first called.
+2026-05-24 20:41:20,389 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:127] INFO root: Finished environment initialization.
+2026-05-24 20:42:30,323 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Loading from /home/zcwang/checkpoint/protenix_base_default_v1.0.0.pt, strict: True
+2026-05-24 20:42:30,968 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Sampled key: module.input_embedder.atom_attention_encoder.linear_no_bias_ref_pos.weight
+2026-05-24 20:42:31,070 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Finish loading checkpoint.
+2026-05-24 20:42:31,077 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:246] INFO runner.inference: Model parameters: 368.48M
+train scheduler 16.0
+inference scheduler 16.0
+Diffusion Module has 16.0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-05-24 20:42:31,083 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:225] INFO runner.msa_search: starting to update msa result for task 0 in /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1SAK_p53_TET_tetramer.json
+2026-05-24 20:42:31,084 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/web_service/colab_request_utils.py:209] INFO protenix.web_service.colab_request_utils: Msa server is running.
+
+  0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+SUBMIT:   0%|          | 0/100 [elapsed: 00:00 estimate remaining: ?][A
+COMPLETE:   0%|          | 0/100 [elapsed: 00:01 estimate remaining: ?][A
+COMPLETE: 100%|██████████| 100/100 [elapsed: 00:01 estimate remaining: 00:00][ACOMPLETE: 100%|██████████| 100/100 [elapsed: 00:03 estimate remaining: 00:00]
+2026-05-24 20:42:34,430 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/msa_search.py:240] INFO runner.msa_search: update msa result success and save to /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1SAK_p53_TET_tetramer-update-msa.json
+2026-05-24 20:42:34,430 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:428] INFO runner.inference: Loading data from /data2/zcwang/FoldBenchmark/inputs/homo_multimer/protenix_json/1SAK_p53_TET_tetramer-update-msa.json
+2026-05-24 20:42:34,432 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/inference/infer_dataloader.py:283] INFO protenix.data.inference.infer_dataloader: Featurizing 1SAK_p53_TET_tetramer...
+2026-05-24 20:42:42,288 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/constraint/constraint_featurizer.py:392] INFO protenix.data.constraint.constraint_featurizer: Loaded constraint feature: #atom contact:0 #contact:0 #pocket:0
+2026-05-24 20:42:42,374 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/protenix/data/template/template_featurizer.py:684] INFO protenix.data.template.template_featurizer: Calling InferenceTemplateFeaturizer.make_template_feature
+2026-05-24 20:42:42,409 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:478] INFO runner.inference: [Rank 0 (1/1)] 1SAK_p53_TET_tetramer [seed:101]: N_asym 4, N_token 168, N_atom 1392, N_msa 547
+2026-05-24 20:42:54,588 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:500] INFO runner.inference: [Rank 0] 1SAK_p53_TET_tetramer [seed:101] succeeded. Model forward time: 12.18s. Results saved to /data2/zcwang/FoldBenchmark/outputs/protenix/homo_multimer/1SAK_p53_TET_tetramer
+2026-05-24 20:42:54,603 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:520] INFO runner.inference: [Rank 0] Seed 101 completed in 20.17s.
+2026-05-24 20:42:54,603 [/data/zcwang/anaconda3/envs/protenix/lib/python3.11/site-packages/runner/inference.py:532] INFO runner.inference: [Rank 0] Job completed in 20.17s.
+100%|██████████| 1/1 [00:23<00:00, 23.52s/it]100%|██████████| 1/1 [00:23<00:00, 23.52s/it]
+Files downloaded and extracted successfully.
+[DONE] protenix/homo_multimer/1SAK_p53_TET_tetramer in 101s

@@ -1,0 +1,50 @@
+[
+    {
+        "name": "2SOD_superoxide_dismutase_CU_ZN",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN/2SOD_superoxide_dismutase_CU_ZN/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN/2SOD_superoxide_dismutase_CU_ZN/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "XATKAVCVLKGDGPVQGTIHFEAKGDTVVVTGSITGLTEGDHGFHVHQFGDNTQGCTSAGPHFNPLSKKHGGPKDEERHVGDLGNVTADKNGVAIVDIVDPLISLSGEYSIIGRTMVVHEKPDDLGRGGNEESTKTGNAGSRLACGVIGIAK",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN/2SOD_superoxide_dismutase_CU_ZN/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/metal_ion/2SOD_superoxide_dismutase_CU_ZN/2SOD_superoxide_dismutase_CU_ZN/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_CU",
+                    "count": 1
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_ZN",
+                    "count": 1
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_CU",
+                    "count": 1
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_ZN",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

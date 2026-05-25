@@ -1,0 +1,24 @@
+[
+    {
+        "name": "5P9J_BTK_ibrutinib",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "GKNAPSTAGLGYGSWEIDPKDLTFLKELGTGQFGVVKYGKWRGQYDVAIKMIKEGSMSEDEFIEEAKVMMNLSHEKLVQLYGVCTKQRPIFIITEYMANGCLLNYLREMRHRFQTQQLLEMCKDVCEAMEYLESKQFLHRDLAARNCLVNDQGVVKVSDFGLSRYVLDDEYTSSVGSKFPVRWSPPEVLMYSKFSSKSDIWAFGVLMWEIYSLGKMPYERFTNSETAEHIAQGLRLYRPHLASEKVYTIMYSCWHEKADERPTFKILLSNILDVMDEES",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/covalent_mod/5P9J_BTK_ibrutinib/5P9J_BTK_ibrutinib/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/covalent_mod/5P9J_BTK_ibrutinib/5P9J_BTK_ibrutinib/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_8E8",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

@@ -1,0 +1,118 @@
+============================================
+FoldBenchmark
+Models: chai1
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod
+GPU: 0
+Start: Sun May 24 01:17:39 PM PDT 2026
+============================================
+
+[0/1] chai1 / protein_protein / 1BRS_barnase_barstar
+  OK (116s)
+
+[1/2] chai1 / protein_protein / 1EMV_trypsin_inhibitor
+  OK (109s)
+
+[2/3] chai1 / protein_protein / 2PV7_homodimer
+  OK (249s)
+
+[3/4] chai1 / protein_protein / 3HFM_lysozyme_fab
+  OK (96s)
+
+[4/5] chai1 / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (101s)
+
+[5/6] chai1 / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (98s)
+
+[6/7] chai1 / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (160s)
+
+[7/8] chai1 / protein_ligand / 6LU7_Mpro_N3
+  OK (123s)
+
+[8/9] chai1 / protein_ligand / 7RN1_3CL_inhibitor
+  OK (124s)
+
+[9/10] chai1 / protein_rna / 1ASY_tRNA_synthetase
+  OK (251s)
+
+[10/11] chai1 / protein_rna / 1URN_U1A_RNA
+  OK (96s)
+
+[11/12] chai1 / protein_rna / 2AZ0_U1A_RNA_hairpin
+  OK (94s)
+
+[12/13] chai1 / monomer / 1CRN_crambin
+  OK (94s)
+
+[13/14] chai1 / monomer / 1L2Y_trpcage
+  OK (96s)
+
+[14/15] chai1 / monomer / 1MBN_myoglobin
+  OK (98s)
+
+[15/16] chai1 / monomer / 1UBQ_ubiquitin
+  OK (96s)
+
+[16/17] chai1 / monomer / 2GB1_protein_G
+  OK (94s)
+
+[17/18] chai1 / antibody_antigen / 1AHW_ab_tissue_factor
+  OK (262s)
+
+[18/19] chai1 / antibody_antigen / 1DVF_idiotope
+  OK (194s)
+
+[19/20] chai1 / antibody_antigen / 1MLC_ab_lysozyme
+  OK (273s)
+
+[20/21] chai1 / antibody_antigen / 4FQI_trastuzumab_HER2
+  OK (172s)
+
+[21/22] chai1 / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  OK (174s)
+
+[22/23] chai1 / protein_dna / 1BL0_MarA_DNA
+  OK (99s)
+
+[23/24] chai1 / protein_dna / 1J1V_DnaA_DNA
+  OK (96s)
+
+[24/25] chai1 / protein_dna / 1LMB_lambda_repressor_DNA
+  OK (122s)
+
+[25/26] chai1 / protein_dna / 3HDD_homeodomain_DNA
+  OK (119s)
+
+[26/27] chai1 / homo_multimer / 14GS_GST_homodimer
+  OK (214s)
+
+[27/28] chai1 / homo_multimer / 1HTI_TIM_homodimer
+  OK (189s)
+
+[28/29] chai1 / homo_multimer / 1SAK_p53_TET_tetramer
+  OK (105s)
+
+[29/30] chai1 / metal_ion / 1CA2_carbonic_anhydrase_ZN
+  OK (125s)
+
+[30/31] chai1 / metal_ion / 2SOD_superoxide_dismutase_CU_ZN
+  OK (137s)
+
+[31/32] chai1 / metal_ion / 8TLN_thermolysin_ZN_CA
+  OK (128s)
+
+[32/33] chai1 / covalent_mod / 4G5J_EGFR_afatinib
+  OK (122s)
+
+[33/34] chai1 / covalent_mod / 5P9J_BTK_ibrutinib
+  OK (123s)
+
+[34/35] chai1 / covalent_mod / 6OIM_KRAS_G12C_sotorasib
+  OK (97s)
+
+============================================
+BENCHMARK COMPLETE: Sun May 24 02:38:52 PM PDT 2026
+Total: 35 | Done: 35 | Failed: 0
+Results: /data2/zcwang/FoldBenchmark/results/timing.csv
+============================================

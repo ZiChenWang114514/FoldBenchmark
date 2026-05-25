@@ -1,0 +1,38 @@
+[
+    {
+        "name": "3HDD_homeodomain_DNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA/3HDD_homeodomain_DNA/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA/3HDD_homeodomain_DNA/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "EKRPRTAFSSEQLARLKREFNENRYLTERRRQQLSSELGLNEAQIKIWFQNKRAKIKKST",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA/3HDD_homeodomain_DNA/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/3HDD_homeodomain_DNA/3HDD_homeodomain_DNA/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TTTTGCCATGTAATTACCTAA",
+                    "count": 1
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "ATTAGGTAATTACATGGCAAA",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

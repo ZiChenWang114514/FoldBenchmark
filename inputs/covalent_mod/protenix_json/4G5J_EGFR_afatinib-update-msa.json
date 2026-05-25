@@ -1,0 +1,24 @@
+[
+    {
+        "name": "4G5J_EGFR_afatinib",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "GSMGEAPNQALLRILKETEFKKIKVLGSGAFGTVYKGLWIPEGEKVKIPVAIKELREATSPKANKEILDEAYVMASVDNPHVCRLLGICLTSTVQLITQLMPFGCLLDYVREHKDNIGSQYLLNWCVQIAKGMNYLEDRRLVHRDLAARNVLVKTPQHVKITDFGLAKLLGAEEKEYHAEGGKVPIKWMALESILHRIYTHQSDVWSYGVTVWELMTFGSKPYDGIPASEISSILEKGERLPQPPICTIDVYMIMVKCWMIDADSRPKFRELIIEFSKMARDPQRYLVIQGDERMHLPSPTDSNFYRALMDEEDMDDVVDADEYLIPQQG",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/covalent_mod/4G5J_EGFR_afatinib/4G5J_EGFR_afatinib/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/covalent_mod/4G5J_EGFR_afatinib/4G5J_EGFR_afatinib/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_0WN",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

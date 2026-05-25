@@ -1,14 +1,14 @@
 version: 1
 sequences:
   - protein:
-      id: 3
+      id: A
       sequence: STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS
   - protein:
-      id: 4
+      id: B
       sequence: STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS
   - dna:
-      id: 1
+      id: C
       sequence: AATACCACTGGCGGTGATAT
   - dna:
-      id: 2
+      id: D
       sequence: TATATCACCGCCAGTGGTAT

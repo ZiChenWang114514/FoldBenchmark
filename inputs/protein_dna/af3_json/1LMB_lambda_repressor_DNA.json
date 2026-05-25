@@ -4,7 +4,7 @@
     {
       "protein": {
         "id": [
-          "3"
+          "A"
         ],
         "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
       }
@@ -12,7 +12,7 @@
     {
       "protein": {
         "id": [
-          "4"
+          "B"
         ],
         "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
       }
@@ -20,7 +20,7 @@
     {
       "dna": {
         "id": [
-          "1"
+          "C"
         ],
         "sequence": "AATACCACTGGCGGTGATAT"
       }
@@ -28,7 +28,7 @@
     {
       "dna": {
         "id": [
-          "2"
+          "D"
         ],
         "sequence": "TATATCACCGCCAGTGGTAT"
       }

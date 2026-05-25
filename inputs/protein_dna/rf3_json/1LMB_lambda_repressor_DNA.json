@@ -3,19 +3,19 @@
   "components": [
     {
       "seq": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
-      "chain_id": "3"
+      "chain_id": "A"
     },
     {
       "seq": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
-      "chain_id": "4"
+      "chain_id": "B"
     },
     {
       "seq": "AATACCACTGGCGGTGATAT",
-      "chain_id": "1"
+      "chain_id": "C"
     },
     {
       "seq": "TATATCACCGCCAGTGGTAT",
-      "chain_id": "2"
+      "chain_id": "D"
     }
   ]
 }

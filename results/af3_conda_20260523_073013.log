@@ -1,0 +1,76 @@
+============================================
+FoldBenchmark - AF3 (conda + sharded)
+GPU: 1 | Total cases: 22
+Start: Sat May 23 07:30:14 AM PDT 2026
+============================================
+
+[0/22] af3 / protein_protein / 1BRS_barnase_barstar
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_protein/1BRS_barnase_barstar.log
+
+[1/22] af3 / protein_protein / 1EMV_trypsin_inhibitor
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_protein/1EMV_trypsin_inhibitor.log
+
+[2/22] af3 / protein_protein / 2PV7_homodimer
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_protein/2PV7_homodimer.log
+
+[3/22] af3 / protein_protein / 3HFM_lysozyme_fab
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_protein/3HFM_lysozyme_fab.log
+
+[4/22] af3 / protein_ligand / 1HSG_HIV_protease_indinavir
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_ligand/1HSG_HIV_protease_indinavir.log
+
+[5/22] af3 / protein_ligand / 3HTB_CDK2_inhibitor
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_ligand/3HTB_CDK2_inhibitor.log
+
+[6/22] af3 / protein_ligand / 4LDE_BRAF_vemurafenib
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_ligand/4LDE_BRAF_vemurafenib.log
+
+[7/22] af3 / protein_ligand / 6LU7_Mpro_N3
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_ligand/6LU7_Mpro_N3.log
+
+[8/22] af3 / protein_ligand / 7RN1_3CL_inhibitor
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_ligand/7RN1_3CL_inhibitor.log
+
+[9/22] af3 / protein_rna / 1ASY_tRNA_synthetase
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_rna/1ASY_tRNA_synthetase.log
+
+[10/22] af3 / protein_rna / 1URN_U1A_RNA
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_rna/1URN_U1A_RNA.log
+
+[11/22] af3 / protein_rna / 2AZ0_U1A_RNA_hairpin
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/protein_rna/2AZ0_U1A_RNA_hairpin.log
+
+[12/22] af3 / monomer / 1CRN_crambin
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/monomer/1CRN_crambin.log
+
+[13/22] af3 / monomer / 1L2Y_trpcage
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/monomer/1L2Y_trpcage.log
+
+[14/22] af3 / monomer / 1MBN_myoglobin
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/monomer/1MBN_myoglobin.log
+
+[15/22] af3 / monomer / 1UBQ_ubiquitin
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/monomer/1UBQ_ubiquitin.log
+
+[16/22] af3 / monomer / 2GB1_protein_G
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/monomer/2GB1_protein_G.log
+
+[17/22] af3 / antibody_antigen / 1AHW_ab_tissue_factor
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/antibody_antigen/1AHW_ab_tissue_factor.log
+
+[18/22] af3 / antibody_antigen / 1DVF_idiotope
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/antibody_antigen/1DVF_idiotope.log
+
+[19/22] af3 / antibody_antigen / 1MLC_ab_lysozyme
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/antibody_antigen/1MLC_ab_lysozyme.log
+
+[20/22] af3 / antibody_antigen / 4FQI_trastuzumab_HER2
+  FAILED (1s) — see /data2/zcwang/FoldBenchmark/outputs/af3/antibody_antigen/4FQI_trastuzumab_HER2.log
+
+[21/22] af3 / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  FAILED (2s) — see /data2/zcwang/FoldBenchmark/outputs/af3/antibody_antigen/7N4I_RBD_neutralizing_ab.log
+
+============================================
+AF3 BENCHMARK COMPLETE: Sat May 23 07:30:46 AM PDT 2026
+Total: 22 | Done: 0 | Failed: 22
+============================================

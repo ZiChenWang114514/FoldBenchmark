@@ -1,0 +1,36 @@
+============================================
+FoldBenchmark
+Models: af3
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen
+GPU: 1
+Start: Sat May 23 07:32:05 AM PDT 2026
+============================================
+
+[0/1] af3 / protein_protein / 1BRS_barnase_barstar
+  OK (275s)
+
+[1/2] af3 / protein_protein / 1EMV_trypsin_inhibitor
+  OK (265s)
+
+[2/3] af3 / protein_protein / 2PV7_homodimer
+  OK (294s)
+
+[3/4] af3 / protein_protein / 3HFM_lysozyme_fab
+  OK (189s)
+
+[4/5] af3 / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (194s)
+
+[5/6] af3 / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (212s)
+
+[6/7] af3 / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (359s)
+
+[7/8] af3 / protein_ligand / 6LU7_Mpro_N3
+  OK (310s)
+
+[8/9] af3 / protein_ligand / 7RN1_3CL_inhibitor
+  OK (308s)
+
+[9/10] af3 / protein_rna / 1ASY_tRNA_synthetase

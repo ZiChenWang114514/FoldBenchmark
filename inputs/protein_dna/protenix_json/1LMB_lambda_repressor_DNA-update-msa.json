@@ -1,0 +1,38 @@
+[
+    {
+        "name": "1LMB_lambda_repressor_DNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA/1LMB_lambda_repressor_DNA/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA/1LMB_lambda_repressor_DNA/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA/1LMB_lambda_repressor_DNA/msa/1/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1LMB_lambda_repressor_DNA/1LMB_lambda_repressor_DNA/msa/1/non_pairing.a3m"
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "AATACCACTGGCGGTGATAT",
+                    "count": 1
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TATATCACCGCCAGTGGTAT",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

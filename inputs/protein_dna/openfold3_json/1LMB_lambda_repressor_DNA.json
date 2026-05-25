@@ -5,22 +5,22 @@
       "chains": [
         {
           "molecule_type": "protein",
-          "chain_ids": "3",
+          "chain_ids": "A",
           "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
         },
         {
           "molecule_type": "protein",
-          "chain_ids": "4",
+          "chain_ids": "B",
           "sequence": "STKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQSGVGALFNGINALNAYNAALLAKILKVSVEEFSPSIAREIYEMYEAVS"
         },
         {
           "molecule_type": "dna",
-          "chain_ids": "1",
+          "chain_ids": "C",
           "sequence": "AATACCACTGGCGGTGATAT"
         },
         {
           "molecule_type": "dna",
-          "chain_ids": "2",
+          "chain_ids": "D",
           "sequence": "TATATCACCGCCAGTGGTAT"
         }
       ]

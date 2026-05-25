@@ -287,26 +287,44 @@ def fetch_pdb_sequences(pdb_id: str) -> dict:
 
 
 def generate_af3_json(case: dict, sequences: dict, scenario: str) -> dict:
-    """Generate AF3-format JSON input."""
+    """Generate AF3-format JSON input.
+
+    AF3/AlphaFast requires chain IDs to be single uppercase letters (A-Z).
+    PDBs like 1LMB use numeric chain IDs ('1','2','3','4'). When any chain ID
+    is not a single uppercase ASCII letter, we auto-remap all chain IDs to
+    A, B, C, ... in the order they appear in the case definition.
+    """
+    # Build remap if any chain ID is not a single uppercase letter
+    all_orig_ids = [cid for cid, _ in case["chains"]] + [lid for lid, _ in case.get("ligands", [])]
+    needs_remap = any(not (len(cid) == 1 and cid.isupper()) for cid in all_orig_ids)
+    if needs_remap:
+        letters = [chr(ord("A") + i) for i in range(26)]
+        remap = {orig: letters[i] for i, orig in enumerate(all_orig_ids)}
+        print(f"  NOTE: Remapping chain IDs for {case['name']}: {remap}")
+    else:
+        remap = {cid: cid for cid in all_orig_ids}
+
     seqs = []
     for chain_id, entity_type in case["chains"]:
         if chain_id not in sequences:
             print(f"  WARNING: Chain {chain_id} not found in PDB {case['pdb_id']}")
             continue
         chain_info = sequences[chain_id]
+        out_id = remap[chain_id]
         if entity_type == "protein":
-            seqs.append({"protein": {"id": [chain_id], "sequence": chain_info["sequence"]}})
+            seqs.append({"protein": {"id": [out_id], "sequence": chain_info["sequence"]}})
         elif entity_type == "rna":
-            seqs.append({"rna": {"id": [chain_id], "sequence": chain_info["sequence"]}})
+            seqs.append({"rna": {"id": [out_id], "sequence": chain_info["sequence"]}})
         elif entity_type == "dna":
-            seqs.append({"dna": {"id": [chain_id], "sequence": chain_info["sequence"]}})
+            seqs.append({"dna": {"id": [out_id], "sequence": chain_info["sequence"]}})
 
     # Add ligands if present
     for lig_id, smiles_or_ccd in case.get("ligands", []):
+        out_id = remap[lig_id]
         if len(smiles_or_ccd) <= 5 and smiles_or_ccd.isalnum():
-            seqs.append({"ligand": {"id": [lig_id], "ccdCodes": [smiles_or_ccd]}})
+            seqs.append({"ligand": {"id": [out_id], "ccdCodes": [smiles_or_ccd]}})
         else:
-            seqs.append({"ligand": {"id": [lig_id], "smiles": smiles_or_ccd}})
+            seqs.append({"ligand": {"id": [out_id], "smiles": smiles_or_ccd}})
 
     return {
         "name": case["name"],

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "1BL0_MarA_DNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "MTMSRRNTDAITIHSILDWIEDNLESPLSLEKVSERSGYSKWHLQRMFKKETGHSLGQYIRSRKMTEIAQKLKESNEPILYLAERYGFESQQTLTRTFKNYFDVPPHKYRMTNMQGESRFLHPLNHYNS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1BL0_MarA_DNA/1BL0_MarA_DNA/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1BL0_MarA_DNA/1BL0_MarA_DNA/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "GGGGATTTAGCAAAACGTGGCATC",
+                    "count": 1
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "CCGATGCCACGTTTTGCTAAATCC",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]

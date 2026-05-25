@@ -1,0 +1,79 @@
+============================================
+FoldBenchmark
+Models: af3
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen
+GPU: 1
+Start: Sat May 23 06:41:36 PM PDT 2026
+============================================
+
+[0/1] af3 / protein_protein / 1BRS_barnase_barstar
+  OK (309s)
+
+[1/2] af3 / protein_protein / 1EMV_trypsin_inhibitor
+  OK (309s)
+
+[2/3] af3 / protein_protein / 2PV7_homodimer
+  OK (309s)
+
+[3/4] af3 / protein_protein / 3HFM_lysozyme_fab
+  OK (309s)
+
+[4/5] af3 / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (309s)
+
+[5/6] af3 / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (309s)
+
+[6/7] af3 / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (309s)
+
+[7/8] af3 / protein_ligand / 6LU7_Mpro_N3
+  OK (309s)
+
+[8/9] af3 / protein_ligand / 7RN1_3CL_inhibitor
+  OK (309s)
+
+[9/10] af3 / protein_rna / 1ASY_tRNA_synthetase
+  OK (511s)
+
+[10/11] af3 / protein_rna / 1URN_U1A_RNA
+  OK (266s)
+
+[11/12] af3 / protein_rna / 2AZ0_U1A_RNA_hairpin
+  OK (247s)
+
+[12/13] af3 / monomer / 1CRN_crambin
+  OK (192s)
+
+[13/14] af3 / monomer / 1L2Y_trpcage
+  OK (185s)
+
+[14/15] af3 / monomer / 1MBN_myoglobin
+  OK (208s)
+
+[15/16] af3 / monomer / 1UBQ_ubiquitin
+  OK (216s)
+
+[16/17] af3 / monomer / 2GB1_protein_G
+  OK (191s)
+
+[17/18] af3 / antibody_antigen / 1AHW_ab_tissue_factor
+  OK (509s)
+
+[18/19] af3 / antibody_antigen / 1DVF_idiotope
+  OK (445s)
+
+[19/20] af3 / antibody_antigen / 1MLC_ab_lysozyme
+  OK (437s)
+
+[20/21] af3 / antibody_antigen / 4FQI_trastuzumab_HER2
+  OK (356s)
+
+[21/22] af3 / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  OK (334s)
+
+============================================
+BENCHMARK COMPLETE: Sat May 23 07:50:12 PM PDT 2026
+Total: 22 | Done: 22 | Failed: 0
+Results: /data2/zcwang/FoldBenchmark/results/timing.csv
+============================================

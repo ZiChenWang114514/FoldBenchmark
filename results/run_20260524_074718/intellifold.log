@@ -1,0 +1,118 @@
+============================================
+FoldBenchmark
+Models: intellifold
+Scenarios: protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod
+GPU: 0
+Start: Sun May 24 09:36:22 AM PDT 2026
+============================================
+
+[0/1] intellifold / protein_protein / 1BRS_barnase_barstar
+  OK (93s)
+
+[1/2] intellifold / protein_protein / 1EMV_trypsin_inhibitor
+  OK (75s)
+
+[2/3] intellifold / protein_protein / 2PV7_homodimer
+  OK (152s)
+
+[3/4] intellifold / protein_protein / 3HFM_lysozyme_fab
+  OK (67s)
+
+[4/5] intellifold / protein_ligand / 1HSG_HIV_protease_indinavir
+  OK (67s)
+
+[5/6] intellifold / protein_ligand / 3HTB_CDK2_inhibitor
+  OK (68s)
+
+[6/7] intellifold / protein_ligand / 4LDE_BRAF_vemurafenib
+  OK (152s)
+
+[7/8] intellifold / protein_ligand / 6LU7_Mpro_N3
+  OK (93s)
+
+[8/9] intellifold / protein_ligand / 7RN1_3CL_inhibitor
+  OK (92s)
+
+[9/10] intellifold / protein_rna / 1ASY_tRNA_synthetase
+  OK (206s)
+
+[10/11] intellifold / protein_rna / 1URN_U1A_RNA
+  OK (76s)
+
+[11/12] intellifold / protein_rna / 2AZ0_U1A_RNA_hairpin
+  OK (57s)
+
+[12/13] intellifold / monomer / 1CRN_crambin
+  OK (53s)
+
+[13/14] intellifold / monomer / 1L2Y_trpcage
+  OK (48s)
+
+[14/15] intellifold / monomer / 1MBN_myoglobin
+  OK (62s)
+
+[15/16] intellifold / monomer / 1UBQ_ubiquitin
+  OK (77s)
+
+[16/17] intellifold / monomer / 2GB1_protein_G
+  OK (52s)
+
+[17/18] intellifold / antibody_antigen / 1AHW_ab_tissue_factor
+  OK (195s)
+
+[18/19] intellifold / antibody_antigen / 1DVF_idiotope
+  OK (153s)
+
+[19/20] intellifold / antibody_antigen / 1MLC_ab_lysozyme
+  OK (201s)
+
+[20/21] intellifold / antibody_antigen / 4FQI_trastuzumab_HER2
+  OK (148s)
+
+[21/22] intellifold / antibody_antigen / 7N4I_RBD_neutralizing_ab
+  OK (144s)
+
+[22/23] intellifold / protein_dna / 1BL0_MarA_DNA
+  OK (87s)
+
+[23/24] intellifold / protein_dna / 1J1V_DnaA_DNA
+  OK (78s)
+
+[24/25] intellifold / protein_dna / 1LMB_lambda_repressor_DNA
+  OK (80s)
+
+[25/26] intellifold / protein_dna / 3HDD_homeodomain_DNA
+  OK (80s)
+
+[26/27] intellifold / homo_multimer / 14GS_GST_homodimer
+  OK (113s)
+
+[27/28] intellifold / homo_multimer / 1HTI_TIM_homodimer
+  OK (145s)
+
+[28/29] intellifold / homo_multimer / 1SAK_p53_TET_tetramer
+  OK (62s)
+
+[29/30] intellifold / metal_ion / 1CA2_carbonic_anhydrase_ZN
+  OK (116s)
+
+[30/31] intellifold / metal_ion / 2SOD_superoxide_dismutase_CU_ZN
+  OK (113s)
+
+[31/32] intellifold / metal_ion / 8TLN_thermolysin_ZN_CA
+  OK (129s)
+
+[32/33] intellifold / covalent_mod / 4G5J_EGFR_afatinib
+  OK (123s)
+
+[33/34] intellifold / covalent_mod / 5P9J_BTK_ibrutinib
+  OK (116s)
+
+[34/35] intellifold / covalent_mod / 6OIM_KRAS_G12C_sotorasib
+  OK (110s)
+
+============================================
+BENCHMARK COMPLETE: Sun May 24 10:38:20 AM PDT 2026
+Total: 35 | Done: 35 | Failed: 0
+Results: /data2/zcwang/FoldBenchmark/results/timing.csv
+============================================

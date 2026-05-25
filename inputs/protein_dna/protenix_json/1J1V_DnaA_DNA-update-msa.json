@@ -1,0 +1,30 @@
+[
+    {
+        "name": "1J1V_DnaA_DNA",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "VTIDNIQKTVAEYYKIKVADLLSKRRSRSVARPRQMAMALAKELTNHSLPEIGDAFGGRDHTTVLHACRKIEQLREESHDIKEDFSNLIRTLSS",
+                    "count": 1,
+                    "pairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1J1V_DnaA_DNA/1J1V_DnaA_DNA/msa/0/pairing.a3m",
+                    "unpairedMsaPath": "/data2/zcwang/FoldBenchmark/outputs/protenix/protein_dna/1J1V_DnaA_DNA/1J1V_DnaA_DNA/msa/0/non_pairing.a3m"
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TGTTATCCACAGG",
+                    "count": 1
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "CCTGTGGATAACA",
+                    "count": 1
+                }
+            }
+        ],
+        "modelSeeds": [
+            1
+        ]
+    }
+]
