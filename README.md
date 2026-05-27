@@ -1,7 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of 8 biomolecular structure prediction models across 9 application
-scenarios (35 test systems).
+Systematic benchmark of **8** biomolecular structure prediction models across **9** scenarios (**35** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -11,13 +10,74 @@ scenarios (35 test systems).
 
 ---
 
+## Results Summary (2026-05-24, 35 cases × 8 models = 280 runs, all passed)
+
+### Overall ranking
+
+| Model | Avg pTM | Avg Speed (s) | Completion | Highlight |
+|-------|---------|---------------|------------|-----------|
+| **Boltz-2** v2.2.1 | **0.92** | 85 | 35/35 | Best overall accuracy |
+| **Chai-1** | 0.91 | 138 | 35/35 | Top on PPI (0.95) & monomer (0.84) |
+| **Protenix** v2.0.0 | 0.89 | 129 | 35/35 | Strong RNA (0.88) & homo-multimer (0.94) |
+| **AlphaFast** v1.0 | 0.85 | **52** | 35/35 | Fastest (batch mode, one DB scan) |
+| **AlphaFold 3** v3.0.2 | 0.84 | 314 | 35/35 | Gold standard, slowest |
+| **OpenFold3** v0.4.1 | 0.82 | 144 | 35/35 | Needs 6 source patches |
+| **IntelliFold-2** | 0.80 | 105 | 35/35 | Moderate across all scenarios |
+| **RoseTTAFold3** v0.1.12 | 0.51 | **47** | 35/35 | Zero-shot (no MSA); fastest monomer (29 s) |
+
+### pTM by scenario (higher = better)
+
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3† |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|------|
+| Protein-Protein (4) | 0.92 | 0.91 | 0.94 | 0.94 | **0.95** | 0.86 | 0.88 | 0.31 |
+| Protein-Ligand (5) | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.84 | 0.89 | 0.45 |
+| Protein-RNA (3) | 0.77 | 0.76 | 0.87 | **0.88** | 0.88 | 0.79 | 0.84 | 0.56 |
+| Monomer (5) | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.62 |
+| Antibody-Antigen (5) | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.53 |
+| Protein-DNA (4) | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.75 |
+| Homo-Multimer (3) | 0.88 | 0.89 | 0.94 | **0.94** | 0.93 | 0.82 | 0.88 | 0.49 |
+| Metal Ion (3) | 0.97 | 0.96 | **0.98** | 0.98 | 0.98 | 0.93 | 0.97 | 0.36 |
+| Covalent Mod (3) | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.86 | 0.94 | 0.47 |
+
+† RF3 zero-shot (Foundry v0.1.12, no MSA); pTM metric computed by RF3 may differ from AF3-style pTM. Multi-chain pTM depressed by lack of paired MSA.
+
+### Speed (seconds/case, bold = fastest)
+
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|-----|
+| Protein-Protein | 283 | **52** | 64 | 119 | 142 | 97 | 140 | 60 |
+| Protein-Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 |
+| Protein-RNA | 351 | 52 | 74 | 146 | 147 | 113 | 141 | **49** |
+| Monomer | 210 | 52 | 57 | 126 | 96 | 58 | 129 | **29** |
+| Antibody-Antigen | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 |
+| Protein-DNA | 206 | 52 | 88 | 118 | 109 | 81 | 129 | **38** |
+| Homo-Multimer | 239 | 52 | 85 | 118 | 169 | 107 | 141 | **46** |
+| Metal Ion | 265 | 52 | 93 | 121 | 130 | 119 | 134 | **40** |
+| Covalent Mod | 536 | 52 | 155 | 130 | 114 | 116 | 136 | **42** |
+
+AlphaFast timings are amortized across the all-in-one batch (all 35 cases, one MMseqs2 DB scan + one JAX compilation cache). Per-case mode is *slower* than AF3.
+
+### Key findings
+
+1. **Boltz-2** achieves the highest overall pTM (0.92 avg) with top scores on ligand (0.95), antibody (0.89), DNA (0.97), metal ion (0.98), and covalent mod (0.96) — the best speed/accuracy tradeoff at 85 s/case.
+2. **Chai-1** leads on PPI (0.95) and monomer (0.84), consistently strong across all scenarios.
+3. **AlphaFast all-in-one batch** achieves a flat **52 s/case** — 5–10× faster than AF3 (314 s avg), with only marginal pTM loss (0.85 vs 0.84).
+4. **Protenix and Chai-1 support RNA** (pTM 0.88 each) — earlier failures were caused by wrong chain IDs in input preparation (silently produced protein homodimers).
+5. **RoseTTAFold3** (Foundry v0.1.12) is the fastest model (**29–62 s/case** zero-shot), but pTM is substantially lower on multi-chain systems without paired MSA.
+6. **OpenFold3** reaches 35/35 after six source patches; competitive on metal ion (0.97) and covalent mod (0.94), but needs CUTLASS 3.5 + SM 8.9 JIT setup.
+7. **Protenix first-run JIT overhead**: new entity type combinations trigger CUDA kernel compilation (+800–1400 s on first case). Always warm up before timing.
+
+Full per-case results: [results/benchmark_results.csv](results/benchmark_results.csv) and [results/summary.md](results/summary.md).
+
+---
+
 ## Quick Start
 
 ### 1. Configure paths (first-time setup)
 
 All model/database paths live in `scripts/config.sh`. The defaults point to the
 reference installation on Zeus (`/data2/zcwang/…`). If you are a **different user on
-the same machine**, copy and edit the file once — you will not need to touch it again:
+the same machine**, copy and edit the file once:
 
 ```bash
 cp scripts/config.sh scripts/config.local.sh   # gitignored
@@ -25,7 +85,7 @@ cp scripts/config.sh scripts/config.local.sh   # gitignored
 export FOLDBENCH_CONFIG=$PWD/scripts/config.local.sh
 ```
 
-Key variables to check in your copy:
+Key variables to check:
 
 | Variable | What it points to |
 |----------|-------------------|
@@ -37,7 +97,7 @@ Key variables to check in your copy:
 | `ALPHAFAST_DB_DIR` | MMseqs2 padded DBs (~388 GB protein + ~27 GB RNA) |
 | `AF3_*` | AF3 Docker volumes (models, databases, patched msa.py) |
 
-Shared resources on Zeus that **do not need to change** for any user:
+Shared resources on Zeus that do not need to change:
 
 | Resource | Path |
 |----------|------|
@@ -47,7 +107,7 @@ Shared resources on Zeus that **do not need to change** for any user:
 ### 2. Run the benchmark
 
 ```bash
-cd /data2/zcwang/FoldBenchmark   # or your clone
+cd /data2/zcwang/FoldBenchmark
 
 # Single model, single scenario — good sanity-check after fresh setup
 bash scripts/run_single_model.sh boltz2 monomer 1UBQ_ubiquitin 0
@@ -58,8 +118,14 @@ bash scripts/run_benchmark.sh --gpu 0
 # Filter by model or scenario
 bash scripts/run_benchmark.sh --model boltz2 --scenario monomer --gpu 0
 
-# AlphaFast all-in-one batch (all 35 cases)
+# Multiple models
+bash scripts/run_benchmark.sh --models "boltz2,chai1,rf3" --gpu 0
+
+# AlphaFast all-in-one batch (all 35 cases, recommended)
 bash scripts/run_alphafast_all_in_one.sh
+
+# One-shot full benchmark (all 8 models × 35 cases)
+bash scripts/master_benchmark.sh
 ```
 
 ### 3. Collect results
@@ -82,7 +148,7 @@ bash scripts/run_benchmark.sh \
   --top-n 5 \
   --report
 
-# UniProt ID list (one ID per line = monomer; two IDs = PPI)
+# UniProt ID list (one ID per line = monomer; two IDs space-separated = PPI)
 bash scripts/run_benchmark.sh \
   --uniprot targets.txt \
   --models "rf3,boltz2" \
@@ -108,6 +174,36 @@ python scripts/screen.py \
   --report results/screen_report.md
 ```
 
+FASTA format (Chai-1 style):
+```
+>protein|name=chain_A
+MTEYKLVVVGA...
+>protein|name=chain_B
+MARLKASEE...
+>ligand|name=L1|smiles=O=C(NC...)...
+>ligand|name=L2|ccd=ATP
+>dna|name=D1
+ATCGATCG
+>rna|name=R1
+AUGCAUGC
+```
+
+### `run_benchmark.sh` parameter reference
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--model NAME` | Single model (legacy) | all |
+| `--models "a,b"` | Multi-model, comma-separated (overrides `--model`) | all |
+| `--scenario NAME` | Scenario filter | all |
+| `--gpu N` | GPU ID | 0 |
+| `--fasta FILE` | New sequence FASTA input | — |
+| `--uniprot FILE` | UniProt ID list | — |
+| `--cases "a,b"` | Case name filter, comma-separated | all |
+| `--top-n N` | Post-processing: top-N ranking + CIF copy | — |
+| `--by METRIC` | Sort metric: `ptm` / `plddt` / `ranking_score` | ptm |
+| `--report` | Generate Markdown report | off |
+| `--screen-only` | Screen existing results, skip predictions | off |
+
 ---
 
 ## Models
@@ -123,99 +219,23 @@ python scripts/screen.py \
 | OpenFold3 | v0.4.1 | conda `openfold3` | ColabFold server | Apache 2.0 |
 | RoseTTAFold3 | v0.1.12 (Foundry) | conda `rf3` | Pre-computed .a3m (no built-in MSA) | BSD-3-Clause |
 
-See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and
-per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
+See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
 
 ---
 
-## Results Summary
+## Test Systems (35 cases, 9 scenarios)
 
-### Completion rate (2026-05-24, 35 cases)
-
-| Model | Success | Notes |
-|-------|---------|-------|
-| AlphaFold 3 v3.0.2 | **35/35** | Gold standard; `--jackhmmer_n_cpu=4` |
-| AlphaFast v1.0 | **35/35** | All-in-one batch (all 35 cases, one MMseqs2 DB scan) |
-| Boltz-2 v2.2.1 | **35/35** | Best speed/accuracy tradeoff |
-| Protenix | **35/35** | RNA support confirmed after input bug fix |
-| Chai-1 | **35/35** | RNA support confirmed after input bug fix |
-| IntelliFold-2 | **35/35** | All scenarios |
-| OpenFold3 v0.4.1 | **35/35** | Requires 6 source patches — see [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) |
-| RoseTTAFold3 v0.1.12 (Foundry) | **35/35** | Zero-shot (no MSA); pTM lower on multi-chain due to no paired MSA |
-
-### Average pTM by scenario (higher = better)
-
-> **Note on RF3**: RoseTTAFold3 Foundry runs zero-shot (no MSA search). Multi-chain pTM
-> is lower because no paired MSA is provided; with pre-computed paired .a3m this would improve.
-
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3† |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|------|
-| Protein-Protein | 0.92 | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.31 |
-| Protein-Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.89 | 0.44 |
-| Protein-RNA | 0.77 | 0.76 | 0.87 | 0.88 | 0.88 | 0.79 | 0.84 | 0.56 |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | 0.62 |
-| Antibody-Antigen | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.52 |
-| Protein-DNA | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.76 |
-| Homo-Multimer | 0.88 | 0.89 | 0.94 | **0.94** | 0.92 | 0.82 | 0.88 | 0.49 |
-| Metal Ion | 0.97 | 0.96 | **0.98** | 0.98 | **0.98** | 0.93 | 0.98 | 0.36 |
-| Covalent Mod | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.85 | 0.94 | 0.47 |
-
-† RF3 zero-shot (Foundry v0.1.12, no MSA); pTM metric computed by RF3 may differ from AF3-style pTM.
-
-### Average speed (seconds/case)
-
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|-----|
-| Protein-Protein | 283 | **52** | 64 | 119 | 143 | 97 | 141 | 60 |
-| Protein-Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 |
-| Protein-RNA | 351 | **52** | 74 | 146 | 147 | 113 | 141 | 49 |
-| Monomer | 210 | **52** | 57 | 126 | 96 | 58 | 129 | **29** |
-| Antibody-Antigen | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 |
-| Protein-DNA | 206 | **52** | 88 | 118 | 109 | 81 | 129 | 38 |
-| Homo-Multimer | 239 | **52** | 85 | 118 | 169 | 107 | 141 | 46 |
-| Metal Ion | 265 | **52** | 93 | 121 | 130 | 119 | 134 | 40 |
-| Covalent Mod | 536 | **52** | 155 | 130 | 114 | 116 | 136 | 42 |
-
-AlphaFast timings are amortized across the all-in-one batch (all 35 cases, one MMseqs2
-queryDB + JAX compilation cache). Per-case mode is *slower* than AF3.
-
-### Key findings
-
-1. **Chai-1** posts the highest pTM on PPI (0.96) and monomer (0.84).
-2. **Boltz-2** is the best speed/accuracy tradeoff: top-tier pTM across all 9 scenarios
-   including RNA (0.87) and antibody-antigen (0.89); only AF3 and AlphaFast are slower.
-3. **AlphaFast all-in-one batch** achieves a flat **52 s/case** across every scenario
-   (all 35 cases batched, one MMseqs2 DB scan, one JAX warm-up) — 5–10× faster than AF3.
-4. **Protenix and Chai-1 do support RNA** (pTM 0.88 each) — earlier failures were caused
-   by wrong chain IDs in `prepare_inputs.py` (silently produced protein homodimers).
-5. **OpenFold3** reaches 35/35 after six source patches (see Troubleshooting); pTM is
-   competitive on RNA (0.84) and ligand (0.89), slower on large antibody-antigen cases.
-6. **RoseTTAFold3** (Foundry v0.1.12) completes 35/35 zero-shot in **29–62 s/case** —
-   fastest model for monomers and ligands. Multi-chain pTM is lower without paired MSA.
-7. **AF3 with `--jackhmmer_n_cpu=4`** uses 64 threads (16 shards × 4 CPU each), but
-   sharded-DB runs are still I/O-bound on large cases (antibody-antigen: ~462 s/case).
-8. **Protenix first-run JIT overhead**: encountering new entity types (DNA, homo-multimers) for the first time triggers CUDA kernel compilation, adding 800–1400 s to the first case. Subsequent cases complete in ~100–130 s. Always warm up by running one case of each entity type before timing.
-
-Full per-case results: [results/benchmark_results.csv](results/benchmark_results.csv)
-and [results/summary.md](results/summary.md).
-
----
-
-## Test Systems
-
-35 cases across 9 scenarios:
-
-| Scenario | Cases | Examples |
-|----------|-------|---------|
-| protein_protein | 4 | 1BRS barnase-barstar, 2PV7 homodimer, 3HFM lysozyme-Fab |
-| protein_ligand | 5 | 1HSG HIV protease, 6LU7 Mpro-N3, 4LDE BRAF-vemurafenib |
-| protein_rna | 3 | 1ASY tRNA-synthetase, 1URN U1A, 2AZ0 U1A-hairpin |
-| monomer | 5 | 1UBQ ubiquitin, 1CRN crambin, 1MBN myoglobin |
-| antibody_antigen | 5 | 4FQI trastuzumab-HER2, 7N4I RBD-neutralizing Ab |
-| protein_dna | 4 | 3HDD homeodomain-DNA, 1LMB lambda repressor, 1J1V DnaA |
-| homo_multimer | 3 | 1HTI TIM homodimer, 1SAK p53 tetramer, 14GS GST homodimer |
-| metal_ion | 3 | 1CA2 carbonic anhydrase (Zn), 8TLN thermolysin (Zn/Ca) |
-| covalent_mod | 3 | 5P9J BTK-ibrutinib, 4G5J EGFR-afatinib, 6OIM KRAS G12C |
+| Scenario | # | Cases |
+|----------|---|-------|
+| protein_protein | 4 | 1BRS barnase-barstar, 1EMV trypsin-inhibitor, 2PV7 homodimer, 3HFM lysozyme-Fab |
+| protein_ligand | 5 | 1HSG HIV protease-indinavir, 3HTB CDK2-inhibitor, 4LDE BRAF-vemurafenib, 6LU7 Mpro-N3, 7RN1 3CL-inhibitor |
+| protein_rna | 3 | 1ASY tRNA-synthetase, 1URN U1A-RNA, 2AZ0 U1A-RNA-hairpin |
+| monomer | 5 | 1CRN crambin, 1L2Y trp-cage, 1MBN myoglobin, 1UBQ ubiquitin, 2GB1 protein G |
+| antibody_antigen | 5 | 1AHW ab-tissue-factor, 1DVF idiotope, 1MLC ab-lysozyme, 4FQI trastuzumab-HER2, 7N4I RBD-neutralizing-Ab |
+| protein_dna | 4 | 1BL0 MarA-DNA, 1J1V DnaA-DNA, 1LMB lambda-repressor-DNA, 3HDD homeodomain-DNA |
+| homo_multimer | 3 | 14GS GST homodimer, 1HTI TIM homodimer, 1SAK p53-TET tetramer |
+| metal_ion | 3 | 1CA2 carbonic-anhydrase (Zn), 2SOD superoxide-dismutase (Cu/Zn), 8TLN thermolysin (Zn/Ca) |
+| covalent_mod | 3 | 4G5J EGFR-afatinib, 5P9J BTK-ibrutinib, 6OIM KRAS-G12C-sotorasib |
 
 Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 
@@ -226,33 +246,36 @@ Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 ```
 FoldBenchmark/
 ├── README.md
+├── LESSONS.md                          # accumulated pitfalls & insights
 ├── docs/
-│   ├── INSTALL.md              # set up all 7 models from scratch
-│   ├── MODELS.md               # per-model CLI + gotchas
-│   ├── INPUT_FORMATS.md        # 5 input formats side-by-side
-│   └── TROUBLESHOOTING.md      # known issues + fixes
+│   ├── INSTALL.md                      # set up all 8 models from scratch
+│   ├── MODELS.md                       # per-model CLI + gotchas
+│   ├── INPUT_FORMATS.md                # 6 input formats side-by-side
+│   └── TROUBLESHOOTING.md              # known issues + fixes
 ├── inputs/
 │   └── {scenario}/
-│       ├── af3_json/           # AF3 + AlphaFast
-│       ├── boltz2_yaml/        # Boltz-2 + IntelliFold-2
-│       ├── chai1_fasta/        # Chai-1
-│       ├── protenix_json/      # Protenix
-│       ├── openfold3_json/     # OpenFold3
-│       └── rf3_json/           # RoseTTAFold3
-├── outputs/                    # raw model outputs (gitignored)
+│       ├── af3_json/                   # AF3 + AlphaFast
+│       ├── boltz2_yaml/                # Boltz-2 + IntelliFold-2
+│       ├── chai1_fasta/                # Chai-1
+│       ├── protenix_json/              # Protenix
+│       ├── openfold3_json/             # OpenFold3
+│       └── rf3_json/                   # RoseTTAFold3
+├── outputs/                            # raw model outputs (gitignored)
 │   └── {model}/{scenario}/{case}/
 ├── scripts/
-│   ├── config.sh                       # machine-specific paths (edit once per user)
+│   ├── config.sh                       # machine-specific paths (edit once)
 │   ├── prepare_inputs.py               # PDB → all 6 input formats
-│   ├── prepare_inputs_from_fasta.py    # FASTA/UniProt → all 6 input formats (new sequences)
+│   ├── prepare_inputs_from_fasta.py    # FASTA/UniProt → all 6 formats (new sequences)
 │   ├── screen.py                       # filter, rank, consensus score, Markdown report
-│   ├── master_benchmark.sh             # one-shot runner (all 8 models, all 35 cases)
+│   ├── master_benchmark.sh             # one-shot full benchmark (8 models × 35 cases)
 │   ├── run_benchmark.sh                # main runner (+FASTA/UniProt/--top-n/--report)
 │   ├── run_single_model.sh             # single (model, scenario, case, gpu)
-│   ├── run_alphafast_all_in_one.sh     # AlphaFast batch (all 35 cases, one DB scan)
-│   └── collect_results.py             # outputs/ → CSV + summary
+│   ├── run_alphafast_all_in_one.sh     # AlphaFast batch (35 cases, one DB scan)
+│   ├── run_alphafast_batch.sh          # AlphaFast per-scenario batch (fallback)
+│   ├── rerun_protenix_anomalous.sh     # re-time Protenix JIT-inflated cases
+│   └── collect_results.py              # outputs/ → CSV + summary (dynamic scenario scan)
 └── results/
-    ├── benchmark_results.csv
+    ├── benchmark_results.csv           # 280 rows (8 models × 35 cases)
     ├── timing.csv
     ├── summary.md
     └── top_N/                          # top-N CIFs (created by --top-n flag)
@@ -268,6 +291,7 @@ FoldBenchmark/
 - **New model**: Add a `case` branch in `scripts/run_single_model.sh`. The model must
   write a `.cif` file to its output directory (used by the skip-detection logic).
 - **New scenario**: Create `inputs/{new_scenario}/` and add entries to `TEST_CASES`.
+  `collect_results.py` will auto-discover it (scans `inputs/*/af3_json/`).
 
 ---
 
@@ -279,7 +303,8 @@ FoldBenchmark/
 - ~400 GB NVMe for AF3 sharded databases
 - ~415 GB for AlphaFast MMseqs2 databases (388 GB protein + 27 GB RNA)
 
-With 4 GPUs, running all 8 models × 35 cases sequentially takes roughly 11–12 hours (AlphaFast uses all-in-one batch; others run serially on GPU 0).
+With 4 GPUs, running all 8 models × 35 cases sequentially takes roughly 11–12 hours
+(AlphaFast uses all-in-one batch; others run serially on GPU 0).
 Models can be parallelized across GPUs with `--gpu N` flags.
 
 ---
