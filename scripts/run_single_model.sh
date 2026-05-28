@@ -263,10 +263,8 @@ case "$MODEL" in
         conda activate esm3
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} \
-        HF_HOME="${ESM3_HF_CACHE}" \
-        HUGGINGFACE_HUB_CACHE="${ESM3_HF_CACHE}" \
-        HTTPS_PROXY="${HTTPS_PROXY:-http://127.0.0.1:7892}" \
-        HTTP_PROXY="${HTTP_PROXY:-http://127.0.0.1:7892}" \
+        ESM3_MODEL_DIR="${ESM3_MODEL_DIR}" \
+        ESM3_HF_CACHE="${ESM3_HF_CACHE}" \
             python "${PROJECT_ROOT}/scripts/run_esm3.py" \
                 --input  "$(realpath "$INPUT_JSON")" \
                 --outdir "${OUTPUTS}/${CASE_NAME}" \

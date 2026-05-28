@@ -58,9 +58,12 @@
 : "${ESMFOLD2_MODEL:=/data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2}"
 
 # ── ESM3 (EvolutionaryScale, Cambrian non-commercial) ──────────────────────────
-# HuggingFace cache dir for esm3-sm-open-v1 weights (~5 GB).
+# HuggingFace cache dir (parent of the esm3-sm-open-v1 directory).
 : "${ESM3_HF_CACHE:=/data2/zcwang/structure_prediction/esm3/hf_cache}"
-# Model variant: "esm3-sm-open-v1" (local, 1.4B, non-commercial) or Forge model name.
+# Resolved model directory — contains data/weights/*.pth files.
+# Loaded via INFRA_PROVIDER trick (bypasses snapshot_download).
+: "${ESM3_MODEL_DIR:=${ESM3_HF_CACHE}/esm3-sm-open-v1}"
+# Model variant name (passed to ESM3.from_pretrained).
 : "${ESM3_MODEL:=esm3-sm-open-v1}"
 # Structure generation steps (higher = more accurate, slower; 8 is a good default).
 : "${ESM3_NUM_STEPS:=8}"
