@@ -343,7 +343,7 @@ conda activate esmfold2
 python scripts/run_esmfold2.py \
     --input  inputs/monomer/af3_json/1UBQ_ubiquitin.json \
     --outdir outputs/esmfold2/monomer/1UBQ_ubiquitin \
-    --model  biohub/ESMFold2 \
+    --model  /data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2 \
     --num-loops 3
 # Output: pred_esmfold2.cif + confidence_esmfold2.json
 ```
@@ -352,12 +352,37 @@ python scripts/run_esmfold2.py \
 ```bash
 conda create -n esmfold2 python=3.12 -y
 conda activate esmfold2
-HTTPS_PROXY=http://127.0.0.1:7890 pip install "esm @ git+https://github.com/Biohub/esm.git"
+
+# GitHub 直接 clone 不稳定；改用下载 zip + 本地安装
+# 1. 下载源码 zip（通过代理）
+curl --proxy http://127.0.0.1:7892 -L -o /tmp/esm.zip \
+    https://github.com/Biohub/esm/archive/refs/heads/main.zip
+curl --proxy http://127.0.0.1:7892 -L -o /tmp/transformers.zip \
+    https://github.com/Biohub/transformers/archive/3a8956fb4d4ea16b0ec8e71deef2c2909b6a5cbf.zip
+unzip /tmp/esm.zip -d /data2/zcwang/structure_prediction/esmfold2/
+unzip /tmp/transformers.zip -d /data2/zcwang/structure_prediction/esmfold2/
+
+# 2. 安装：先装 transformers fork，再装 esm --no-deps，再补依赖
+cd /data2/zcwang/structure_prediction/esmfold2/transformers-3a8956fb*/
+pip install -e . --no-deps
+cd /data2/zcwang/structure_prediction/esmfold2/esm-main/
+pip install -e . --no-deps
+pip install torch>=2.2.0 biotite>=1.0.0 rdkit biopython scikit-learn \
+    zstd cloudpathlib brotli attrs msgpack-numpy pygtrie tenacity \
+    httpx accelerate einops ipython boto3 pydssp
+
+# 3. 验证
+python -c "from esm.models.esmfold2 import StructurePredictionInput, ProteinInput; print('OK')"
 ```
 
 **Input format**: Reuses AF3 JSON (already generated for all 35 cases). No new input directory needed. The wrapper script (`run_esmfold2.py`) converts AF3 JSON → `StructurePredictionInput` at runtime.
 
-**Weights**: Downloaded automatically from HuggingFace Hub on first run (~12 GB ESMC-6B + ~0.4 GB folding head). Cached to `ESMFOLD2_HF_CACHE` (default: `/data2/zcwang/structure_prediction/esmfold2/hf_cache`).
+**Weights (pre-downloaded, offline)**: Two components — both at `/data2/zcwang/structure_prediction/esmfold2/hf_cache/`:
+- `biohub_ESMFold2/` — folding head (~1.3 GB: `config.json` + `ccd.pkl` 398 MB + `model.safetensors` 896 MB)
+- `biohub_ESMC_6B/` — ESMC-6B backbone (~27 GB: 6 shards × 4.5 GB + metadata)
+
+`config.json`中`esmc_id`已改为本地路径；`ESMCFOLD_CCD_PATH`指向本地`ccd.pkl`（避免联网）。
+如需重新下载：`curl --proxy http://127.0.0.1:7892 -L -C - -o <target> https://huggingface.co/biohub/ESMFold2/resolve/main/<file>`
 
 **Architecture**: ESMC-6B language model (2.8B sequence training corpus) + ESMFold2 looped-transformer folding head. Supports inference-time compute scaling via `--num-loops` (higher = more accurate but slower).
 
@@ -371,7 +396,7 @@ HTTPS_PROXY=http://127.0.0.1:7890 pip install "esm @ git+https://github.com/Bioh
 - Zero-shot single-sequence by default (no MSA); ColabFold MSA optionally supported
 - Output: `result.complex.to_mmcif()` → CIF; `result.ptm`, `result.plddt`, `result.iptm` → confidence
 
-**Speed**: Benchmark TBD (first run includes ESMC-6B weight download ~12 GB).
+**Speed**: **~27 s/case** avg across 35 cases (no MSA search; model loads in ~3 s after first run). Fastest: monomer/DNA ~20 s; slowest: antibody-antigen ~40 s.
 
 **VRAM**: ~13 GB (ESMC-6B in bfloat16 ~12 GB + folding head ~1 GB); RTX 4090 (48 GB) comfortable.
 
@@ -381,7 +406,7 @@ HTTPS_PROXY=http://127.0.0.1:7890 pip install "esm @ git+https://github.com/Bioh
 
 | Use case | Recommended model | Why |
 |----------|-------------------|-----|
-| General PPI | **Boltz-2** or **ESMFold2** | Boltz-2 pTM 0.94; ESMFold2 SOTA on antibody-antigen |
+| General PPI | **Boltz-2** or **ESMFold2** | Boltz-2 pTM 0.94; ESMFold2 pTM 0.89 PPI avg; fastest (27s) |
 | Protein-ligand | **Boltz-2** or Chai-1 | pTM 0.95 / 0.94; ESMFold2 CCD only |
 | Protein-RNA | **Boltz-2** or Chai-1 | pTM 0.87 / 0.88 |
 | Antibody-antigen | **ESMFold2** or Boltz-2 | ESMFold2 SOTA per Biohub benchmarks |
