@@ -1,0 +1,40 @@
+[
+  {
+    "name": "6ZHC_BclxL_PROTAC_VHL",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "PRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFRDAGTHDGLLVNQTELFVPSLNVDGQPIFANITLPVYTLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKDLERLTQERIAHQRMGD",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MDVFLMIRRHKTTIFTDAKESSTVFELKRIVEGILKRPPDEQRLYKDDQLLDDGKTLGECGFTSQTARPQAPATVGLAFRADDTFEALCIEPFSSPPELPDVMKPQD",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MYVKLISSDGHEFIVKREHALTSGTIKAMLSGPGQFAENETNEVNFREIPSHVLSKVCMYFTYKVRYTNSSTEIPEFPIAPEIALELLMAANFLDC",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MSMAMSQSNRELVVDFLSYKLSQKGYSWSQFSDVEENRTEAPEGTESEMETPSAINGNPSWHLADSPAVNGATGHSSSLDAREVIPMAAVKQALREAGDEFELRYRRAFSDLTSQLHITPGTAYQSFEQVVNELFRDGVNWGRIVAFFSFGGALCVESVDKEMQVLVSRIAAWMATYLNDHLEPWIQENGGWDTFVELYGNNAAAESRKGQERLEHHHHHH",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_QL8",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

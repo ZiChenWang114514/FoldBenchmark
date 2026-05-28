@@ -402,6 +402,41 @@ python -c "from esm.models.esmfold2 import StructurePredictionInput, ProteinInpu
 
 ---
 
+---
+
+## Ternary Complex Scenario (added 2026-05-28)
+
+The `ternary_complex` scenario covers 6 high-resolution structures of bifunctional
+degrader systems — the hardest multi-protein+ligand prediction challenge:
+
+| Case | PDB | Class | E3 | POI | Ligand CCD | Resolution |
+|------|-----|-------|----|-----|-----------|-----------|
+| 5FQD_CRBN_lenalidomide_CK1a | 5FQD | Molecular glue | DDB1/CRBN | CK1α | LVY | 2.45 Å |
+| 6H0F_CRBN_pomalidomide_IKZF1 | 6H0F | Molecular glue | DDB1/CRBN | IKZF1 ZF2 | Y70 | 3.25 Å |
+| 5HXB_CRBN_CC885_GSPT1 | 5HXB | Molecular glue | DDB1/CRBN | GSPT1 | 85C | 3.60 Å |
+| 6ZHC_BclxL_PROTAC_VHL | 6ZHC | PROTAC | VHL+EloB/C | Bcl-xL | QL8 | 1.92 Å |
+| 6HAY_SMARCA2_PROTAC_VHL | 6HAY | PROTAC | VHL+EloB/C | SMARCA2 BD1 | FX8 | 2.24 Å |
+| 7JTP_WDR5_PROTAC_VHL | 7JTP | PROTAC | VHL+EloB/C | WDR5 | X6M | 2.12 Å |
+
+**Design decisions**:
+- **DDB1 included**: 5FQD/6H0F/5HXB all contain DDB1 — omitting it removes the structural
+  context that positions CRBN relative to the recruited POI.
+- **ElonginB/C included**: Standard VHL system (6ZHC/6HAY/7JTP) always includes EloB+EloC
+  as the heterodimer that bridges VHL to Cullin2.
+- **CCD codes for all ligands**: More precise than SMILES for small-molecule benchmarking.
+  Chai-1 (which only accepts SMILES) gets automatic CCD→SMILES conversion via `CCD_TO_SMILES`
+  in `prepare_inputs.py`.
+- **6ZHC chain IDs**: Uses triple-character auth_asym_ids (AAA/BBB/CCC/DDD) — `prepare_inputs.py`
+  auto-remaps to A/B/C/D in all output formats.
+
+**Prediction notes**:
+- PROTAC linkers are highly flexible; consider multiple seeds (`modelSeeds: [1,2,3,4,5]`).
+- Focus on **iPTM** (interface pTM) rather than overall pTM for cross-protein interface quality.
+- ESMFold2 fully supports all 6 cases (CCD codes). SMILES-only ligands would be skipped.
+- RF3 (zero-shot, no paired MSA) may underperform on the large multi-protein assemblies.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |

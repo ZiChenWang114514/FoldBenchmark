@@ -1,0 +1,40 @@
+[
+  {
+    "name": "6HAY_SMARCA2_PROTAC_VHL",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "SMAEKLSPNPPKLTKQMNAIIDTVINYKDSSGRQLSEVFIQLPSRKELPEYYELIRKPVDFKKIKERIRNHKYRSLGDLEKDVMLLCHNAQTFNLEGSQIYEDSIVLQSVFKSARQKIAKEEE",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "GSMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFRDAGTHDGLLVNQTELFVPSLNVDGQPIFANITLPVYTLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKDLERLTQERIAHQRMGD",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MMYVKLISSDGHEFIVKREHALTSGTIKAMLSGPGQFAENETNEVNFREIPSHVLSKVCMYFTYKVRYTNSSTEIPEFPIAPEIALELLMAANFLDC",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MDVFLMIRRHKTTIFTDAKESSTVFELKRIVEGILKRPPDEQRLYKDDQLLDDGKTLGECGFTSQTARPQAPATVGLAFRADDTFEALCIEPFSSPPELPDVMK",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_FX8",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

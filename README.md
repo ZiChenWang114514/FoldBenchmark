@@ -1,6 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of **9** biomolecular structure prediction models across **9** scenarios (**35** test systems) on 4× RTX 4090.
+Systematic benchmark of **9** biomolecular structure prediction models across **10** scenarios (**41** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -226,7 +226,7 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 
 ---
 
-## Test Systems (35 cases, 9 scenarios)
+## Test Systems (41 cases, 10 scenarios)
 
 | Scenario | # | Cases |
 |----------|---|-------|
@@ -239,6 +239,7 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 | homo_multimer | 3 | 14GS GST homodimer, 1HTI TIM homodimer, 1SAK p53-TET tetramer |
 | metal_ion | 3 | 1CA2 carbonic-anhydrase (Zn), 2SOD superoxide-dismutase (Cu/Zn), 8TLN thermolysin (Zn/Ca) |
 | covalent_mod | 3 | 4G5J EGFR-afatinib, 5P9J BTK-ibrutinib, 6OIM KRAS-G12C-sotorasib |
+| ternary_complex | 6 | 5FQD CRBN-lenalidomide-CK1α, 6H0F CRBN-pomalidomide-IKZF1, 5HXB CRBN-CC885-GSPT1, 6ZHC Bcl-xL-VHL-PROTAC, 6HAY SMARCA2-VHL-PROTAC, 7JTP WDR5-VHL-PROTAC |
 
 Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 

@@ -21,6 +21,25 @@ INPUTS_DIR = PROJECT_ROOT / "inputs"
 # For ligands: (chain_id, "ligand", smiles_or_ccd)
 # ============================================================
 
+# Canonical SMILES for CCD-code ligands that Chai-1 cannot accept directly.
+# Chai-1 requires SMILES; all other models accept CCD codes natively.
+# SMILES sourced from RCSB PDB chemcomp API (OpenEye OEToolkits SMILES_CANONICAL).
+CCD_TO_SMILES: dict[str, str] = {
+    # Molecular glue ligands (ternary_complex scenario)
+    "LVY": "c1cc2c(c(c1)N)CN(C2=O)[C@H]3CCC(=O)NC3=O",           # lenalidomide
+    "Y70": "c1cc2c(c(c1)N)C(=O)N(C2=O)[C@H]3CCC(=O)NC3=O",        # pomalidomide
+    "85C": "Cc1ccc(cc1Cl)NC(=O)NCc2ccc3c(c2)CN(C3=O)[C@H]4CCC(=O)NC4=O",  # CC-885
+    # PROTAC ligands (ternary_complex scenario)
+    "QL8": ("Cc1c(scn1)c2ccc(cc2)CNC(=O)[C@@H]3C[C@H](CN3C(=O)[C@H](C(C)(C)C)"
+            "NC(=O)CCOCCOCCOCCOCCOCCOCC#Cc4ccc(cc4)OCCCc5c(nc(s5)N6CCc7cccc(c7C6)"
+            "C(=O)Nc8nc9ccccc9s8)C(=O)O)O"),
+    "FX8": ("Cc1c(scn1)c2ccc(c(c2)OCCOCCOCCN3CCN(CC3)c4cc(nnc4N)c5ccccc5O)"
+            "CNC(=O)[C@@H]6C[C@H](CN6C(=O)[C@H](C(C)(C)C)NC(=O)C7(CC7)F)O"),
+    "X6M": ("Cc1c(scn1)c2ccc(cc2)[C@H](C)NC(=O)[C@@H]3C[C@H](CN3C(=O)[C@H](C(C)(C)C)"
+            "NC(=O)CNC(=O)c4ccc(c(c4)c5ccc(c(c5)NC(=O)C6=CNC(=O)C=C6C(F)(F)F)"
+            "N7C[C@H](N([C@H](C7)C)C)C)F)O"),
+}
+
 TEST_CASES = {
     "protein_protein": [
         {
@@ -249,6 +268,57 @@ TEST_CASES = {
             "ligands": [("B", "MOV"), ("C", "MG"), ("D", "GDP")],
         },
     ],
+    # ── Ternary Complex (added 2026-05-28) ───────────────────────────────────
+    # 3 molecular glue (CRBN-based, DDB1+CRBN+POI) + 3 PROTAC (VHL-based).
+    # All chain IDs verified against RCSB auth_asym_ids.
+    # Ligand CCD codes: LVY=lenalidomide, Y70=pomalidomide, 85C=CC-885,
+    #   QL8/FX8/X6M=PROTAC bifunctional molecules.
+    # Chai-1 SMILES are provided via CCD_TO_SMILES (Chai-1 rejects CCD codes).
+    "ternary_complex": [
+        {
+            "name": "5FQD_CRBN_lenalidomide_CK1a",
+            "pdb_id": "5FQD",
+            # DDB1(A) + CRBN(B) + CK1α(C) + lenalidomide LVY [molecular glue, 2.45Å]
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+            "ligands": [("D", "LVY")],
+        },
+        {
+            "name": "6H0F_CRBN_pomalidomide_IKZF1",
+            "pdb_id": "6H0F",
+            # DDB1(A) + CRBN(B) + IKZF1 ZF2(C) + pomalidomide Y70 [molecular glue, 3.25Å]
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+            "ligands": [("D", "Y70")],
+        },
+        {
+            "name": "5HXB_CRBN_CC885_GSPT1",
+            "pdb_id": "5HXB",
+            # GSPT1(A) + DDB1(B) + CRBN(C) + CC-885 85C [molecular glue, 3.60Å]
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+            "ligands": [("D", "85C")],
+        },
+        {
+            "name": "6ZHC_BclxL_PROTAC_VHL",
+            "pdb_id": "6ZHC",
+            # VHL(AAA)+EloB(BBB)+EloC(CCC)+Bcl-xL(DDD)+PROTAC QL8 [PROTAC, 1.92Å]
+            # Triple-char chain IDs → auto-remapped to A,B,C,D in AF3 JSON
+            "chains": [("AAA", "protein"), ("BBB", "protein"), ("CCC", "protein"), ("DDD", "protein")],
+            "ligands": [("E", "QL8")],
+        },
+        {
+            "name": "6HAY_SMARCA2_PROTAC_VHL",
+            "pdb_id": "6HAY",
+            # SMARCA2(A)+VHL(B)+EloC(C)+EloB(D)+PROTAC FX8 [PROTAC, 2.24Å]
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein")],
+            "ligands": [("E", "FX8")],
+        },
+        {
+            "name": "7JTP_WDR5_PROTAC_VHL",
+            "pdb_id": "7JTP",
+            # WDR5(A)+VHL(L)+EloB(J)+EloC(K)+PROTAC X6M [PROTAC, 2.12Å]
+            "chains": [("A", "protein"), ("L", "protein"), ("J", "protein"), ("K", "protein")],
+            "ligands": [("B", "X6M")],
+        },
+    ],
 }
 
 
@@ -382,6 +452,12 @@ def generate_chai1_fasta(af3_json: dict) -> str:
             if "smiles" in entry["ligand"]:
                 lines.append(f">ligand|name=chain_{chain_id}")
                 lines.append(entry["ligand"]["smiles"])
+            elif "ccdCodes" in entry["ligand"]:
+                # Chai-1 requires SMILES; look up CCD code in CCD_TO_SMILES
+                smiles = CCD_TO_SMILES.get(entry["ligand"]["ccdCodes"][0])
+                if smiles:
+                    lines.append(f">ligand|name=chain_{chain_id}")
+                    lines.append(smiles)
     return "\n".join(lines) + "\n"
 
 
