@@ -47,6 +47,16 @@ CCD_TO_SMILES: dict[str, str] = {
     "TA1": ("CC1=C2[C@H](C(=O)[C@@]3([C@H](C[C@@H]4[C@]([C@H]3[C@@H]([C@@](C2(C)C)"
             "(C[C@@H]1OC(=O)[C@@H]([C@H](c5ccccc5)NC(=O)c6ccccc6)O)O)"
             "OC(=O)c7ccccc7)(CO4)OC(=O)C)O)C)OC(=O)C"),   # taxol/paclitaxel (P-gp in 6QEX)
+    # IDP scenario ligands
+    "GTA": ("C[n+]1cn(c2c1C(=O)NC(=N2)N)[C@H]3[C@@H]([C@@H]([C@H](O3)CO[P@@](=O)(O)"
+            "O[P@@](=O)(O)O[P@@](=O)(O)OC[C@@H]4[C@H]([C@H]([C@@H](O4)n5cnc6c5ncnc6N)"
+            "O)O)O)O"),  # m7GpppA cap analog (eIF4E in 1WKW)
+    # RNA structure scenario ligands
+    "SAM": "C[S@@+](CC[C@@H](C(=O)[O-])N)C[C@@H]1[C@H]([C@H]([C@@H](O1)n2cnc3c2ncnc3N)O)O",  # SAM in 2GIS SAM-I riboswitch
+    # Glycoprotein scenario ligands
+    "MMA": "CO[C@@H]1[C@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O",  # methyl α-D-mannopyranoside (ConA in 5CNA)
+    "NAG": "CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@H]1O)CO)O)O",  # N-acetyl-β-D-glucosamine (Siglec/lectin)
+    "NDG": "CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@@H]1O)CO)O)O",  # N-acetyl-α-D-glucosamine (WGA in 2UVO)
 }
 
 TEST_CASES = {
@@ -326,6 +336,281 @@ TEST_CASES = {
             # WDR5(A)+VHL(L)+EloB(J)+EloC(K)+PROTAC X6M [PROTAC, 2.12Å]
             "chains": [("A", "protein"), ("L", "protein"), ("J", "protein"), ("K", "protein")],
             "ligands": [("B", "X6M")],
+        },
+    ],
+    # ── IDP / IDR (added 2026-05-28) ─────────────────────────────────────────
+    # 4 intrinsically disordered protein coupled folding-binding complexes.
+    # IDP is disordered in solution and adopts structure only upon binding partner.
+    # All chain IDs verified vs RCSB auth_asym_ids.
+    "idp": [
+        {
+            "name": "1YCR_MDM2_p53TAD",
+            "pdb_id": "1YCR",
+            # MDM2 N-terminal domain (A,109aa) + p53 TAD helix (B,15aa)
+            # THE canonical IDP: p53 TAD fully disordered free; helix on MDM2 binding
+            # X-ray 2.6 Å — most-cited IDP coupled-folding structure
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "1WKW_eIF4E_4EBP1",
+            "pdb_id": "1WKW",
+            # eIF4E cap-binding protein (A,191aa) + 4EBP1 peptide (B,20aa) + m7GpppA cap
+            # 4EBP1 is fully disordered free; adopts reverse-L geometry (non-helical IDP mode)
+            # mTOR signaling axis; X-ray 2.1 Å
+            "chains": [("A", "protein"), ("B", "protein")],
+            "ligands": [("C", "GTA")],
+        },
+        {
+            "name": "4QVF_BCLxL_BIM_BH3",
+            "pdb_id": "4QVF",
+            # BCL-XL anti-apoptotic protein (A,169aa) + BIM BH3 helix (B,26aa)
+            # BIM is an intrinsically disordered protein; BH3 helix docks into hydrophobic groove
+            # Drug target for venetoclax (ABT-199); X-ray 1.5 Å
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "1NEX_Cdc4_Skp1_pDegron",
+            "pdb_id": "1NEX",
+            # Cdc4 WD40 β-propeller (B,464aa) + Skp1 (A,169aa) + CPD phosphodegron (E,9aa)
+            # Sic1 IDP phosphodegron GLLTPPQSG binds WD40 in extended conformation
+            # E3 ligase substrate recognition; X-ray 2.7 Å
+            # ASU has 2 copies; use chains A (Skp1), B (Cdc4), E (pDegron)
+            "chains": [("A", "protein"), ("B", "protein"), ("E", "protein")],
+        },
+    ],
+    # ── Protein-Peptide (added 2026-05-28) ───────────────────────────────────
+    # 5 short-peptide (5–26 aa) binding complexes. Each tests a different binding
+    # geometry: extended groove (SH2), wrap-around helix (CaM), β-strand augmentation
+    # (PDZ), helical groove (BCL-XL), MHC groove (HLA-A2).
+    "protein_peptide": [
+        {
+            "name": "1SHA_Src_SH2_pY",
+            "pdb_id": "1SHA",
+            # v-Src SH2 domain (A,104aa) + pTyr phosphopeptide YVPML (B,5aa)
+            # Extended conformation; pY pocket + +3 hydrophobic pocket; 1.5 Å X-ray
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "1CDL_CaM_M13",
+            "pdb_id": "1CDL",
+            # Calmodulin (A,147aa) + M13 skMLCK peptide (E,20aa)
+            # CaM completely wraps around M13 helical peptide; 1-8-14 hydrophobic mode
+            # ASU has 4 copies (CaM A-D, M13 E-H); use one pair: A + E
+            "chains": [("A", "protein"), ("E", "protein")],
+        },
+        {
+            "name": "1BE9_PDZ3_CRIPT",
+            "pdb_id": "1BE9",
+            # PSD-95 PDZ3 domain (A,119aa) + CRIPT KQTSV C-terminal pentapeptide (B,5aa)
+            # β-strand augmentation into PDZ binding groove; C-terminus carboxylate anchor
+            # Shortest peptide in benchmark (5 aa); X-ray ~2.0 Å
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "4QVF_BCLxL_BIM_BH3",
+            "pdb_id": "4QVF",
+            # BCL-XL (A,169aa) + BIM BH3 helix (B,26aa) — same PDB as idp scenario
+            # Here tested as protein-peptide: helical peptide in deep hydrophobic groove
+            # Drug target for venetoclax; X-ray 1.5 Å
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "3MRG_HLA_HCV_peptide",
+            "pdb_id": "3MRG",
+            # HLA-A*0201 heavy chain (A,293aa) + β2-microglobulin (B,100aa) + HCV NS3 9-mer (P,9aa)
+            # Peptide-binding groove; N/C anchor residues; central bulge; MHC-I canonical
+            # Peptide sequence CINGVCWTV; X-ray ~2.0 Å
+            "chains": [("A", "protein"), ("B", "protein"), ("P", "protein")],
+        },
+    ],
+    # ── RNA Structure (added 2026-05-28) ─────────────────────────────────────
+    # 5 pure RNA folding cases (no protein). Covers tRNA → ribozyme → riboswitch → large domain.
+    # NOTE: ESMFold2 (protein-only model) is skipped for this scenario automatically.
+    # Protenix may also not support protein-free RNA input; check outputs after run.
+    "rna_structure": [
+        {
+            "name": "1EHZ_tRNA_Phe",
+            "pdb_id": "1EHZ",
+            # Yeast tRNA-Phe (A, 76 nt) — canonical L-shaped cloverleaf reference
+            # Highest-resolution full-length tRNA (1.93 Å X-ray); WC + non-WC base pairs
+            # Standard reference for RNA structure prediction benchmarks
+            "chains": [("A", "rna")],
+        },
+        {
+            "name": "3ZP8_hammerhead_ribozyme",
+            "pdb_id": "3ZP8",
+            # Full-length Schistosoma hammerhead ribozyme (A,43nt) + substrate strand (B,20nt)
+            # Highest-resolution ribozyme (1.55 Å); Y-junction; catalytic Mg²⁺
+            "chains": [("A", "rna"), ("B", "rna")],
+        },
+        {
+            "name": "4OJI_twister_ribozyme",
+            "pdb_id": "4OJI",
+            # Oryza sativa twister ribozyme (A, 54 nt)
+            # Novel double-pseudoknot topology discovered 2014 (Nature Chem Biol)
+            # Fastest self-cleaving ribozyme; tests prediction of novel RNA topologies
+            "chains": [("A", "rna")],
+        },
+        {
+            "name": "2GIS_SAM1_riboswitch",
+            "pdb_id": "2GIS",
+            # SAM-I riboswitch aptamer (A, 94 nt) + S-adenosylmethionine ligand
+            # Metabolite-sensing RNA; 4-way junction + pseudoknot + K-turn; X-ray 2.9 Å
+            "chains": [("A", "rna")],
+            "ligands": [("B", "SAM")],
+        },
+        {
+            "name": "1GID_P4P6_groupI",
+            "pdb_id": "1GID",
+            # P4-P6 domain of Tetrahymena Group I intron (A, 158 nt)
+            # Largest RNA in benchmark; landmark helix-packing + GAAA tetraloop-receptor
+            # ASU has 2 copies; use chain A only; Mg²⁺-dependent tertiary structure; X-ray 2.8 Å
+            "chains": [("A", "rna")],
+        },
+    ],
+    # ── Hetero-multimer (added 2026-05-28) ───────────────────────────────────
+    # 5 asymmetric multi-protein complexes (3–8 different-sequence chains).
+    # Distinct from: antibody-antigen (already tested), GPCR+G-protein (gpcr scenario),
+    # ternary_complex (only degrader complexes). Covers ubiquitin pathway + DNA replication + NPC.
+    "hetero_multimer": [
+        {
+            "name": "1LDK_SCF_Cul1_Skp2",
+            "pdb_id": "1LDK",
+            # SCF E3 ubiquitin ligase: Cul1(A,396aa)+Rbx1(C,90aa)+Skp1(D,133aa)+Skp2(B,366aa)+E(41aa)
+            # Elongated Cullin scaffold (>100 Å) + RING catalytic core; 4 different proteins
+            # Landmark ubiquitin ligase structure; X-ray 2.6 Å; ZN on Rbx1 RING domain
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"),
+                       ("D", "protein"), ("E", "protein")],
+            "ligands": [("F", "ZN")],
+        },
+        {
+            "name": "4II2_E1_E2_Ubiquitin",
+            "pdb_id": "4II2",
+            # Uba1 E1 (A,1001aa) + His-Ubiquitin (B,83aa) + Ubc4 E2 (C,163aa)
+            # First E1-E2-Ub ternary complex; large multi-domain E1 enzyme; X-ray 2.2 Å
+            # ATP (D) on Uba1 active site; tests prediction of multi-domain E1 fold
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+            "ligands": [("D", "ATP")],
+        },
+        {
+            "name": "3IKO_Nup84_heterotrimer",
+            "pdb_id": "3IKO",
+            # Nuclear pore subcomplex: Sec13(A,297aa) + Nup145C(B,442aa) + Nup84(C,460aa)
+            # WD40 β-propeller + 2× α-helical solenoids; NPC building block; X-ray 3.2 Å
+            # ASU has 3 copies; use one set: chains A (Sec13), B (Nup145C), C (Nup84)
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+        },
+        {
+            "name": "1SXJ_RFC_PCNA_clamp",
+            "pdb_id": "1SXJ",
+            # RFC clamp loader (RFC1-5: A-E) + PCNA homo-trimer (F,G,H)
+            # RFC1(A,516aa) + RFC2(B,323aa) + RFC3(C,340aa) + RFC4(D,353aa) + RFC5(E,354aa)
+            # PCNA homo-trimer (F=G=H=283aa); AAA+ spiral arrangement; X-ray 3.1 Å
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein"),
+                       ("E", "protein"), ("F", "protein"), ("G", "protein"), ("H", "protein")],
+        },
+        {
+            "name": "5CWS_nucleoporin_channel",
+            "pdb_id": "5CWS",
+            # Chaetomium thermophilum NPC channel complex:
+            # Nsp1 frag(A,237aa) + Nup49 frag(B,266aa) + Nup57 frag(C,208aa) + Nic96 N-term(D,227aa)
+            # FG-repeat nucleoporins + inner ring adaptor; thermophilic = good diffraction; X-ray 3.3 Å
+            # ASU has 2 copies per complex; use one copy: A,B,C,D
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein")],
+        },
+    ],
+    # ── Glycoprotein (added 2026-05-28) ──────────────────────────────────────
+    # 4 protein-carbohydrate interaction structures. Tests models' ability to predict
+    # protein-glycan interfaces — a key differentiator of AF3 vs earlier models.
+    # Ligands specified as CCD codes; complex branched N-glycans require future code enhancement.
+    "glycoprotein": [
+        {
+            "name": "5CNA_ConA_mannose",
+            "pdb_id": "5CNA",
+            # Concanavalin A homo-tetramer (A,B,C,D; 237aa each) + 4× MMA (methyl α-D-mannose)
+            # Classic Ca²⁺/Mn²⁺-dependent legume lectin; monosaccharide binding reference
+            # X-ray 2.0 Å; tests tetramer fold + sugar recognition
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein")],
+            "ligands": [("E", "MMA"), ("F", "MMA"), ("G", "MMA"), ("H", "MMA")],
+        },
+        {
+            "name": "2HRL_Siglec7_NAG",
+            "pdb_id": "2HRL",
+            # Siglec-7 inhibitory receptor (A, 127aa) + N-acetylglucosamine (NAG)
+            # High-resolution (1.8 Å) sialic acid binding; ganglioside GT1b recognition site
+            "chains": [("A", "protein")],
+            "ligands": [("B", "NAG")],
+        },
+        {
+            "name": "1DBN_lectin_NAG",
+            "pdb_id": "1DBN",
+            # Lectin dimer (A,B; 239aa each) + N-acetylglucosamine per monomer
+            # NAG-binding; homo-dimer lectin fold; clean nonpolymer glycan ligand
+            "chains": [("A", "protein"), ("B", "protein")],
+            "ligands": [("C", "NAG"), ("D", "NAG")],
+        },
+        {
+            "name": "2UVO_WGA_NDG",
+            "pdb_id": "2UVO",
+            # Wheat germ agglutinin homo-tetramer (A,B,E,F; 171aa each) + NDG (α-GlcNAc) per monomer
+            # Classic cereal lectin; 3-domain hevein-fold; NDG in primary sugar-binding site
+            # X-ray 2.1 Å; ASU has 4 monomers with non-sequential chain IDs A,B,E,F
+            "chains": [("A", "protein"), ("B", "protein"), ("E", "protein"), ("F", "protein")],
+            "ligands": [("C", "NDG"), ("D", "NDG"), ("G", "NDG"), ("H", "NDG")],
+        },
+    ],
+    # ── Coiled-coil and Repeat Proteins (added 2026-05-28) ───────────────────
+    # 6 cases: parallel CC homodimer → designed heterotrimer → biological 4-helix bundle
+    # → Ankyrin repeat → TPR repeat → HEAT repeat solenoid.
+    # Tests long-range regular structural motifs where models often struggle.
+    "coiled_coil": [
+        {
+            "name": "2ZTA_GCN4_leucine_zipper",
+            "pdb_id": "2ZTA",
+            # GCN4 leucine zipper parallel homo-dimer (A,B; 34aa each)
+            # THE archetypal coiled-coil; Crick "knobs-into-holes" packing; heptad a,d positions
+            # X-ray 1.8 Å — every CC prediction algorithm is benchmarked against this
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "1BB1_designed_heterotrimer_CC",
+            "pdb_id": "1BB1",
+            # Designed heterotrimeric coiled-coil (A,B,C; 36aa each, 3 DIFFERENT sequences)
+            # Charge-complementary design; no evolutionary co-variation; hardest CC prediction
+            # X-ray 1.8 Å MAD; tests de novo sequence-based CC register assignment
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+        },
+        {
+            "name": "1SFC_SNARE_4helix_bundle",
+            "pdb_id": "1SFC",
+            # Neuronal SNARE: synaptobrevin/VAMP(A,96aa) + syntaxin-1a(B,83aa) + SNAP25-N(C,83aa) + SNAP25-C(D,87aa)
+            # Biological hetero 4-helix parallel bundle; 16-layer "ionic layer"; botulinum toxin target
+            # ASU has 3 copies; use one: A,B,C,D; X-ray 2.4 Å
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"), ("D", "protein")],
+        },
+        {
+            "name": "1N0R_4ANK_ankyrin_repeat",
+            "pdb_id": "1N0R",
+            # Consensus-designed 4ANK ankyrin repeat protein (A, 126aa)
+            # 4× 33-aa repeats (β-turn + 2 antiparallel helices); ultra-regular solenoid
+            # X-ray 1.5 Å — highest-resolution ankyrin repeat structure for benchmarking
+            "chains": [("A", "protein")],
+        },
+        {
+            "name": "1A17_PP5_TPR_domain",
+            "pdb_id": "1A17",
+            # Protein phosphatase 5 TPR domain (A, 166aa)
+            # 3 TPR motifs × 34 aa each; right-handed helix-pair superhelix; Hsp90 binding groove
+            # X-ray 2.0 Å; tests TPR groove geometry prediction
+            "chains": [("A", "protein")],
+        },
+        {
+            "name": "1QGK_importinb_HEAT",
+            "pdb_id": "1QGK",
+            # Importin-β (A, 876aa, 19 HEAT repeats) + IBB domain peptide (B, 44aa)
+            # Longest single chain in benchmark (~100 kDa); superhelical curvature over 19 repeats
+            # Tests long-range HEAT repeat geometry + peptide binding; X-ray 2.5 Å
+            "chains": [("A", "protein"), ("B", "protein")],
         },
     ],
     # ── GPCR (added 2026-05-28) ──────────────────────────────────────────────

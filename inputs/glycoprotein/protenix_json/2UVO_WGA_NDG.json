@@ -1,0 +1,58 @@
+[
+  {
+    "name": "2UVO_WGA_NDG",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NDG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NDG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NDG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NDG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

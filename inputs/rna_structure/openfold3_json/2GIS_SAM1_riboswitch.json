@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "2GIS_SAM1_riboswitch": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "rna",
+          "chain_ids": "A",
+          "sequence": "GGCUUAUCAAGAGAGGUGGAGGGACUGGCCCGAUGAAACCCGGCAACCAGAAAUGGUGCCAAUUCCUGCAGCGGAAACGUUGAAAGAUGAGCCA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "ccd_codes": "SAM"
+        }
+      ]
+    }
+  }
+}

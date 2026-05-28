@@ -1,0 +1,24 @@
+{
+  "queries": {
+    "1BB1_designed_heterotrimer_CC": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "XAEIAAIEYEQAAIKEEIAAIKDKIAAIKEYIAAIX"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "XEKIAAIKEEQAAIEEEIQAIKEEIAAIKYLIAQIX"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "C",
+          "sequence": "XAEIAAIKYKQAAIKNEIAAIKQEIAAIEQMIAAIX"
+        }
+      ]
+    }
+  }
+}

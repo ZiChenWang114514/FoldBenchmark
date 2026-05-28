@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "2HRL_Siglec7_NAG": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "GQKSNRKDYSLTMQSSVTVQEGMCVHVRCSFSYPVDSQTDSDPVHGYWFRAGNDISWKAPVATNNPAWAVQEETRDRFHLLGDPQTKNCTLSIRDARMSDAGRYFFRMEKGNIKWNYKYDQLSVNVT"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "B",
+          "ccd_codes": "NAG"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "queries": {
+    "1WKW_eIF4E_4EBP1": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "EVANPEHYIKHPLQNRWALWFFKNDKSKTWQANLRLISKFDTVEDFWALYNHIQLSSNLMPGCDYSLFKDGIEPMWEDEKNKRGGRWLITLNKQQRRSDLDRFWLETLLCLIGESFDDYSDDVCGAVVNVRAKGDKIAIWTTECENREAVTHIGRVYKERLGLPPKIVIGYQSHADTATKSGSTTKNRFVV"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "PGGTRIIYDRKFLMECRNSP"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "GTA"
+        }
+      ]
+    }
+  }
+}

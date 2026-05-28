@@ -1,0 +1,34 @@
+[
+  {
+    "name": "1DBN_lectin_NAG",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NAG",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NAG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

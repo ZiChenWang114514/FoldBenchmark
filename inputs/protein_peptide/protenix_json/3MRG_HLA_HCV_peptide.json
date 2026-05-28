@@ -1,0 +1,28 @@
+[
+  {
+    "name": "3MRG_HLA_HCV_peptide",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "GSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDGETRKVKAHSQTHRVDLGTLRGYYNQSEAGSHTVQRMYGCDVGSDWRFLRGYHQYAYDGKDYIALKEDLRSWTAADMAAQTTKHKWEAAHVAEQLRAYLEGTCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWVAVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPGSLHHILDAQKMVWNHR",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MIQRTPKIQVYSRHPAENGKSNFLNCYVSGFHPSDIEVDLLKNGERIEKVEHSDLSFSKDWSFYLLYYTEFTPTEKDEYACRVNHVTLSQPKIVKWDRDM",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "CINGVCWTV",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "queries": {
+    "2UVO_WGA_NDG": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "E",
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "F",
+          "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "NDG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "D",
+          "ccd_codes": "NDG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "G",
+          "ccd_codes": "NDG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "H",
+          "ccd_codes": "NDG"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "1DBN_lectin_NAG",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "C"
+        ],
+        "ccdCodes": [
+          "NAG"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "D"
+        ],
+        "ccdCodes": [
+          "NAG"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

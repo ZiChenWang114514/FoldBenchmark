@@ -1,0 +1,82 @@
+{
+  "name": "2UVO_WGA_NDG",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "E"
+        ],
+        "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "F"
+        ],
+        "sequence": "QRCGEQGSNMECPNNLCCSQYGYCGMGGDYCGKGCQNGACWTSKRCGSQAGGATCTNNQCCSQYGYCGFGAEYCGAGCQGGPCRADIKCGSQAGGKLCPNNLCCSQWGFCGLGSEFCGGGCQSGACSTDKPCGKDAGGRVCTNNYCCSKWGSCGIGPGYCGAGCQSGGCDG"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "C"
+        ],
+        "ccdCodes": [
+          "NDG"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "D"
+        ],
+        "ccdCodes": [
+          "NDG"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "G"
+        ],
+        "ccdCodes": [
+          "NDG"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "H"
+        ],
+        "ccdCodes": [
+          "NDG"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

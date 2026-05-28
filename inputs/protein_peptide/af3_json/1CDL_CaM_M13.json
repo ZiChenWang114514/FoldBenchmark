@@ -1,0 +1,26 @@
+{
+  "name": "1CDL_CaM_M13",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "ADQLTEEQIAEFKEAFSLFDKDGDGTITTKELGTVMRSLGQNPTEAELQDMINEVDADGNGTIDFPEFLTMMARKMKDTDSEEEIREAFRVFDKDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREADIDGDGQVNYEEFVQMMTA"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "E"
+        ],
+        "sequence": "ARRKWQKTGHAVRAIGRLSS"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

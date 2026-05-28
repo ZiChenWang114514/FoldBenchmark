@@ -1,0 +1,13 @@
+{
+  "name": "2ZTA_GCN4_leucine_zipper",
+  "components": [
+    {
+      "seq": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER",
+      "chain_id": "A"
+    },
+    {
+      "seq": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER",
+      "chain_id": "B"
+    }
+  ]
+}

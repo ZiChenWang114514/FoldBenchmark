@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1SHA_Src_SH2_pY",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "QAEEWYFGKITRRESERLLLNPENPRGTFLVRESETTKGAYCLSVSDFDNAKGLNVKHYKIRKLDSGGFYITSRTQFSSLQQLVAYYSKHADGLCHRLTNVCPT",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "YVPML",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

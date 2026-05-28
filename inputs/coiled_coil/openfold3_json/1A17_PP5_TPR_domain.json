@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "1A17_PP5_TPR_domain": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "RDEPPADGALKRAEELKTQANDYFKAKDYENAIKFYSQAIELNPSNAIYYGNRSLAYLRTECYGYALGDATRAIELDKKYIKGYYRRAASNMALGKFRAALRDYETVVKVKPHDKDAKMKYQECNKIVKQKAFERAIAGDEHKRSVVDSLDIESMTIEDEYSGPKL"
+        }
+      ]
+    }
+  }
+}

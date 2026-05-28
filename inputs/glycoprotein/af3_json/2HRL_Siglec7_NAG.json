@@ -1,0 +1,28 @@
+{
+  "name": "2HRL_Siglec7_NAG",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "GQKSNRKDYSLTMQSSVTVQEGMCVHVRCSFSYPVDSQTDSDPVHGYWFRAGNDISWKAPVATNNPAWAVQEETRDRFHLLGDPQTKNCTLSIRDARMSDAGRYFFRMEKGNIKWNYKYDQLSVNVT"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "B"
+        ],
+        "ccdCodes": [
+          "NAG"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

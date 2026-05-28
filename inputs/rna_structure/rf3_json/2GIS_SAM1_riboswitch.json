@@ -1,0 +1,12 @@
+{
+  "name": "2GIS_SAM1_riboswitch",
+  "components": [
+    {
+      "seq": "GGCUUAUCAAGAGAGGUGGAGGGACUGGCCCGAUGAAACCCGGCAACCAGAAAUGGUGCCAAUUCCUGCAGCGGAAACGUUGAAAGAUGAGCCA",
+      "chain_id": "A"
+    },
+    {
+      "ccd_code": "SAM"
+    }
+  ]
+}

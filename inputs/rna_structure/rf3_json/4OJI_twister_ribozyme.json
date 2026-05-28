@@ -1,0 +1,9 @@
+{
+  "name": "4OJI_twister_ribozyme",
+  "components": [
+    {
+      "seq": "CCGCCUAACACUGCCAAUGCCGGUCCCAAGCCCGGAUAAAAGUGGAGGGGGCGG",
+      "chain_id": "A"
+    }
+  ]
+}

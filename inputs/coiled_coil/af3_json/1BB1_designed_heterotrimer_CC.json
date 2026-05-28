@@ -1,0 +1,34 @@
+{
+  "name": "1BB1_designed_heterotrimer_CC",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "XAEIAAIEYEQAAIKEEIAAIKDKIAAIKEYIAAIX"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "XEKIAAIKEEQAAIEEEIQAIKEEIAAIKYLIAQIX"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "C"
+        ],
+        "sequence": "XAEIAAIKYKQAAIKNEIAAIKQEIAAIEQMIAAIX"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

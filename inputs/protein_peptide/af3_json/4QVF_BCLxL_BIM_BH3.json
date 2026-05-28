@@ -1,0 +1,26 @@
+{
+  "name": "4QVF_BCLxL_BIM_BH3",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "MSQSNRELVVDFLSYKLSQKGYSWSQFSDVEENRTEAPEGTESEAVKQALREAGDEFELRYRRAFSDLTSQLHITPGTAYQSFEQVVNELFRDGVNWGRIVAFFSFGGALCVESVDKEMQVLVSRIAAWMATYLNDHLEPWIQENGGWDTFVELYGNNAAAESRKGQER"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "DMRPEIWIAQELRRIGDEFNAYYARR"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

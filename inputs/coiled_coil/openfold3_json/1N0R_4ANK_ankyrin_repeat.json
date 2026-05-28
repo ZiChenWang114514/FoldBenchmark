@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "1N0R_4ANK_ankyrin_repeat": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "NGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGAY"
+        }
+      ]
+    }
+  }
+}

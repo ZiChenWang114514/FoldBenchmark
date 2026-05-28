@@ -1,0 +1,82 @@
+{
+  "name": "5CNA_ConA_mannose",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "C"
+        ],
+        "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "D"
+        ],
+        "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "E"
+        ],
+        "ccdCodes": [
+          "MMA"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "F"
+        ],
+        "ccdCodes": [
+          "MMA"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "G"
+        ],
+        "ccdCodes": [
+          "MMA"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "H"
+        ],
+        "ccdCodes": [
+          "MMA"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

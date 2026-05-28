@@ -1,0 +1,49 @@
+{
+  "queries": {
+    "5CNA_ConA_mannose": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "C",
+          "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "D",
+          "sequence": "ADTIVAVELDTYPNTDIGDPSYPHIGIDIKSVRSKKTAKWNMQNGKVGTAHIIYNSVDKRLSAVVSYPNADSATVSYDVDLDNVLPEWVRVGLSASTGLYKETNTILSWSFTSKLKSNSTHETNALHFMFNQFSKDQKDLILQGDATTGTDGNLELTRVSSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDSSIPSGSTGRLLGLFPDAN"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "E",
+          "ccd_codes": "MMA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "F",
+          "ccd_codes": "MMA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "G",
+          "ccd_codes": "MMA"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "H",
+          "ccd_codes": "MMA"
+        }
+      ]
+    }
+  }
+}

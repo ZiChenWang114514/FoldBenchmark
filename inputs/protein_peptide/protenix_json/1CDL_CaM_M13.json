@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1CDL_CaM_M13",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "ADQLTEEQIAEFKEAFSLFDKDGDGTITTKELGTVMRSLGQNPTEAELQDMINEVDADGNGTIDFPEFLTMMARKMKDTDSEEEIREAFRVFDKDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREADIDGDGQVNYEEFVQMMTA",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "ARRKWQKTGHAVRAIGRLSS",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

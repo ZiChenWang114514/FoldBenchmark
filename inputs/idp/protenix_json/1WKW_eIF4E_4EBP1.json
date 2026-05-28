@@ -1,0 +1,28 @@
+[
+  {
+    "name": "1WKW_eIF4E_4EBP1",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "EVANPEHYIKHPLQNRWALWFFKNDKSKTWQANLRLISKFDTVEDFWALYNHIQLSSNLMPGCDYSLFKDGIEPMWEDEKNKRGGRWLITLNKQQRRSDLDRFWLETLLCLIGESFDDYSDDVCGAVVNVRAKGDKIAIWTTECENREAVTHIGRVYKERLGLPPKIVIGYQSHADTATKSGSTTKNRFVV",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "PGGTRIIYDRKFLMECRNSP",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_GTA",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

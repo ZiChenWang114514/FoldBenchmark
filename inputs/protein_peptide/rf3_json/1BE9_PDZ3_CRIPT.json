@@ -1,0 +1,13 @@
+{
+  "name": "1BE9_PDZ3_CRIPT",
+  "components": [
+    {
+      "seq": "GSPEFLGEEDIPREPRRIVIHRGSTGLGFNIIGGEDGEGIFISFILAGGPADLSGELRKGDQILSVNGVDLRNASHEQAAIALKNAGQTVTIIAQYKPEEYSRFEANSRVNSSGRIVTN",
+      "chain_id": "A"
+    },
+    {
+      "seq": "KQTSV",
+      "chain_id": "B"
+    }
+  ]
+}

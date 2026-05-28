@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "3ZP8_hammerhead_ribozyme": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "rna",
+          "chain_ids": "A",
+          "sequence": "GGAUGUACUACCAGCUGAUGAGUCCCAAAUAGGACGAAACGCC"
+        },
+        {
+          "molecule_type": "rna",
+          "chain_ids": "B",
+          "sequence": "GGCGUCCUGGUAUCCAAUCC"
+        }
+      ]
+    }
+  }
+}

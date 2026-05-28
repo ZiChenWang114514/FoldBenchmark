@@ -1,0 +1,8 @@
+version: 1
+sequences:
+  - rna:
+      id: A
+      sequence: GGCUUAUCAAGAGAGGUGGAGGGACUGGCCCGAUGAAACCCGGCAACCAGAAAUGGUGCCAAUUCCUGCAGCGGAAACGUUGAAAGAUGAGCCA
+  - ligand:
+      id: B
+      ccd: SAM

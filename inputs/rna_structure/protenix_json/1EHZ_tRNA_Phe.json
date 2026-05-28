@@ -1,0 +1,16 @@
+[
+  {
+    "name": "1EHZ_tRNA_Phe",
+    "sequences": [
+      {
+        "rnaSequence": {
+          "sequence": "GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUCUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCACCA",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

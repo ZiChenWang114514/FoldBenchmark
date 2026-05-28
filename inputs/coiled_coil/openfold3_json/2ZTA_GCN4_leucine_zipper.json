@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "2ZTA_GCN4_leucine_zipper": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER"
+        }
+      ]
+    }
+  }
+}

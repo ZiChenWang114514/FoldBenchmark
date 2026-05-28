@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "4QVF_BCLxL_BIM_BH3": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MSQSNRELVVDFLSYKLSQKGYSWSQFSDVEENRTEAPEGTESEAVKQALREAGDEFELRYRRAFSDLTSQLHITPGTAYQSFEQVVNELFRDGVNWGRIVAFFSFGGALCVESVDKEMQVLVSRIAAWMATYLNDHLEPWIQENGGWDTFVELYGNNAAAESRKGQER"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "DMRPEIWIAQELRRIGDEFNAYYARR"
+        }
+      ]
+    }
+  }
+}

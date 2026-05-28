@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "1EHZ_tRNA_Phe": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "rna",
+          "chain_ids": "A",
+          "sequence": "GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUCUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCACCA"
+        }
+      ]
+    }
+  }
+}

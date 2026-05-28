@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1YCR_MDM2_p53TAD",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "SQIPASEQETLVRPKPLLLKLLKSVGAQKDTYTMKEVLFYLGQYIMTKRLYDEKQQHIVYCSNDLLGDLFGVPSFSVKEHRKIYTMIYRNLVVVNQQESSDSGTSVSEN",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "SQETFSDLWKLLPEN",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

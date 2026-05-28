@@ -1,0 +1,22 @@
+[
+  {
+    "name": "4QVF_BCLxL_BIM_BH3",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MSQSNRELVVDFLSYKLSQKGYSWSQFSDVEENRTEAPEGTESEAVKQALREAGDEFELRYRRAFSDLTSQLHITPGTAYQSFEQVVNELFRDGVNWGRIVAFFSFGGALCVESVDKEMQVLVSRIAAWMATYLNDHLEPWIQENGGWDTFVELYGNNAAAESRKGQER",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "DMRPEIWIAQELRRIGDEFNAYYARR",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

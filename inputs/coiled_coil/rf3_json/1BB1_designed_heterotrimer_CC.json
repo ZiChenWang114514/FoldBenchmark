@@ -1,0 +1,17 @@
+{
+  "name": "1BB1_designed_heterotrimer_CC",
+  "components": [
+    {
+      "seq": "XAEIAAIEYEQAAIKEEIAAIKDKIAAIKEYIAAIX",
+      "chain_id": "A"
+    },
+    {
+      "seq": "XEKIAAIKEEQAAIEEEIQAIKEEIAAIKYLIAQIX",
+      "chain_id": "B"
+    },
+    {
+      "seq": "XAEIAAIKYKQAAIKNEIAAIKQEIAAIEQMIAAIX",
+      "chain_id": "C"
+    }
+  ]
+}

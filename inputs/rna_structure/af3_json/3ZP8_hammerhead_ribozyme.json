@@ -1,0 +1,26 @@
+{
+  "name": "3ZP8_hammerhead_ribozyme",
+  "sequences": [
+    {
+      "rna": {
+        "id": [
+          "A"
+        ],
+        "sequence": "GGAUGUACUACCAGCUGAUGAGUCCCAAAUAGGACGAAACGCC"
+      }
+    },
+    {
+      "rna": {
+        "id": [
+          "B"
+        ],
+        "sequence": "GGCGUCCUGGUAUCCAAUCC"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

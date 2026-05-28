@@ -1,0 +1,16 @@
+[
+  {
+    "name": "1N0R_4ANK_ankyrin_repeat",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "NGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGADVNAKDKNGRTPLHLAARNGHLEVVKLLLEAGAY",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

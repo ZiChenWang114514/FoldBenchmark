@@ -1,0 +1,22 @@
+[
+  {
+    "name": "2HRL_Siglec7_NAG",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "GQKSNRKDYSLTMQSSVTVQEGMCVHVRCSFSYPVDSQTDSDPVHGYWFRAGNDISWKAPVATNNPAWAVQEETRDRFHLLGDPQTKNCTLSIRDARMSDAGRYFFRMEKGNIKWNYKYDQLSVNVT",
+          "count": 1
+        }
+      },
+      {
+        "ligand": {
+          "ligand": "CCD_NAG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

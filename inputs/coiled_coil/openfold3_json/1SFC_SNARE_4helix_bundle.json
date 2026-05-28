@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "1SFC_SNARE_4helix_bundle": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "MSATAATVPPAAPAGEGGPPAPPPNLTSNRRLQQTQAQVDEVVDIMRVNVDKVLERDQKLSELDDRADALQAGASQFETSAAKLKRKYWWKNLKMM"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "GIIMDSSISKQALSEIETRHSEIIKLENSIRELHDMFMDMAMLVESQGEMIDRIEYNVEHAVDYVERAVSDTKKAVKYQSKAR"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "C",
+          "sequence": "MAEDADMRNELEEMQRRADQLADESLESTRRMLQLVEESKDAGIRTLVMLDEQGEQLDRVEEGMNHINQDMKEAEKNLKDLGK"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "D",
+          "sequence": "VVDEREQMAISGGFIRRVTNDARENEMDENLEQVSGIIGNLRHMALDMGNEIDTQNRQIDRIMEKADSNKTRIDEANQRATKMLGSG"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "1SFC_SNARE_4helix_bundle",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "MSATAATVPPAAPAGEGGPPAPPPNLTSNRRLQQTQAQVDEVVDIMRVNVDKVLERDQKLSELDDRADALQAGASQFETSAAKLKRKYWWKNLKMM",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "GIIMDSSISKQALSEIETRHSEIIKLENSIRELHDMFMDMAMLVESQGEMIDRIEYNVEHAVDYVERAVSDTKKAVKYQSKAR",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "MAEDADMRNELEEMQRRADQLADESLESTRRMLQLVEESKDAGIRTLVMLDEQGEQLDRVEEGMNHINQDMKEAEKNLKDLGK",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "VVDEREQMAISGGFIRRVTNDARENEMDENLEQVSGIIGNLRHMALDMGNEIDTQNRQIDRIMEKADSNKTRIDEANQRATKMLGSG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of **9** biomolecular structure prediction models across **12** scenarios (**52** test systems) on 4× RTX 4090.
+Systematic benchmark of **9** biomolecular structure prediction models across **18** scenarios (**81** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -226,7 +226,7 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 
 ---
 
-## Test Systems (52 cases, 12 scenarios)
+## Test Systems (81 cases, 18 scenarios)
 
 | Scenario | # | Cases |
 |----------|---|-------|
@@ -242,6 +242,12 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 | ternary_complex | 6 | 5FQD CRBN-lenalidomide-CK1α, 6H0F CRBN-pomalidomide-IKZF1, 5HXB CRBN-CC885-GSPT1, 6ZHC Bcl-xL-VHL-PROTAC, 6HAY SMARCA2-VHL-PROTAC, 7JTP WDR5-VHL-PROTAC |
 | gpcr | 5 | 5IU4 A2A-ZM241385, 4GRV NTSR1-neurotensin, 3SN6 β2AR-Gs (Nobel 2012), 6X18 GLP-1R-Gs, 6DDE μOR-Gi |
 | membrane_complex | 6 | 3J5P TRPV1-apo, 8X94 TRPV1-SAF312, 7EKI α7-nAChR, 2VL0 ELIC, 6THA GLUT1, 6QEX P-gp-Fab |
+| idp | 4 | 1YCR MDM2-p53TAD, 1WKW eIF4E-4EBP1, 4QVF BCL-XL-BIM, 1NEX Cdc4-Skp1-pDegron |
+| protein_peptide | 5 | 1SHA SH2-pY, 1CDL CaM-M13, 1BE9 PDZ3-CRIPT, 4QVF BCL-XL-BIM, 3MRG HLA-A2-HCV |
+| rna_structure | 5 | 1EHZ tRNA-Phe, 3ZP8 hammerhead, 4OJI twister, 2GIS SAM-I+SAM, 1GID P4-P6 |
+| hetero_multimer | 5 | 1LDK SCF-Cul1, 4II2 E1-E2-Ub, 3IKO Nup84, 1SXJ RFC-PCNA, 5CWS nucleoporin |
+| glycoprotein | 4 | 5CNA ConA-mannose, 2HRL Siglec7-NAG, 1DBN lectin-NAG, 2UVO WGA-NDG |
+| coiled_coil | 6 | 2ZTA GCN4-zipper, 1BB1 designed-CC3, 1SFC SNARE, 1N0R ankyrin, 1A17 TPR, 1QGK importin-β-HEAT |
 
 Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "1BE9_PDZ3_CRIPT",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "GSPEFLGEEDIPREPRRIVIHRGSTGLGFNIIGGEDGEGIFISFILAGGPADLSGELRKGDQILSVNGVDLRNASHEQAAIALKNAGQTVTIIAQYKPEEYSRFEANSRVNSSGRIVTN",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "KQTSV",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "1BB1_designed_heterotrimer_CC",
+    "sequences": [
+      {
+        "proteinChain": {
+          "sequence": "XAEIAAIEYEQAAIKEEIAAIKDKIAAIKEYIAAIX",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "XEKIAAIKEEQAAIEEEIQAIKEEIAAIKYLIAQIX",
+          "count": 1
+        }
+      },
+      {
+        "proteinChain": {
+          "sequence": "XAEIAAIKYKQAAIKNEIAAIKQEIAAIEQMIAAIX",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

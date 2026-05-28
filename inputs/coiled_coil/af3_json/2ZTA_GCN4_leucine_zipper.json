@@ -1,0 +1,26 @@
+{
+  "name": "2ZTA_GCN4_leucine_zipper",
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER"
+      }
+    },
+    {
+      "protein": {
+        "id": [
+          "B"
+        ],
+        "sequence": "XRMKQLEDKVEELLSKNYHLENEVARLKKLVGER"
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

@@ -1,0 +1,13 @@
+{
+  "name": "1SHA_Src_SH2_pY",
+  "components": [
+    {
+      "seq": "QAEEWYFGKITRRESERLLLNPENPRGTFLVRESETTKGAYCLSVSDFDNAKGLNVKHYKIRKLDSGGFYITSRTQFSSLQQLVAYYSKHADGLCHRLTNVCPT",
+      "chain_id": "A"
+    },
+    {
+      "seq": "YVPML",
+      "chain_id": "B"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "queries": {
+    "1DBN_lectin_NAG": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "protein",
+          "chain_ids": "A",
+          "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL"
+        },
+        {
+          "molecule_type": "protein",
+          "chain_ids": "B",
+          "sequence": "SDELSFTINNFVPNEADLLFQGEASVSSTGVLQLTKVENGQPQKYSVGRALYAAPVRIWGNTTGSVASFSTSFTFVVKAPNPDITSDGLAFYLAPPDSQIPSGSVSKYLGLFNNSNSDSSNQIVAVEFDTYFAHSYDPWDPNYRHIGIDVNGIESIKTVQWDWINGGVAFATITYLAPNKTLIASLVYPSNQTTFSVAASVDLKEILPEWVRVGFSAATGYPTEVETHDVLSWSFTSTL"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "C",
+          "ccd_codes": "NAG"
+        },
+        {
+          "molecule_type": "ligand",
+          "chain_ids": "D",
+          "ccd_codes": "NAG"
+        }
+      ]
+    }
+  }
+}

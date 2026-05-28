@@ -1,0 +1,9 @@
+{
+  "name": "1EHZ_tRNA_Phe",
+  "components": [
+    {
+      "seq": "GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUCUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCACCA",
+      "chain_id": "A"
+    }
+  ]
+}

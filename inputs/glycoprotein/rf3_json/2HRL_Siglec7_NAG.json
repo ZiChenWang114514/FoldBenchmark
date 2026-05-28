@@ -1,0 +1,12 @@
+{
+  "name": "2HRL_Siglec7_NAG",
+  "components": [
+    {
+      "seq": "GQKSNRKDYSLTMQSSVTVQEGMCVHVRCSFSYPVDSQTDSDPVHGYWFRAGNDISWKAPVATNNPAWAVQEETRDRFHLLGDPQTKNCTLSIRDARMSDAGRYFFRMEKGNIKWNYKYDQLSVNVT",
+      "chain_id": "A"
+    },
+    {
+      "ccd_code": "NAG"
+    }
+  ]
+}

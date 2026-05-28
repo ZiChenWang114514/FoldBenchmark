@@ -1,0 +1,28 @@
+{
+  "name": "2GIS_SAM1_riboswitch",
+  "sequences": [
+    {
+      "rna": {
+        "id": [
+          "A"
+        ],
+        "sequence": "GGCUUAUCAAGAGAGGUGGAGGGACUGGCCCGAUGAAACCCGGCAACCAGAAAUGGUGCCAAUUCCUGCAGCGGAAACGUUGAAAGAUGAGCCA"
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "B"
+        ],
+        "ccdCodes": [
+          "SAM"
+        ]
+      }
+    }
+  ],
+  "modelSeeds": [
+    1
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}

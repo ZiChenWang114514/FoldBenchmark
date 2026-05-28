@@ -1,0 +1,16 @@
+[
+  {
+    "name": "4OJI_twister_ribozyme",
+    "sequences": [
+      {
+        "rnaSequence": {
+          "sequence": "CCGCCUAACACUGCCAAUGCCGGUCCCAAGCCCGGAUAAAAGUGGAGGGGGCGG",
+          "count": 1
+        }
+      }
+    ],
+    "modelSeeds": [
+      1
+    ]
+  }
+]

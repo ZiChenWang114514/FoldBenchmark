@@ -511,6 +511,100 @@ The `membrane_complex` scenario covers 6 non-GPCR integral membrane protein stru
 
 ---
 
+## IDP Scenario (added 2026-05-28)
+
+The `idp` scenario covers 4 intrinsically disordered protein coupled folding-binding complexes where the IDP region is disordered in solution and adopts structure only upon binding:
+
+| Case | PDB | IDP Feature | Res. |
+|------|-----|-------------|------|
+| 1YCR_MDM2_p53TAD | 1YCR | p53 TAD helix → MDM2 cleft | 2.6 Å |
+| 1WKW_eIF4E_4EBP1 | 1WKW | 4EBP1 reverse-L → eIF4E + m7GpppA cap | 2.1 Å |
+| 4QVF_BCLxL_BIM_BH3 | 4QVF | BIM BH3 helix → BCL-XL groove | 1.5 Å |
+| 1NEX_Cdc4_Skp1_pDegron | 1NEX | CPD phosphodegron → Cdc4 WD40 β-propeller | 2.7 Å |
+
+---
+
+## Protein-Peptide Scenario (added 2026-05-28)
+
+The `protein_peptide` scenario covers 5 short peptide (5–26 aa) binding complexes testing diverse binding geometries:
+
+| Case | PDB | Binding Mode | Peptide Length | Res. |
+|------|-----|-------------|----------------|------|
+| 1SHA_Src_SH2_pY | 1SHA | Extended groove (pTyr) | 5 aa | 1.5 Å |
+| 1CDL_CaM_M13 | 1CDL | Wrap-around helix | 20 aa | 2.4 Å |
+| 1BE9_PDZ3_CRIPT | 1BE9 | β-strand augmentation | 5 aa | 2.0 Å |
+| 4QVF_BCLxL_BIM_BH3 | 4QVF | Helix in hydrophobic groove | 26 aa | 1.5 Å |
+| 3MRG_HLA_HCV_peptide | 3MRG | MHC-I groove (3-chain) | 9 aa | 2.0 Å |
+
+---
+
+## RNA Structure Scenario (added 2026-05-28)
+
+The `rna_structure` scenario covers 5 pure RNA folding cases with no protein present:
+
+| Case | PDB | RNA Type | Size | Res. |
+|------|-----|----------|------|------|
+| 1EHZ_tRNA_Phe | 1EHZ | tRNA (canonical reference) | 76 nt | 1.93 Å |
+| 3ZP8_hammerhead_ribozyme | 3ZP8 | Self-cleaving ribozyme | 63 nt | 1.55 Å |
+| 4OJI_twister_ribozyme | 4OJI | Double-pseudoknot ribozyme | 54 nt | 2.34 Å |
+| 2GIS_SAM1_riboswitch | 2GIS | Metabolite-sensing riboswitch + SAM | 94 nt | 2.9 Å |
+| 1GID_P4P6_groupI | 1GID | Group I intron P4-P6 domain | 158 nt | 2.8 Å |
+
+**Model compatibility**:
+- **ESMFold2**: Protein-only model — **skipped** for all `rna_structure` cases.
+- **Protenix**: May require at least one protein chain; check output.
+- AF3, AlphaFast, Boltz-2, Chai-1, OpenFold3, RF3: all support pure RNA input.
+
+---
+
+## Hetero-multimer Scenario (added 2026-05-28)
+
+The `hetero_multimer` scenario covers 5 asymmetric multi-protein complexes (3–8 chains) distinct from antibody, GPCR, or ternary degrader scenarios:
+
+| Case | PDB | Complex | Chains | Res. |
+|------|-----|---------|--------|------|
+| 1LDK_SCF_Cul1_Skp2 | 1LDK | SCF E3 ligase (Cul1+Rbx1+Skp1+Skp2) + Zn | 5+1 | 2.6 Å |
+| 4II2_E1_E2_Ubiquitin | 4II2 | Uba1(E1)+Ubc4(E2)+Ubiquitin + ATP | 3+1 | 2.2 Å |
+| 3IKO_Nup84_heterotrimer | 3IKO | NPC: Sec13+Nup145C+Nup84 | 3 | 3.2 Å |
+| 1SXJ_RFC_PCNA_clamp | 1SXJ | RFC pentamer + PCNA trimer | 8 | 3.1 Å |
+| 5CWS_nucleoporin_channel | 5CWS | Nsp1+Nup49+Nup57+Nic96 | 4 | 3.3 Å |
+
+**Notes**: 1SXJ is the largest case in the benchmark (8 chains, ~2400 aa total). RFC subunits are paralogous but distinct sequences — tests whether models differentiate similar-but-non-identical chains.
+
+---
+
+## Glycoprotein Scenario (added 2026-05-28)
+
+The `glycoprotein` scenario covers 4 protein-carbohydrate interaction structures:
+
+| Case | PDB | System | Glycan Ligand | Res. |
+|------|-----|--------|---------------|------|
+| 5CNA_ConA_mannose | 5CNA | ConA homo-tetramer | 4× MMA (methyl mannose) | 2.0 Å |
+| 2HRL_Siglec7_NAG | 2HRL | Siglec-7 | NAG (GlcNAc) | 1.8 Å |
+| 1DBN_lectin_NAG | 1DBN | Lectin dimer | 2× NAG | — |
+| 2UVO_WGA_NDG | 2UVO | WGA tetramer | 4× NDG (α-GlcNAc) | 2.1 Å |
+
+**Limitation**: Complex branched N-glycans (e.g., Spike protein glycan shield) require AF3's branched entity format, which is not yet supported by `prepare_inputs.py`. Current cases use simple mono/disaccharide CCD ligands.
+
+---
+
+## Coiled-coil and Repeat Protein Scenario (added 2026-05-28)
+
+The `coiled_coil` scenario covers 6 cases spanning coiled-coils and all 3 major repeat protein families:
+
+| Case | PDB | Type | Chains | Res. |
+|------|-----|------|--------|------|
+| 2ZTA_GCN4_leucine_zipper | 2ZTA | Parallel CC homodimer | 2 × 34 aa | 1.8 Å |
+| 1BB1_designed_heterotrimer_CC | 1BB1 | Designed CC heterotrimer | 3 × 36 aa | 1.8 Å |
+| 1SFC_SNARE_4helix_bundle | 1SFC | Biological 4-helix CC | 4 chains | 2.4 Å |
+| 1N0R_4ANK_ankyrin_repeat | 1N0R | Ankyrin repeat (4×33 aa) | 1 × 126 aa | 1.5 Å |
+| 1A17_PP5_TPR_domain | 1A17 | TPR repeat (3×34 aa) | 1 × 166 aa | 2.0 Å |
+| 1QGK_importinb_HEAT | 1QGK | HEAT repeat (19 repeats) + IBB peptide | 876 + 44 aa | 2.5 Å |
+
+**Prediction notes**: 1QGK importin-β (876 aa, 19 HEAT repeats) is one of the longest single chains in the benchmark. The challenge is maintaining correct superhelical curvature over the entire length. Models trained on shorter proteins may show curvature drift beyond repeat 10–12.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |

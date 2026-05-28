@@ -1,0 +1,13 @@
+{
+  "name": "1YCR_MDM2_p53TAD",
+  "components": [
+    {
+      "seq": "SQIPASEQETLVRPKPLLLKLLKSVGAQKDTYTMKEVLFYLGQYIMTKRLYDEKQQHIVYCSNDLLGDLFGVPSFSVKEHRKIYTMIYRNLVVVNQQESSDSGTSVSEN",
+      "chain_id": "A"
+    },
+    {
+      "seq": "SQETFSDLWKLLPEN",
+      "chain_id": "B"
+    }
+  ]
+}

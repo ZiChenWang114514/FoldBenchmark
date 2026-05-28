@@ -1,0 +1,14 @@
+{
+  "queries": {
+    "4OJI_twister_ribozyme": {
+      "use_msas": true,
+      "chains": [
+        {
+          "molecule_type": "rna",
+          "chain_ids": "A",
+          "sequence": "CCGCCUAACACUGCCAAUGCCGGUCCCAAGCCCGGAUAAAAGUGGAGGGGGCGG"
+        }
+      ]
+    }
+  }
+}
