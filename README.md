@@ -1,6 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of **9** biomolecular structure prediction models across **10** scenarios (**41** test systems) on 4× RTX 4090.
+Systematic benchmark of **9** biomolecular structure prediction models across **12** scenarios (**52** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -226,7 +226,7 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 
 ---
 
-## Test Systems (41 cases, 10 scenarios)
+## Test Systems (52 cases, 12 scenarios)
 
 | Scenario | # | Cases |
 |----------|---|-------|
@@ -240,6 +240,8 @@ See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, a
 | metal_ion | 3 | 1CA2 carbonic-anhydrase (Zn), 2SOD superoxide-dismutase (Cu/Zn), 8TLN thermolysin (Zn/Ca) |
 | covalent_mod | 3 | 4G5J EGFR-afatinib, 5P9J BTK-ibrutinib, 6OIM KRAS-G12C-sotorasib |
 | ternary_complex | 6 | 5FQD CRBN-lenalidomide-CK1α, 6H0F CRBN-pomalidomide-IKZF1, 5HXB CRBN-CC885-GSPT1, 6ZHC Bcl-xL-VHL-PROTAC, 6HAY SMARCA2-VHL-PROTAC, 7JTP WDR5-VHL-PROTAC |
+| gpcr | 5 | 5IU4 A2A-ZM241385, 4GRV NTSR1-neurotensin, 3SN6 β2AR-Gs (Nobel 2012), 6X18 GLP-1R-Gs, 6DDE μOR-Gi |
+| membrane_complex | 6 | 3J5P TRPV1-apo, 8X94 TRPV1-SAF312, 7EKI α7-nAChR, 2VL0 ELIC, 6THA GLUT1, 6QEX P-gp-Fab |
 
 Full list with PDB IDs is in `scripts/prepare_inputs.py`.
 

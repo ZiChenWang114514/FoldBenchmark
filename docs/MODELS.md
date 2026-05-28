@@ -437,6 +437,80 @@ degrader systems — the hardest multi-protein+ligand prediction challenge:
 
 ---
 
+## GPCR Scenario (added 2026-05-28)
+
+The `gpcr` scenario covers 5 GPCR structures across Class A/B, different functional states, and G protein coupling partners:
+
+| Case | PDB | Class | Complex | Ligand | Resolution |
+|------|-----|-------|---------|--------|-----------|
+| 5IU4_A2A_ZM241385 | 5IU4 | Class A | A2AR-T4L fusion + antagonist | ZM241385 (ZMA) | 1.7 Å X-ray |
+| 4GRV_NTSR1_neurotensin | 4GRV | Class A | NTSR1-Lys fusion + peptide agonist | NT(8-13) | 2.8 Å X-ray |
+| 3SN6_b2AR_Gs | 3SN6 | Class A | β2AR + Gs heterotrimer + Nb35 | BI-167107 (P0G) | 3.2 Å X-ray |
+| 6X18_GLP1R_Gs | 6X18 | Class B | GLP-1R + Gs heterotrimer + GLP-1 | GLP-1 peptide | 2.7 Å cryo-EM |
+| 6DDE_MOR_Gi_DAMGO | 6DDE | Class A | μOR + Gi1 + Nb39 | DAMGO (no CCD) | 3.5 Å cryo-EM |
+
+**Design decisions**:
+- **T4L/Lysozyme fusion proteins**: 5IU4/3SN6/4GRV/6X18 contain T4L or Lysozyme inserted
+  into ICL3 as a crystallization stabilization strategy. RCSB returns the full fusion
+  sequence; benchmark uses it as deposited. Models will predict the fusion protein fold.
+- **DAMGO (6DDE)**: DAMGO ([D-Ala2,N-Me-Phe4,Gly5-ol]-enkephalin) is a synthetic opioid
+  peptide; it has no standard PDB CCD code. The 6DDE entry covers the 6-chain protein
+  complex (receptor + Gi heterotrimer + nanobody) without the DAMGO ligand explicitly.
+- **P0G (3SN6)**: BI-167107 is a β2-AR full agonist cocrystallized with Gs. SMILES
+  provided in `CCD_TO_SMILES` for Chai-1 compatibility.
+- **Notable benchmark targets**: 3SN6 (Nobel Prize 2012), 6X18 (Semaglutide/Ozempic target GLP-1R).
+
+**Prediction notes**:
+- Focus on **iPTM** rather than overall pTM — the GPCR-G protein interface is the
+  biologically meaningful contact.
+- 5IU4 (1.7 Å X-ray) is the highest-resolution GPCR structure available; expect highest
+  pTM scores here.
+- Models may struggle with the 7-TM bundle prediction accuracy for cryo-EM structures
+  (3SN6/6X18/6DDE) due to lower resolution.
+- AlphaFast/AF3 trained extensively on GPCR structures; RF3 zero-shot may be weaker on
+  the GPCR-G protein interfaces.
+
+---
+
+## Membrane Complex Scenario (added 2026-05-28)
+
+The `membrane_complex` scenario covers 6 non-GPCR integral membrane protein structures spanning TRP channels, pLGIC, SLC and ABC transporters:
+
+| Case | PDB | Family | Composition | Ligand | Resolution |
+|------|-----|--------|-------------|--------|-----------|
+| 3J5P_TRPV1_apo | 3J5P | TRP channel | Homo-tetramer (4×839 aa) | none (apo) | 3.4 Å cryo-EM |
+| 8X94_TRPV1_SAF312 | 8X94 | TRP channel | Homo-tetramer + antagonist | SAF312 (EZI) | 2.75 Å cryo-EM |
+| 7EKI_nAChR_a7 | 7EKI | Cys-loop pLGIC | Homo-pentamer (~5×510 aa) | none | cryo-EM |
+| 2VL0_ELIC | 2VL0 | Cys-loop pLGIC | Homo-pentamer (5×321 aa) | none | 3.3 Å X-ray |
+| 6THA_GLUT1 | 6THA | SLC2 transporter | Monomer (492 aa) | BNG (nonyl glucoside) | 2.4 Å X-ray |
+| 6QEX_Pgp_Fab | 6QEX | ABC transporter | P-gp + UIC2 Fab | Paclitaxel (TA1) | 3.5 Å cryo-EM |
+
+**Design decisions**:
+- **3J5P vs 8X94 (apo/drug pair)**: Direct comparison of the same TRPV1 tetramer in
+  apo vs SAF312-bound state. Key question: can models capture conformational differences
+  driven by drug binding?
+- **2VL0 pentamer selection**: The ASU contains 10 chains (A–J = 2 pentamers). Benchmark
+  uses chains A–E (first pentamer only). `prepare_inputs.py` fetches all 10 sequences
+  but the TEST_CASES entry only requests A–E.
+- **BNG in 6THA**: β-nonyl glucoside is technically a detergent used in crystallization,
+  but occupies the glucose-binding site of GLUT1 as a substrate analog. Including it
+  tests models' ability to predict transporter-substrate interactions.
+- **TA1 in 6QEX**: Paclitaxel (taxol) is bound in the P-glycoprotein drug-binding cavity.
+  Full SMILES included in `CCD_TO_SMILES` for Chai-1 compatibility.
+
+**Prediction notes**:
+- **Homo-multimer accuracy**: TRPV1 (4×839 aa = ~3356 aa total) and α7-nAChR/ELIC
+  (5×510/321 aa) are the largest benchmark assemblies. Expect pTM to be lower for
+  larger systems.
+- **AlphaFast/AF3** have the strongest training data for homo-multimers; RF3 zero-shot
+  may significantly underperform on pentameric systems without paired MSA.
+- **Transmembrane topology**: All models are sequence-only; they cannot access membrane
+  environment information. TM helix placement accuracy is the critical metric.
+- **P-gp + Fab (6QEX)**: 3-chain complex (ABCB1 + IgG Fab light + heavy chain), ~1600 aa
+  total. Tests models' ability to predict antibody-membrane protein interfaces.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |

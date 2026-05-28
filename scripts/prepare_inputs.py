@@ -38,6 +38,15 @@ CCD_TO_SMILES: dict[str, str] = {
     "X6M": ("Cc1c(scn1)c2ccc(cc2)[C@H](C)NC(=O)[C@@H]3C[C@H](CN3C(=O)[C@H](C(C)(C)C)"
             "NC(=O)CNC(=O)c4ccc(c(c4)c5ccc(c(c5)NC(=O)C6=CNC(=O)C=C6C(F)(F)F)"
             "N7C[C@H](N([C@H](C7)C)C)C)F)O"),
+    # GPCR ligands (gpcr scenario)
+    "ZMA": "c1cc(oc1)c2nc3nc(nc(n3n2)N)NCCc4ccc(cc4)O",  # ZM241385 (A2A antagonist in 5IU4)
+    "P0G": "Cc1ccccc1CC(C)(C)NC[C@@H](c2ccc(c3c2OCC(=O)N3)O)O",  # BI-167107 (β2-AR agonist in 3SN6)
+    # Membrane complex ligands (membrane_complex scenario)
+    "EZI": "CC(C)C1=Nc2cc(ccc2C(=O)N1c3ccc(cc3)C#N)O",  # SAF312 (TRPV1 antagonist in 8X94)
+    "BNG": "CCCCCCCCCO[C@H]1[C@@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O",  # nonyl glucoside (GLUT1 in 6THA)
+    "TA1": ("CC1=C2[C@H](C(=O)[C@@]3([C@H](C[C@@H]4[C@]([C@H]3[C@@H]([C@@](C2(C)C)"
+            "(C[C@@H]1OC(=O)[C@@H]([C@H](c5ccccc5)NC(=O)c6ccccc6)O)O)"
+            "OC(=O)c7ccccc7)(CO4)OC(=O)C)O)C)OC(=O)C"),   # taxol/paclitaxel (P-gp in 6QEX)
 }
 
 TEST_CASES = {
@@ -317,6 +326,108 @@ TEST_CASES = {
             # WDR5(A)+VHL(L)+EloB(J)+EloC(K)+PROTAC X6M [PROTAC, 2.12Å]
             "chains": [("A", "protein"), ("L", "protein"), ("J", "protein"), ("K", "protein")],
             "ligands": [("B", "X6M")],
+        },
+    ],
+    # ── GPCR (added 2026-05-28) ──────────────────────────────────────────────
+    # 5 GPCR structures: Class A/B, antagonist/agonist/G-protein-coupled.
+    # All chain IDs verified against RCSB auth_asym_ids.
+    # Note: 5IU4/3SN6/4GRV/6X18 contain T4L/Lysozyme fusion proteins in the
+    # GPCR chain (standard crystallization strategy); included as deposited.
+    "gpcr": [
+        {
+            "name": "5IU4_A2A_ZM241385",
+            "pdb_id": "5IU4",
+            # A2A adenosine receptor (A2AR-T4L fusion) + ZM241385 antagonist
+            # Class A GPCR, X-ray 1.7 Å — highest-resolution GPCR structure
+            "chains": [("A", "protein")],
+            "ligands": [("B", "ZMA")],
+        },
+        {
+            "name": "4GRV_NTSR1_neurotensin",
+            "pdb_id": "4GRV",
+            # NTSR1 (neurotensin receptor, Lysozyme fusion) + NT(8-13) peptide
+            # Class A GPCR + peptide agonist, X-ray 2.8 Å
+            "chains": [("A", "protein"), ("B", "protein")],
+        },
+        {
+            "name": "3SN6_b2AR_Gs",
+            "pdb_id": "3SN6",
+            # β2-adrenergic receptor + Gs heterotrimer + Nb35 — Nobel 2012
+            # Class A GPCR active state + Gs, X-ray 3.2 Å
+            "chains": [("R", "protein"), ("A", "protein"), ("B", "protein"),
+                       ("G", "protein"), ("N", "protein")],
+            "ligands": [("L", "P0G")],
+        },
+        {
+            "name": "6X18_GLP1R_Gs",
+            "pdb_id": "6X18",
+            # GLP-1 receptor + Gs heterotrimer + GLP-1 peptide
+            # Class B GPCR + Gs, cryo-EM 2.7 Å — Semaglutide (Ozempic) target
+            "chains": [("R", "protein"), ("A", "protein"), ("B", "protein"),
+                       ("G", "protein"), ("N", "protein"), ("P", "protein")],
+        },
+        {
+            "name": "6DDE_MOR_Gi_DAMGO",
+            "pdb_id": "6DDE",
+            # μ-opioid receptor + Gi1 heterotrimer + Nb39 [+ DAMGO agonist]
+            # Class A GPCR + Gi, cryo-EM 3.5 Å — opioid drug target
+            "chains": [("R", "protein"), ("A", "protein"), ("B", "protein"),
+                       ("C", "protein"), ("E", "protein"), ("D", "protein")],
+        },
+    ],
+    # ── Membrane Complex (added 2026-05-28) ──────────────────────────────────
+    # 6 non-GPCR membrane protein structures: TRP channels, pLGIC,
+    # SLC/ABC transporters. All chains verified against RCSB.
+    "membrane_complex": [
+        {
+            "name": "3J5P_TRPV1_apo",
+            "pdb_id": "3J5P",
+            # TRPV1 TRP channel apo form — landmark 2013 cryo-EM structure
+            # Homo-tetramer, cryo-EM 3.4 Å
+            "chains": [("A", "protein"), ("B", "protein"),
+                       ("C", "protein"), ("D", "protein")],
+        },
+        {
+            "name": "8X94_TRPV1_SAF312",
+            "pdb_id": "8X94",
+            # TRPV1 + SAF312 clinical antagonist (EZI, 2024) — drug-bound TRP
+            # Homo-tetramer, cryo-EM 2.75 Å
+            "chains": [("A", "protein"), ("B", "protein"),
+                       ("C", "protein"), ("D", "protein")],
+            "ligands": [("E", "EZI")],
+        },
+        {
+            "name": "7EKI_nAChR_a7",
+            "pdb_id": "7EKI",
+            # α7 nicotinic acetylcholine receptor — mammalian Cys-loop pLGIC
+            # Homo-pentamer, cryo-EM
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"),
+                       ("D", "protein"), ("E", "protein")],
+        },
+        {
+            "name": "2VL0_ELIC",
+            "pdb_id": "2VL0",
+            # ELIC bacterial Cys-loop ligand-gated channel
+            # ASU has 10 chains (2 pentamers); use chains A-E (first pentamer)
+            # X-ray 3.3 Å
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein"),
+                       ("D", "protein"), ("E", "protein")],
+        },
+        {
+            "name": "6THA_GLUT1",
+            "pdb_id": "6THA",
+            # GLUT1 glucose transporter (SLC2A1) — MFS-fold, X-ray 2.4 Å
+            # BNG (nonyl glucoside) occupies the substrate-binding site
+            "chains": [("A", "protein")],
+            "ligands": [("B", "BNG")],
+        },
+        {
+            "name": "6QEX_Pgp_Fab",
+            "pdb_id": "6QEX",
+            # P-glycoprotein (ABCB1) + UIC2 Fab — ABC transporter + antibody
+            # cryo-EM 3.5 Å; TA1 = paclitaxel (taxol) in the drug-binding cavity
+            "chains": [("A", "protein"), ("B", "protein"), ("C", "protein")],
+            "ligands": [("D", "TA1")],
         },
     ],
 }
