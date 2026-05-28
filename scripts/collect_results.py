@@ -13,7 +13,7 @@ OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 RESULTS_DIR = PROJECT_ROOT / "results"
 TIMING_FILE = RESULTS_DIR / "timing.csv"
 
-MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intellifold", "rf3"]
+MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intellifold", "rf3", "esmfold2"]
 # Benchmark scenarios — fixed order for reproducible CSV/summary layout.
 # "screening" is appended automatically when inputs/screening/af3_json/ exists.
 _BENCHMARK_SCENARIOS = [

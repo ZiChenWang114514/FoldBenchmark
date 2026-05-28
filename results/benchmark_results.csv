@@ -7,6 +7,7 @@ protein_protein,1BRS_barnase_barstar,protenix,True,95.82577514648438,0.964674890
 protein_protein,1BRS_barnase_barstar,chai1,True,,0.9710580706596375,0.9436009526252747,116
 protein_protein,1BRS_barnase_barstar,intellifold,True,0.9313943386077881,0.8806167244911194,0.8797622799873352,93
 protein_protein,1BRS_barnase_barstar,rf3,True,0.6902,0.26417410373687744,0.2175,53
+protein_protein,1BRS_barnase_barstar,esmfold2,True,0.9463053345680237,0.9351705312728882,,24
 protein_protein,1EMV_trypsin_inhibitor,af3,True,,0.92,0.9225220410017828,294
 protein_protein,1EMV_trypsin_inhibitor,alphafast,True,,0.93,0.9268296458251679,52
 protein_protein,1EMV_trypsin_inhibitor,boltz2,True,,0.9512372612953186,,57
@@ -15,6 +16,7 @@ protein_protein,1EMV_trypsin_inhibitor,protenix,True,95.24114227294922,0.9579737
 protein_protein,1EMV_trypsin_inhibitor,chai1,True,,0.9550021886825562,0.9132665395736694,109
 protein_protein,1EMV_trypsin_inhibitor,intellifold,True,0.9206730127334595,0.8503274321556091,0.8683724761009217,75
 protein_protein,1EMV_trypsin_inhibitor,rf3,True,0.6629,0.3452097773551941,0.2071,50
+protein_protein,1EMV_trypsin_inhibitor,esmfold2,True,0.9230749011039734,0.9260050654411316,,22
 protein_protein,2PV7_homodimer,af3,True,,0.86,0.9047659614632689,315
 protein_protein,2PV7_homodimer,alphafast,True,,0.84,0.897538929701967,52
 protein_protein,2PV7_homodimer,boltz2,True,,0.8785500526428223,,72
@@ -23,6 +25,7 @@ protein_protein,2PV7_homodimer,protenix,True,89.6551742553711,0.8573102355003357
 protein_protein,2PV7_homodimer,chai1,True,,0.9100286364555359,0.869430422782898,249
 protein_protein,2PV7_homodimer,intellifold,True,0.9367250204086304,0.8295251131057739,0.8524028062820435,152
 protein_protein,2PV7_homodimer,rf3,True,0.7008,0.3118917942047119,0.2611,89
+protein_protein,2PV7_homodimer,esmfold2,True,0.839237630367279,0.7186590433120728,,49
 protein_protein,3HFM_lysozyme_fab,af3,True,,0.95,0.9450283789086944,213
 protein_protein,3HFM_lysozyme_fab,alphafast,True,,0.92,0.9202995807836218,52
 protein_protein,3HFM_lysozyme_fab,boltz2,True,,0.9614041447639465,,55
@@ -31,6 +34,7 @@ protein_protein,3HFM_lysozyme_fab,protenix,True,96.69002532958984,0.963871657848
 protein_protein,3HFM_lysozyme_fab,chai1,True,,0.9818049669265747,0.1963609904050827,96
 protein_protein,3HFM_lysozyme_fab,intellifold,True,0.9496784806251526,0.8640379905700684,0.8640379905700684,67
 protein_protein,3HFM_lysozyme_fab,rf3,True,0.7,0.3261892795562744,0.066,46
+protein_protein,3HFM_lysozyme_fab,esmfold2,True,0.9707055687904358,0.9806671142578125,,24
 protein_ligand,1HSG_HIV_protease_indinavir,af3,True,,0.96,0.9899035586389476,211
 protein_ligand,1HSG_HIV_protease_indinavir,alphafast,True,,0.95,0.9891249464143445,52
 protein_ligand,1HSG_HIV_protease_indinavir,boltz2,True,,0.9767721891403198,,56
@@ -39,6 +43,7 @@ protein_ligand,1HSG_HIV_protease_indinavir,protenix,True,97.2939682006836,0.9780
 protein_ligand,1HSG_HIV_protease_indinavir,chai1,True,,0.9781887531280518,0.9665015339851379,101
 protein_ligand,1HSG_HIV_protease_indinavir,intellifold,True,0.9402256608009338,0.8866323232650757,0.8844717741012573,67
 protein_ligand,1HSG_HIV_protease_indinavir,rf3,True,0.716,0.46055904030799866,0.3775,51
+protein_ligand,1HSG_HIV_protease_indinavir,esmfold2,True,0.9360977411270142,0.922970712184906,,21
 protein_ligand,3HTB_CDK2_inhibitor,af3,True,,0.85,0.8295649043746564,224
 protein_ligand,3HTB_CDK2_inhibitor,alphafast,True,,0.91,0.826138148654971,52
 protein_ligand,3HTB_CDK2_inhibitor,boltz2,True,,0.9638306498527527,,54
@@ -47,6 +52,7 @@ protein_ligand,3HTB_CDK2_inhibitor,protenix,True,96.05606079101562,0.94588494300
 protein_ligand,3HTB_CDK2_inhibitor,chai1,True,,0.9065927267074585,0.18131855130195618,98
 protein_ligand,3HTB_CDK2_inhibitor,intellifold,True,0.9574952125549316,0.8313980102539062,0.8219103336334228,68
 protein_ligand,3HTB_CDK2_inhibitor,rf3,True,0.7832,0.6824192404747009,0.6094,51
+protein_ligand,3HTB_CDK2_inhibitor,esmfold2,True,0.9655923843383789,0.9288585186004639,,22
 protein_ligand,4LDE_BRAF_vemurafenib,af3,True,,0.74,0.6865422909129306,399
 protein_ligand,4LDE_BRAF_vemurafenib,alphafast,True,,0.76,0.6720192423654123,52
 protein_ligand,4LDE_BRAF_vemurafenib,boltz2,True,,0.8462434411048889,,98
@@ -55,6 +61,7 @@ protein_ligand,4LDE_BRAF_vemurafenib,protenix,True,88.56442260742188,0.841112494
 protein_ligand,4LDE_BRAF_vemurafenib,chai1,True,,0.8242135047912598,0.38045740127563477,160
 protein_ligand,4LDE_BRAF_vemurafenib,intellifold,True,0.8838812112808228,0.7292231917381287,0.7309991717338562,152
 protein_ligand,4LDE_BRAF_vemurafenib,rf3,True,0.7217,0.42001134157180786,0.3763,78
+protein_ligand,4LDE_BRAF_vemurafenib,esmfold2,True,0.9162123203277588,0.801904022693634,,34
 protein_ligand,6LU7_Mpro_N3,af3,True,,0.94,0.9195258823612189,335
 protein_ligand,6LU7_Mpro_N3,alphafast,True,,0.94,0.9263086071705474,52
 protein_ligand,6LU7_Mpro_N3,boltz2,True,,0.9791103601455688,,57
@@ -63,6 +70,7 @@ protein_ligand,6LU7_Mpro_N3,protenix,True,96.51953887939453,0.967415452003479,,1
 protein_ligand,6LU7_Mpro_N3,chai1,True,,0.9865801930427551,0.9288616180419922,123
 protein_ligand,6LU7_Mpro_N3,intellifold,True,0.960026741027832,0.8852094411849976,0.8899044752120973,93
 protein_ligand,6LU7_Mpro_N3,rf3,True,0.7289,0.3346363604068756,0.385,53
+protein_ligand,6LU7_Mpro_N3,esmfold2,True,0.9388152360916138,0.9439952373504639,,27
 protein_ligand,7RN1_3CL_inhibitor,af3,True,,0.96,0.9664064754292168,335
 protein_ligand,7RN1_3CL_inhibitor,alphafast,True,,0.96,0.9657108911589503,52
 protein_ligand,7RN1_3CL_inhibitor,boltz2,True,,0.9798969030380249,,50
@@ -71,6 +79,7 @@ protein_ligand,7RN1_3CL_inhibitor,protenix,True,96.86986541748047,0.971867740154
 protein_ligand,7RN1_3CL_inhibitor,chai1,True,,0.9814690947532654,0.9087250828742981,124
 protein_ligand,7RN1_3CL_inhibitor,intellifold,True,0.9603588581085205,0.8891407251358032,0.8871182680130005,92
 protein_ligand,7RN1_3CL_inhibitor,rf3,True,0.7294,0.3340231776237488,0.3647,43
+protein_ligand,7RN1_3CL_inhibitor,esmfold2,True,0.9387248754501343,0.943892240524292,,25
 protein_rna,1ASY_tRNA_synthetase,af3,True,,0.88,0.8555040158203596,486
 protein_rna,1ASY_tRNA_synthetase,alphafast,True,,0.88,0.8616404069658457,52
 protein_rna,1ASY_tRNA_synthetase,boltz2,True,,0.9018880724906921,,105
@@ -79,6 +88,7 @@ protein_rna,1ASY_tRNA_synthetase,protenix,True,88.85717010498047,0.9291827678680
 protein_rna,1ASY_tRNA_synthetase,chai1,True,,0.9467709064483643,0.8228995203971863,251
 protein_rna,1ASY_tRNA_synthetase,intellifold,True,0.8447424173355103,0.8235223293304443,0.8135581970214845,206
 protein_rna,1ASY_tRNA_synthetase,rf3,True,0.7088,0.3408346176147461,0.3533,77
+protein_rna,1ASY_tRNA_synthetase,esmfold2,True,0.7823593020439148,0.8387817144393921,,40
 protein_rna,1URN_U1A_RNA,af3,True,,0.9,0.8754467344194046,290
 protein_rna,1URN_U1A_RNA,alphafast,True,,0.9,0.8813909544471759,52
 protein_rna,1URN_U1A_RNA,boltz2,True,,0.9509971141815186,,63
@@ -87,6 +97,7 @@ protein_rna,1URN_U1A_RNA,protenix,True,95.6778335571289,0.9482530951499939,,146
 protein_rna,1URN_U1A_RNA,chai1,True,,0.9595848321914673,0.910976767539978,96
 protein_rna,1URN_U1A_RNA,intellifold,True,0.923716127872467,0.8594088554382324,0.8544510841369629,76
 protein_rna,1URN_U1A_RNA,rf3,True,0.8084,0.8057746291160583,0.5302,35
+protein_rna,1URN_U1A_RNA,esmfold2,True,0.8969143629074097,0.9108208417892456,,20
 protein_rna,2AZ0_U1A_RNA_hairpin,af3,True,,0.53,0.3385187699426758,277
 protein_rna,2AZ0_U1A_RNA_hairpin,alphafast,True,,0.51,0.3292917274405515,52
 protein_rna,2AZ0_U1A_RNA_hairpin,boltz2,True,,0.7495493292808533,,53
@@ -95,6 +106,7 @@ protein_rna,2AZ0_U1A_RNA_hairpin,protenix,True,77.58441925048828,0.7671203613281
 protein_rna,2AZ0_U1A_RNA_hairpin,chai1,True,,0.7361968159675598,0.3580125868320465,94
 protein_rna,2AZ0_U1A_RNA_hairpin,intellifold,True,0.826860249042511,0.6848975419998169,0.6444360971450805,57
 protein_rna,2AZ0_U1A_RNA_hairpin,rf3,True,0.7735,0.5361484289169312,0.374,35
+protein_rna,2AZ0_U1A_RNA_hairpin,esmfold2,True,0.6403706073760986,0.4652199447154999,,21
 monomer,1CRN_crambin,af3,True,,0.78,0.8043923674312525,198
 monomer,1CRN_crambin,alphafast,True,,0.79,0.8047722369002327,52
 monomer,1CRN_crambin,boltz2,True,,0.8844942450523376,,50
@@ -103,6 +115,7 @@ monomer,1CRN_crambin,protenix,True,96.8157730102539,0.8998846411705017,,123
 monomer,1CRN_crambin,chai1,True,,0.9487892389297485,0.18975785374641418,94
 monomer,1CRN_crambin,intellifold,True,0.9199546575546265,0.7230058908462524,0.7230058908462524,53
 monomer,1CRN_crambin,rf3,True,0.7193,0.45886316895484924,0.0922,28
+monomer,1CRN_crambin,esmfold2,True,0.6205506324768066,0.4400325417518616,,20
 monomer,1L2Y_trpcage,af3,True,,0.12,0.37149144703035686,197
 monomer,1L2Y_trpcage,alphafast,True,,0.13,0.24742168889779165,52
 monomer,1L2Y_trpcage,boltz2,True,,0.493160218000412,,51
@@ -111,6 +124,7 @@ monomer,1L2Y_trpcage,protenix,True,93.83226013183594,0.4614388644695282,,122
 monomer,1L2Y_trpcage,chai1,True,,0.43734851479530334,0.08746970444917679,96
 monomer,1L2Y_trpcage,intellifold,True,0.9306227564811707,0.1183544397354126,0.1183544397354126,48
 monomer,1L2Y_trpcage,rf3,True,0.8148,0.46171337366104126,0.0924,27
+monomer,1L2Y_trpcage,esmfold2,True,0.817278265953064,0.24361225962638855,,19
 monomer,1MBN_myoglobin,af3,True,,0.85,0.8573359092684987,217
 monomer,1MBN_myoglobin,alphafast,True,,0.91,0.9159994249430827,52
 monomer,1MBN_myoglobin,boltz2,True,,0.949591338634491,,55
@@ -119,6 +133,7 @@ monomer,1MBN_myoglobin,protenix,True,93.96304321289062,0.9535510540008545,,125
 monomer,1MBN_myoglobin,chai1,True,,0.9629951119422913,0.19259902834892273,98
 monomer,1MBN_myoglobin,intellifold,True,0.9257275462150574,0.8259484767913818,0.8259484767913818,62
 monomer,1MBN_myoglobin,rf3,True,0.6856,0.41100409626960754,0.0822,36
+monomer,1MBN_myoglobin,esmfold2,True,0.8899593949317932,0.9019970893859863,,20
 monomer,1UBQ_ubiquitin,af3,True,,0.85,0.8572962255510606,235
 monomer,1UBQ_ubiquitin,alphafast,True,,0.86,0.8615698621111894,52
 monomer,1UBQ_ubiquitin,boltz2,True,,0.9209499359130859,,72
@@ -127,6 +142,7 @@ monomer,1UBQ_ubiquitin,protenix,True,94.1011734008789,0.9237367510795593,,136
 monomer,1UBQ_ubiquitin,chai1,True,,0.9197584390640259,0.18395169079303741,96
 monomer,1UBQ_ubiquitin,intellifold,True,0.9474348425865173,0.7783265113830566,0.7783265113830566,77
 monomer,1UBQ_ubiquitin,rf3,True,0.8613,0.9030663371086121,0.1807,28
+monomer,1UBQ_ubiquitin,esmfold2,True,0.8130964040756226,0.7626876831054688,,21
 monomer,2GB1_protein_G,af3,True,,0.83,0.8323836367687467,202
 monomer,2GB1_protein_G,alphafast,True,,0.82,0.8168932198019412,52
 monomer,2GB1_protein_G,boltz2,True,,0.9208426475524902,,59
@@ -135,6 +151,7 @@ monomer,2GB1_protein_G,protenix,True,95.42400360107422,0.9173135757446289,,124
 monomer,2GB1_protein_G,chai1,True,,0.911572277545929,0.1823144555091858,94
 monomer,2GB1_protein_G,intellifold,True,0.9321686029434204,0.7766438722610474,0.7766438722610474,52
 monomer,2GB1_protein_G,rf3,True,0.8472,0.8777581453323364,0.1756,28
+monomer,2GB1_protein_G,esmfold2,True,0.8662368059158325,0.8075488209724426,,21
 antibody_antigen,1AHW_ab_tissue_factor,af3,True,,0.82,0.8114296802406286,529
 antibody_antigen,1AHW_ab_tissue_factor,alphafast,True,,0.81,0.7807160317691998,52
 antibody_antigen,1AHW_ab_tissue_factor,boltz2,True,,0.9658900499343872,,145
@@ -143,6 +160,7 @@ antibody_antigen,1AHW_ab_tissue_factor,protenix,True,88.3830337524414,0.68564420
 antibody_antigen,1AHW_ab_tissue_factor,chai1,True,,0.8585329055786133,0.803653359413147,262
 antibody_antigen,1AHW_ab_tissue_factor,intellifold,True,0.8966709971427917,0.6503194570541382,0.5732231855392456,195
 antibody_antigen,1AHW_ab_tissue_factor,rf3,True,0.7573,0.5071556568145752,0.434,79
+antibody_antigen,1AHW_ab_tissue_factor,esmfold2,True,0.8489730954170227,0.6633412837982178,,55
 antibody_antigen,1DVF_idiotope,af3,True,,0.4,0.33781390941835093,497
 antibody_antigen,1DVF_idiotope,alphafast,True,,0.51,0.39323121521376303,52
 antibody_antigen,1DVF_idiotope,boltz2,True,,0.9173259735107422,,106
@@ -151,6 +169,7 @@ antibody_antigen,1DVF_idiotope,protenix,True,86.87451934814453,0.568766653537750
 antibody_antigen,1DVF_idiotope,chai1,True,,0.7016002535820007,0.6118541955947876,194
 antibody_antigen,1DVF_idiotope,intellifold,True,0.9196863770484924,0.7158442139625549,0.6672386288642883,153
 antibody_antigen,1DVF_idiotope,rf3,True,0.7778,0.693476140499115,0.6229,54
+antibody_antigen,1DVF_idiotope,esmfold2,True,0.8858132362365723,0.7388826012611389,,33
 antibody_antigen,1MLC_ab_lysozyme,af3,True,,0.76,0.6735775503568423,504
 antibody_antigen,1MLC_ab_lysozyme,alphafast,True,,0.75,0.67138184985072,52
 antibody_antigen,1MLC_ab_lysozyme,boltz2,True,,0.7801317572593689,,107
@@ -159,6 +178,7 @@ antibody_antigen,1MLC_ab_lysozyme,protenix,True,91.40470123291016,0.803973674774
 antibody_antigen,1MLC_ab_lysozyme,chai1,True,,0.8092478513717651,0.7163285613059998,273
 antibody_antigen,1MLC_ab_lysozyme,intellifold,True,0.9054887890815735,0.6875609159469604,0.6199122190475463,201
 antibody_antigen,1MLC_ab_lysozyme,rf3,True,0.7596,0.5340133905410767,0.4552,67
+antibody_antigen,1MLC_ab_lysozyme,esmfold2,True,0.8682070374488831,0.7324540019035339,,43
 antibody_antigen,4FQI_trastuzumab_HER2,af3,True,,0.81,0.8867268263394892,403
 antibody_antigen,4FQI_trastuzumab_HER2,alphafast,True,,0.82,0.9036381605956233,52
 antibody_antigen,4FQI_trastuzumab_HER2,boltz2,True,,0.862562894821167,,100
@@ -167,6 +187,7 @@ antibody_antigen,4FQI_trastuzumab_HER2,protenix,True,85.58332824707031,0.8247011
 antibody_antigen,4FQI_trastuzumab_HER2,chai1,True,,0.8867371082305908,0.8689596056938171,172
 antibody_antigen,4FQI_trastuzumab_HER2,intellifold,True,0.8659013509750366,0.6572005152702332,0.6545250296592713,148
 antibody_antigen,4FQI_trastuzumab_HER2,rf3,True,0.6564,0.2245473563671112,0.1641,62
+antibody_antigen,4FQI_trastuzumab_HER2,esmfold2,True,0.47677189111709595,0.4247902035713196,,36
 antibody_antigen,7N4I_RBD_neutralizing_ab,af3,True,,0.84,0.8608766036184654,379
 antibody_antigen,7N4I_RBD_neutralizing_ab,alphafast,True,,0.86,0.878667868745752,52
 antibody_antigen,7N4I_RBD_neutralizing_ab,boltz2,True,,0.9117208123207092,,94
@@ -175,6 +196,7 @@ antibody_antigen,7N4I_RBD_neutralizing_ab,protenix,True,94.98041534423828,0.9055
 antibody_antigen,7N4I_RBD_neutralizing_ab,chai1,True,,0.8977324962615967,0.8583534955978394,174
 antibody_antigen,7N4I_RBD_neutralizing_ab,intellifold,True,0.9442330002784729,0.8368958234786987,0.8409279584884644,144
 antibody_antigen,7N4I_RBD_neutralizing_ab,rf3,True,0.808,0.6703342795372009,0.6429,50
+antibody_antigen,7N4I_RBD_neutralizing_ab,esmfold2,True,0.9196688532829285,0.8575002551078796,,32
 protein_dna,1BL0_MarA_DNA,af3,True,,0.85,0.8496016673627337,225
 protein_dna,1BL0_MarA_DNA,alphafast,True,,0.86,0.8476461511393127,52
 protein_dna,1BL0_MarA_DNA,boltz2,True,,0.9741767644882202,,105
@@ -183,6 +205,7 @@ protein_dna,1BL0_MarA_DNA,protenix,True,94.79594421386719,0.9400105476379395,,13
 protein_dna,1BL0_MarA_DNA,chai1,True,,0.9164795875549316,0.8972357511520386,99
 protein_dna,1BL0_MarA_DNA,intellifold,True,0.9420354962348938,0.8143218755722046,0.8258690595626831,87
 protein_dna,1BL0_MarA_DNA,rf3,True,0.7956,0.651853084564209,0.4418,40
+protein_dna,1BL0_MarA_DNA,esmfold2,True,0.7996581196784973,0.8258082270622253,,20
 protein_dna,1J1V_DnaA_DNA,af3,True,,0.95,0.9438649433622226,202
 protein_dna,1J1V_DnaA_DNA,alphafast,True,,0.95,0.9434870544918184,52
 protein_dna,1J1V_DnaA_DNA,boltz2,True,,0.9846145510673523,,87
@@ -191,6 +214,7 @@ protein_dna,1J1V_DnaA_DNA,protenix,True,97.5450668334961,0.9668247699737549,,130
 protein_dna,1J1V_DnaA_DNA,chai1,True,,0.9728637933731079,0.9673292636871338,96
 protein_dna,1J1V_DnaA_DNA,intellifold,True,0.9771406054496765,0.911500096321106,0.9088587999343872,78
 protein_dna,1J1V_DnaA_DNA,rf3,True,0.8245,0.889227032661438,0.7623,35
+protein_dna,1J1V_DnaA_DNA,esmfold2,True,0.9604760408401489,0.9652295708656311,,19
 protein_dna,1LMB_lambda_repressor_DNA,af3,True,,0.92,0.9563802593634635,202
 protein_dna,1LMB_lambda_repressor_DNA,alphafast,True,,0.92,0.9526068893209074,52
 protein_dna,1LMB_lambda_repressor_DNA,boltz2,True,,0.9721294641494751,,79
@@ -199,6 +223,7 @@ protein_dna,1LMB_lambda_repressor_DNA,protenix,True,96.75953674316406,0.95081955
 protein_dna,1LMB_lambda_repressor_DNA,chai1,True,,0.9498469829559326,0.9245606064796448,122
 protein_dna,1LMB_lambda_repressor_DNA,intellifold,True,0.9556631445884705,0.8842293620109558,0.8765378832817077,80
 protein_dna,1LMB_lambda_repressor_DNA,rf3,True,0.846,0.8561011552810669,0.8217,38
+protein_dna,1LMB_lambda_repressor_DNA,esmfold2,True,0.905171275138855,0.8883717656135559,,22
 protein_dna,3HDD_homeodomain_DNA,af3,True,,0.84,0.8853274169077877,196
 protein_dna,3HDD_homeodomain_DNA,alphafast,True,,0.83,0.8345031606081882,52
 protein_dna,3HDD_homeodomain_DNA,boltz2,True,,0.9543312191963196,,81
@@ -207,6 +232,7 @@ protein_dna,3HDD_homeodomain_DNA,protenix,True,85.70982360839844,0.6950346231460
 protein_dna,3HDD_homeodomain_DNA,chai1,True,,0.9056347608566284,0.8927990198135376,119
 protein_dna,3HDD_homeodomain_DNA,intellifold,True,0.9329679608345032,0.7963412404060364,0.7917276501655578,80
 protein_dna,3HDD_homeodomain_DNA,rf3,True,0.8405,0.6201947331428528,0.5465,39
+protein_dna,3HDD_homeodomain_DNA,esmfold2,True,0.8261998295783997,0.7039579153060913,,21
 homo_multimer,14GS_GST_homodimer,af3,True,,0.97,0.9634530189078786,259
 homo_multimer,14GS_GST_homodimer,alphafast,True,,0.97,0.9614487735018611,52
 homo_multimer,14GS_GST_homodimer,boltz2,True,,0.976826548576355,,67
@@ -215,6 +241,7 @@ homo_multimer,14GS_GST_homodimer,protenix,True,96.3460922241211,0.97049158811569
 homo_multimer,14GS_GST_homodimer,chai1,True,,0.9820522665977478,0.9666037559509277,214
 homo_multimer,14GS_GST_homodimer,intellifold,True,0.9625617861747742,0.9021210670471191,0.9008115768432617,113
 homo_multimer,14GS_GST_homodimer,rf3,True,0.6609,0.19736872613430023,0.1462,49
+homo_multimer,14GS_GST_homodimer,esmfold2,True,0.9431676268577576,0.8986547589302063,,31
 homo_multimer,1HTI_TIM_homodimer,af3,True,,0.95,0.9451410055779024,264
 homo_multimer,1HTI_TIM_homodimer,alphafast,True,,0.95,0.9497781785881848,52
 homo_multimer,1HTI_TIM_homodimer,boltz2,True,,0.9591962099075317,,131
@@ -223,6 +250,7 @@ homo_multimer,1HTI_TIM_homodimer,protenix,True,95.38887023925781,0.9610290527343
 homo_multimer,1HTI_TIM_homodimer,chai1,True,,0.9629502296447754,0.9462621212005615,189
 homo_multimer,1HTI_TIM_homodimer,intellifold,True,0.9337309002876282,0.863768458366394,0.8800685167312623,145
 homo_multimer,1HTI_TIM_homodimer,rf3,True,0.7728,0.6522762179374695,0.4791,54
+homo_multimer,1HTI_TIM_homodimer,esmfold2,True,0.9245077967643738,0.8965485095977783,,36
 homo_multimer,1SAK_p53_TET_tetramer,af3,True,,0.73,1.24144898185626,194
 homo_multimer,1SAK_p53_TET_tetramer,alphafast,True,,0.76,1.248079528402167,52
 homo_multimer,1SAK_p53_TET_tetramer,boltz2,True,,0.8846461176872253,,58
@@ -231,6 +259,7 @@ homo_multimer,1SAK_p53_TET_tetramer,protenix,True,87.2601547241211,0.90251612663
 homo_multimer,1SAK_p53_TET_tetramer,chai1,True,,0.8315181732177734,0.7987614870071411,105
 homo_multimer,1SAK_p53_TET_tetramer,intellifold,True,0.875398576259613,0.7073767185211182,0.7012453079223633,62
 homo_multimer,1SAK_p53_TET_tetramer,rf3,True,0.723,0.62842857837677,0.5842,34
+homo_multimer,1SAK_p53_TET_tetramer,esmfold2,True,0.6417325139045715,0.5518958568572998,,21
 metal_ion,1CA2_carbonic_anhydrase_ZN,af3,True,,0.97,0.9800579141329446,266
 metal_ion,1CA2_carbonic_anhydrase_ZN,alphafast,True,,0.97,0.9804612583059713,52
 metal_ion,1CA2_carbonic_anhydrase_ZN,boltz2,True,,0.9816920161247253,,77
@@ -239,6 +268,7 @@ metal_ion,1CA2_carbonic_anhydrase_ZN,protenix,True,97.01702117919922,0.977622568
 metal_ion,1CA2_carbonic_anhydrase_ZN,chai1,True,,0.9809353947639465,0.1961870789527893,125
 metal_ion,1CA2_carbonic_anhydrase_ZN,intellifold,True,0.970617413520813,0.9235174655914307,0.9666773796081543,116
 metal_ion,1CA2_carbonic_anhydrase_ZN,rf3,True,0.676,0.2883809506893158,0.3813,39
+metal_ion,1CA2_carbonic_anhydrase_ZN,esmfold2,True,0.9680954813957214,0.9817854762077332,,23
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,af3,True,,0.95,0.9461620041024031,243
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,alphafast,True,,0.95,0.945583878228795,52
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,boltz2,True,,0.975412130355835,,92
@@ -247,6 +277,7 @@ metal_ion,2SOD_superoxide_dismutase_CU_ZN,protenix,True,96.64634704589844,0.9717
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,chai1,True,,0.9684144258499146,0.9384280443191528,137
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,intellifold,True,0.9542328715324402,0.9018436670303345,0.8937685251235962,113
 metal_ion,2SOD_superoxide_dismutase_CU_ZN,rf3,True,0.6735,0.3798387050628662,0.3199,41
+metal_ion,2SOD_superoxide_dismutase_CU_ZN,esmfold2,True,0.9522268176078796,0.9227346181869507,,30
 metal_ion,8TLN_thermolysin_ZN_CA,af3,True,,0.98,0.9785671565257285,286
 metal_ion,8TLN_thermolysin_ZN_CA,alphafast,True,,0.97,0.9782058591133627,52
 metal_ion,8TLN_thermolysin_ZN_CA,boltz2,True,,0.984169065952301,,109
@@ -255,6 +286,7 @@ metal_ion,8TLN_thermolysin_ZN_CA,protenix,True,98.12193298339844,0.9798654913902
 metal_ion,8TLN_thermolysin_ZN_CA,chai1,True,,0.9904041886329651,0.19808083772659302,128
 metal_ion,8TLN_thermolysin_ZN_CA,intellifold,True,0.9758390784263611,0.9585295915603638,0.9556772470474243,129
 metal_ion,8TLN_thermolysin_ZN_CA,rf3,True,0.6636,0.4064207375049591,0.4052,39
+metal_ion,8TLN_thermolysin_ZN_CA,esmfold2,True,0.9802442193031311,0.9883753061294556,,27
 covalent_mod,4G5J_EGFR_afatinib,af3,True,,0.92,0.971773781343263,638
 covalent_mod,4G5J_EGFR_afatinib,alphafast,True,,0.92,0.974162992293908,52
 covalent_mod,4G5J_EGFR_afatinib,boltz2,True,,0.9523032307624817,,186
@@ -263,6 +295,7 @@ covalent_mod,4G5J_EGFR_afatinib,protenix,True,91.15850067138672,0.94409322738647
 covalent_mod,4G5J_EGFR_afatinib,chai1,True,,0.8952053189277649,0.1790410727262497,122
 covalent_mod,4G5J_EGFR_afatinib,intellifold,True,0.8767403960227966,0.8038051128387451,0.8313354015350343,123
 covalent_mod,4G5J_EGFR_afatinib,rf3,True,0.6547,0.2954152822494507,0.3348,45
+covalent_mod,4G5J_EGFR_afatinib,esmfold2,True,0.8884356617927551,0.9164955615997314,,26
 covalent_mod,5P9J_BTK_ibrutinib,af3,True,,0.96,0.989992027040071,631
 covalent_mod,5P9J_BTK_ibrutinib,alphafast,True,,0.96,0.989234276739293,52
 covalent_mod,5P9J_BTK_ibrutinib,boltz2,True,,0.9826425313949585,,165
@@ -271,6 +304,7 @@ covalent_mod,5P9J_BTK_ibrutinib,protenix,True,94.65991973876953,0.96247941255569
 covalent_mod,5P9J_BTK_ibrutinib,chai1,True,,0.963438093662262,0.19268761575222015,123
 covalent_mod,5P9J_BTK_ibrutinib,intellifold,True,0.9721760153770447,0.904761552810669,0.9039825916290284,116
 covalent_mod,5P9J_BTK_ibrutinib,rf3,True,0.6709,0.3364715576171875,0.3373,43
+covalent_mod,5P9J_BTK_ibrutinib,esmfold2,True,0.9107001423835754,0.9457432627677917,,24
 covalent_mod,6OIM_KRAS_G12C_sotorasib,af3,True,,0.9,0.9604453174422418,338
 covalent_mod,6OIM_KRAS_G12C_sotorasib,alphafast,True,,0.9,0.9582204426105393,52
 covalent_mod,6OIM_KRAS_G12C_sotorasib,boltz2,True,,0.9525614976882935,,115
@@ -279,3 +313,4 @@ covalent_mod,6OIM_KRAS_G12C_sotorasib,protenix,True,91.8457260131836,0.946133494
 covalent_mod,6OIM_KRAS_G12C_sotorasib,chai1,True,,0.897278904914856,0.17945578694343567,97
 covalent_mod,6OIM_KRAS_G12C_sotorasib,intellifold,True,0.9051184058189392,0.8635025024414062,0.8949088573455811,110
 covalent_mod,6OIM_KRAS_G12C_sotorasib,rf3,True,0.7431,0.774097204208374,0.7655,38
+covalent_mod,6OIM_KRAS_G12C_sotorasib,esmfold2,True,0.7885718941688538,0.8254209160804749,,19

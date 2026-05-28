@@ -48,6 +48,15 @@
 # or wget http://files.ipd.uw.edu/pub/rf3/rf3_foundry_01_24_latest_remapped.ckpt
 : "${RF3_CKPT_PATH:=/data2/zcwang/structure_prediction/RoseTTAFold3/weights/rf3_foundry_01_24_latest_remapped.ckpt}"
 
+# ── ESMFold2 (Biohub, 2026-05-27) ──────────────────────────────────────
+# HuggingFace cache dir for model weights (~12 GB ESMC-6B + ~0.4 GB folding head).
+: "${ESMFOLD2_HF_CACHE:=/data2/zcwang/structure_prediction/esmfold2/hf_cache}"
+# Number of diffusion refinement loops (3=default; higher=more accurate but slower).
+: "${ESMFOLD2_NUM_LOOPS:=3}"
+# Model variant: local path (weights at hf_cache/biohub_ESMFold2/) or HF ID.
+# Use local path to skip re-download; set to "biohub/ESMFold2-Fast" for lighter variant.
+: "${ESMFOLD2_MODEL:=/data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2}"
+
 # ── AlphaFast ─────────────────────────────────────────────────────────
 # Native uv-venv install of AlphaFast.
 : "${ALPHAFAST_DIR:=/data2/zcwang/af3/alphafast}"

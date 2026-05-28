@@ -216,9 +216,32 @@ case "$MODEL" in
             ckpt_path="${RF3_CKPT_PATH}" \
             2>&1 || echo "FAILED: rf3/${SCENARIO}/${CASE_NAME}"
         ;;
+    esmfold2)
+        # ESMFold2 (Chan Zuckerberg Biohub, MIT license, 2026-05-27)
+        # No CLI — uses Python API wrapper. Input: AF3 JSON (reused from af3_json/).
+        # Output: pred_esmfold2.cif + confidence_esmfold2.json
+        # NOTE: LigandInput only supports CCD codes; SMILES-only ligands are skipped.
+        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        source "${CONDA_BASE}/etc/profile.d/conda.sh"
+        conda activate esmfold2
+        mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        CUDA_VISIBLE_DEVICES=${GPU_ID} \
+        HF_HOME="${ESMFOLD2_HF_CACHE}" \
+        HUGGINGFACE_HUB_CACHE="${ESMFOLD2_HF_CACHE}" \
+        ESMCFOLD_CCD_PATH="${ESMFOLD2_MODEL}/ccd.pkl" \
+        HTTPS_PROXY="${HTTPS_PROXY:-http://127.0.0.1:7890}" \
+        HTTP_PROXY="${HTTP_PROXY:-http://127.0.0.1:7890}" \
+            python "${PROJECT_ROOT}/scripts/run_esmfold2.py" \
+                --input  "$(realpath "$INPUT_JSON")" \
+                --outdir "${OUTPUTS}/${CASE_NAME}" \
+                --model  "${ESMFOLD2_MODEL:-biohub/ESMFold2}" \
+                --num-loops "${ESMFOLD2_NUM_LOOPS:-3}" \
+            2>&1 || echo "FAILED: esmfold2/${SCENARIO}/${CASE_NAME}"
+        ;;
     *)
         echo "Unknown model: $MODEL"
-        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold, rf3"
+        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold, rf3, esmfold2"
         exit 1
         ;;
 esac

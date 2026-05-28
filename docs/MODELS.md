@@ -1,6 +1,6 @@
 # Per-Model Usage Reference
 
-Verified working CLI commands and key gotchas for all 7 models.
+Verified working CLI commands and key gotchas for all 9 models.
 This is the canonical "how to actually run each model" reference.
 
 For input format details see [INPUT_FORMATS.md](INPUT_FORMATS.md).
@@ -21,6 +21,7 @@ For known issues see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 | Chai-1 | `chai1` | `chai-lab fold input.fasta output/ --use-msa-server` | FASTA |
 | IntelliFold-2 | `intellifold` | `intellifold predict input.yaml --out_dir output/ --use_msa_server` | YAML |
 | RoseTTAFold3 | `rf3` | `rf3 fold inputs=input.json out_dir=output/ ckpt_path=...` | RF3 JSON |
+| ESMFold2 | `esmfold2` | `python scripts/run_esmfold2.py --input ... --outdir ...` | AF3 JSON (reused) |
 
 ---
 
@@ -335,16 +336,57 @@ CUDA_VISIBLE_DEVICES=0 rf3 fold \
 
 ---
 
+## 9. ESMFold2 (Biohub, 2026-05-27)
+
+```bash
+conda activate esmfold2
+python scripts/run_esmfold2.py \
+    --input  inputs/monomer/af3_json/1UBQ_ubiquitin.json \
+    --outdir outputs/esmfold2/monomer/1UBQ_ubiquitin \
+    --model  biohub/ESMFold2 \
+    --num-loops 3
+# Output: pred_esmfold2.cif + confidence_esmfold2.json
+```
+
+**Installation** (Python 3.12 required, strict):
+```bash
+conda create -n esmfold2 python=3.12 -y
+conda activate esmfold2
+HTTPS_PROXY=http://127.0.0.1:7890 pip install "esm @ git+https://github.com/Biohub/esm.git"
+```
+
+**Input format**: Reuses AF3 JSON (already generated for all 35 cases). No new input directory needed. The wrapper script (`run_esmfold2.py`) converts AF3 JSON → `StructurePredictionInput` at runtime.
+
+**Weights**: Downloaded automatically from HuggingFace Hub on first run (~12 GB ESMC-6B + ~0.4 GB folding head). Cached to `ESMFOLD2_HF_CACHE` (default: `/data2/zcwang/structure_prediction/esmfold2/hf_cache`).
+
+**Architecture**: ESMC-6B language model (2.8B sequence training corpus) + ESMFold2 looped-transformer folding head. Supports inference-time compute scaling via `--num-loops` (higher = more accurate but slower).
+
+**Model variants**:
+- `biohub/ESMFold2` — full model, used for benchmark (default)
+- `biohub/ESMFold2-Fast` — faster, slightly lower accuracy
+
+**Key differences from other models**:
+- No CLI — must use `run_esmfold2.py` wrapper
+- `LigandInput` accepts CCD codes only (`ccd=["ATP"]`); SMILES-only ligands are skipped with a warning
+- Zero-shot single-sequence by default (no MSA); ColabFold MSA optionally supported
+- Output: `result.complex.to_mmcif()` → CIF; `result.ptm`, `result.plddt`, `result.iptm` → confidence
+
+**Speed**: Benchmark TBD (first run includes ESMC-6B weight download ~12 GB).
+
+**VRAM**: ~13 GB (ESMC-6B in bfloat16 ~12 GB + folding head ~1 GB); RTX 4090 (48 GB) comfortable.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |
 |----------|-------------------|-----|
-| General PPI | **Boltz-2** | Best pTM (0.94), ~79s/case |
-| Protein-ligand | **Boltz-2** or Chai-1 | pTM 0.95 / 0.94, ~84-152s |
-| Protein-RNA | **Boltz-2** or Chai-1 | pTM 0.90 / 0.88; all 8 models support RNA |
-| Antibody-antigen | **Boltz-2** | Best pTM (0.89) |
-| High-throughput screening | **RF3** | 30-60s zero-shot, no MSA needed |
-| AF3 batch speedup | **AlphaFast** | 75s/case (flat), 3-5× faster than AF3 |
+| General PPI | **Boltz-2** or **ESMFold2** | Boltz-2 pTM 0.94; ESMFold2 SOTA on antibody-antigen |
+| Protein-ligand | **Boltz-2** or Chai-1 | pTM 0.95 / 0.94; ESMFold2 CCD only |
+| Protein-RNA | **Boltz-2** or Chai-1 | pTM 0.87 / 0.88 |
+| Antibody-antigen | **ESMFold2** or Boltz-2 | ESMFold2 SOTA per Biohub benchmarks |
+| High-throughput screening | **RF3** | 30-60s zero-shot, no MSA |
+| AF3 batch speedup | **AlphaFast** | 52s/case (flat), 5× faster than AF3 |
 | Reproducible / publication | **AF3** | Gold standard, JackHMMER MSA |
 | Cluster-friendly minimal | **Chai-1** | Lightest weights, simplest input |
 

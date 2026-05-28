@@ -51,7 +51,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-ALL_MODELS="af3 alphafast boltz2 openfold3 protenix chai1 intellifold rf3"
+ALL_MODELS="af3 alphafast boltz2 openfold3 protenix chai1 intellifold rf3 esmfold2"
 ALL_SCENARIOS="protein_protein protein_ligand protein_rna monomer antibody_antigen protein_dna homo_multimer metal_ion covalent_mod"
 
 # --models takes precedence over --model
