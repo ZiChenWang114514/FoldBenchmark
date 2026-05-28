@@ -245,9 +245,38 @@ case "$MODEL" in
                 --num-loops "${ESMFOLD2_NUM_LOOPS:-3}" \
             2>&1 || echo "FAILED: esmfold2/${SCENARIO}/${CASE_NAME}"
         ;;
+    esm3)
+        # ESM3 (EvolutionaryScale, Science 2025; Cambrian non-commercial license)
+        # Generative multimodal protein language model — structure prediction via
+        # iterative decoding of structure tokens from sequence.
+        # Input: AF3 JSON (protein chains only; RNA/DNA/ligand chains ignored).
+        # Output: pred_esm3.cif + confidence_esm3.json
+        # NOTE: RNA-only inputs (rna_structure scenario) are skipped.
+        INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
+        [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        HAS_PROTEIN=$(python3 -c "import json; d=json.load(open('$INPUT_JSON')); print(any('protein' in s for s in d.get('sequences',[])))" 2>/dev/null)
+        if [ "$HAS_PROTEIN" = "False" ]; then
+            echo "SKIP: esm3 does not support RNA-only input: $CASE_NAME"
+            exit 0
+        fi
+        source "${CONDA_BASE}/etc/profile.d/conda.sh"
+        conda activate esm3
+        mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        CUDA_VISIBLE_DEVICES=${GPU_ID} \
+        HF_HOME="${ESM3_HF_CACHE}" \
+        HUGGINGFACE_HUB_CACHE="${ESM3_HF_CACHE}" \
+        HTTPS_PROXY="${HTTPS_PROXY:-http://127.0.0.1:7892}" \
+        HTTP_PROXY="${HTTP_PROXY:-http://127.0.0.1:7892}" \
+            python "${PROJECT_ROOT}/scripts/run_esm3.py" \
+                --input  "$(realpath "$INPUT_JSON")" \
+                --outdir "${OUTPUTS}/${CASE_NAME}" \
+                --model  "${ESM3_MODEL:-esm3-sm-open-v1}" \
+                --num-steps "${ESM3_NUM_STEPS:-8}" \
+            2>&1 || echo "FAILED: esm3/${SCENARIO}/${CASE_NAME}"
+        ;;
     *)
         echo "Unknown model: $MODEL"
-        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold, rf3, esmfold2"
+        echo "Available: af3, alphafast, boltz2, openfold3, protenix, chai1, intellifold, rf3, esmfold2, esm3"
         exit 1
         ;;
 esac

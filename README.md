@@ -1,6 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of **9** biomolecular structure prediction models across **18** scenarios (**81** test systems) on 4× RTX 4090.
+Systematic benchmark of **10** biomolecular structure prediction models across **18** scenarios (**81** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -221,6 +221,7 @@ AUGCAUGC
 | OpenFold3 | v0.4.1 | conda `openfold3` | ColabFold server | Apache 2.0 |
 | RoseTTAFold3 | v0.1.12 (Foundry) | conda `rf3` | Pre-computed .a3m (no built-in MSA) | BSD-3-Clause |
 | ESMFold2 | 2026-05-27 | conda `esmfold2` (Python 3.12) | No MSA (zero-shot) | MIT |
+| ESM3 | sm-open-v1 (1.4B) | conda `esm3` | No MSA (generative, zero-shot) | Cambrian non-commercial |
 
 See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
 
@@ -317,7 +318,7 @@ FoldBenchmark/
 - ~400 GB NVMe for AF3 sharded databases
 - ~415 GB for AlphaFast MMseqs2 databases (388 GB protein + 27 GB RNA)
 
-With 4 GPUs, running all 8 models × 35 cases sequentially takes roughly 11–12 hours
+With 4 GPUs, running all 10 models × 35 cases sequentially takes roughly 12–14 hours
 (AlphaFast uses all-in-one batch; others run serially on GPU 0).
 Models can be parallelized across GPUs with `--gpu N` flags.
 

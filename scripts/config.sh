@@ -57,6 +57,14 @@
 # Use local path to skip re-download; set to "biohub/ESMFold2-Fast" for lighter variant.
 : "${ESMFOLD2_MODEL:=/data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2}"
 
+# ── ESM3 (EvolutionaryScale, Cambrian non-commercial) ──────────────────────────
+# HuggingFace cache dir for esm3-sm-open-v1 weights (~5 GB).
+: "${ESM3_HF_CACHE:=/data2/zcwang/structure_prediction/esm3/hf_cache}"
+# Model variant: "esm3-sm-open-v1" (local, 1.4B, non-commercial) or Forge model name.
+: "${ESM3_MODEL:=esm3-sm-open-v1}"
+# Structure generation steps (higher = more accurate, slower; 8 is a good default).
+: "${ESM3_NUM_STEPS:=8}"
+
 # ── AlphaFast ─────────────────────────────────────────────────────────
 # Native uv-venv install of AlphaFast.
 : "${ALPHAFAST_DIR:=/data2/zcwang/af3/alphafast}"

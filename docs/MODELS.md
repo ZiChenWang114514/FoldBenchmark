@@ -605,6 +605,71 @@ The `coiled_coil` scenario covers 6 cases spanning coiled-coils and all 3 major 
 
 ---
 
+## ESM3 (added 2026-05-28)
+
+**ESM3** (EvolutionaryScale, *Science* 2025: "Simulating 500 million years of evolution with a language model") is a frontier **generative multimodal protein language model** that jointly reasons over sequence, structure, and function via masked generation.
+
+| Property | Value |
+|----------|-------|
+| Architecture | Multitrack transformer + geometric attention |
+| Open model | `esm3-sm-open-v1` — 1.4B params, HuggingFace |
+| Larger models | 34B / 98B via EvolutionaryScale Forge API |
+| License | **Cambrian Non-Commercial** (academic research OK; commercial use requires Forge API) |
+| VRAM (1.4B, bfloat16) | ~3–4 GB |
+| Monomer LDDT (CAMEO) | 0.880 (vs ESMFold 0.861) |
+| Multi-chain complex | Not benchmarked in literature |
+| RNA / ligand / glycan | **Not supported** |
+| MSA required | No (zero-shot, sequence only) |
+| Installation | `pip install esm` + HuggingFace token to accept EvolutionaryScale agreement |
+
+### Why ESM3 alongside ESMFold2
+
+Both models are zero-shot (no MSA). They represent two different paradigms:
+- **ESMFold2** (Biohub): discriminative — sequence → structure (one-shot folding head)
+- **ESM3**: generative — sequence → structure via iterative token decoding
+
+Comparing them on the same 81 cases makes the discriminative-vs-generative trade-off explicit for single-chain and complex scenarios.
+
+### Input / output
+
+- **Input**: AF3 JSON (`af3_json/`); protein chains extracted and joined with `:` for multi-chain.
+- **RNA / DNA / ligand chains** in the JSON are silently ignored.
+- **Output**: `pred_esm3.cif` (mmCIF via gemmi, or stub CIF + `pred_esm3.pdb` if gemmi absent) + `confidence_esm3.json` with `ptm` and `plddt`.
+
+### Setup
+
+```bash
+# 1. Create conda env
+conda create -n esm3 python=3.11 -y
+conda activate esm3
+
+# 2. Install esm package (requires CUDA-compatible PyTorch)
+pip install esm --extra-index-url https://download.pytorch.org/whl/cu121
+pip install gemmi   # for mmCIF export
+
+# 3. Accept HuggingFace agreement for EvolutionaryScale/esm3-sm-open-v1
+# Then set ESM3_HF_CACHE in config.sh and weights will auto-download on first run
+
+# 4. Smoke test
+python -c "
+from esm.models.esm3 import ESM3
+from esm.sdk.api import ESMProtein, GenerationConfig
+m = ESM3.from_pretrained('esm3-sm-open-v1').to('cuda')
+p = ESMProtein(sequence='MKFLKFSLLTAVLFVAIASALA')
+r = m.generate(p, GenerationConfig(track='structure', num_steps=8))
+print('pTM:', r.ptm.mean().item() if r.ptm is not None else 'N/A')
+"
+```
+
+### Known issues
+
+1. **API evolution**: The ESM3 Python API is still maturing (v0.x → v1.x). If `result.ptm` is missing, check `result.metrics.ptm` or `result.protein_tensor.ptm` in your installed version.
+2. **Multi-chain accuracy**: Complex prediction is not published in benchmarks; expect accuracy weaker than Boltz-2/Chai-1 on PPI / antibody scenarios.
+3. **Skipped scenarios**: `rna_structure` (all 5 cases skipped). Scenarios with ligands run but ligand coordinates are absent from output.
+4. **1.4B model vs larger**: `esm3-sm-open-v1` (1.4B) is the only fully local open model. For higher accuracy, configure `ESM3_MODEL` to a Forge API model name and set `ESM3_FORGE_TOKEN`.
+
+---
+
 ## Choosing a model for your task
 
 | Use case | Recommended model | Why |
@@ -613,9 +678,10 @@ The `coiled_coil` scenario covers 6 cases spanning coiled-coils and all 3 major 
 | Protein-ligand | **Boltz-2** or Chai-1 | pTM 0.95 / 0.94; ESMFold2 CCD only |
 | Protein-RNA | **Boltz-2** or Chai-1 | pTM 0.87 / 0.88 |
 | Antibody-antigen | **ESMFold2** or Boltz-2 | ESMFold2 SOTA per Biohub benchmarks |
-| High-throughput screening | **RF3** | 30-60s zero-shot, no MSA |
+| High-throughput screening | **RF3** or **ESM3** | RF3 30-60s zero-shot; ESM3 generative alternative (no MSA) |
 | AF3 batch speedup | **AlphaFast** | 52s/case (flat), 5× faster than AF3 |
 | Reproducible / publication | **AF3** | Gold standard, JackHMMER MSA |
 | Cluster-friendly minimal | **Chai-1** | Lightest weights, simplest input |
+| Generative design comparison | **ESM3** | Only generative model in the benchmark |
 
 See [results/summary.md](../results/summary.md) for full benchmark numbers.
