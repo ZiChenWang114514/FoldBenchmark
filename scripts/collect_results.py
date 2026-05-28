@@ -19,6 +19,8 @@ MODELS = ["af3", "alphafast", "boltz2", "openfold3", "protenix", "chai1", "intel
 _BENCHMARK_SCENARIOS = [
     "protein_protein", "protein_ligand", "protein_rna", "monomer", "antibody_antigen",
     "protein_dna", "homo_multimer", "metal_ion", "covalent_mod",
+    "ternary_complex", "gpcr", "membrane_complex",
+    "idp", "protein_peptide", "rna_structure", "hetero_multimer", "glycoprotein", "coiled_coil",
 ]
 
 

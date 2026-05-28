@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# master_benchmark.sh — 全量重跑 35 cases × 8 models，公平 benchmark
+# master_benchmark.sh — 全量重跑 81 cases × 9 models，公平 benchmark
 # Usage: bash scripts/master_benchmark.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."

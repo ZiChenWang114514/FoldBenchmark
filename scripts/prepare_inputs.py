@@ -72,11 +72,6 @@ TEST_CASES = {
             "chains": [("A", "protein"), ("D", "protein")],
         },
         {
-            "name": "1A2K_GH_receptor",
-            "pdb_id": "1A2K",
-            "chains": [("A", "protein"), ("B", "protein")],
-        },
-        {
             "name": "3HFM_lysozyme_fab",
             "pdb_id": "3HFM",
             "chains": [("Y", "protein"), ("A", "protein")],

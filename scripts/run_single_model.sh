@@ -223,6 +223,12 @@ case "$MODEL" in
         # NOTE: LigandInput only supports CCD codes; SMILES-only ligands are skipped.
         INPUT_JSON="${INPUTS}/af3_json/${CASE_NAME}.json"
         [ ! -f "$INPUT_JSON" ] && echo "SKIP: no input" && exit 0
+        # ESMFold2 is protein-only; skip RNA-only inputs (rna_structure scenario)
+        HAS_PROTEIN=$(python3 -c "import json; d=json.load(open('$INPUT_JSON')); print(any('protein' in s for s in d.get('sequences',[])))" 2>/dev/null)
+        if [ "$HAS_PROTEIN" = "False" ]; then
+            echo "SKIP: esmfold2 does not support RNA-only input: $CASE_NAME"
+            exit 0
+        fi
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate esmfold2
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
