@@ -1,6 +1,6 @@
 ---
 name: fold-models
-description: Run individual open-source structure prediction models (AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3) on user-provided inputs. TRIGGER when the user asks to predict a structure with a specific non-AF3 model, run AlphaFast/Boltz-2/Chai/Protenix/OpenFold/IntelliFold/RF3 on a protein, or compare a specific model's output. DO NOT TRIGGER for AF3 (use af3-local) or for cross-model benchmarks (use fold-bench).
+description: Run individual open-source structure prediction models (AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3, ESMFold2) on user-provided inputs. TRIGGER when the user asks to predict a structure with a specific non-AF3 model, run AlphaFast/Boltz-2/Chai/Protenix/OpenFold/IntelliFold/RF3/ESMFold2 on a protein, or compare a specific model's output. DO NOT TRIGGER for AF3 (use af3-local) or for cross-model benchmarks (use fold-bench).
 ---
 
 # fold-models
@@ -17,7 +17,7 @@ Run open-source structure prediction models at `/data2/zcwang/structure_predicti
 - "AlphaFast 加速 AF3 / GPU MMseqs2"
 - "RoseTTAFold3 / RF3 跑一下这个结构"
 
-## 7 Models — Verified Working Commands
+## 8 Models — Verified Working Commands
 
 ### Boltz-2 (recommended: fastest + top-tier accuracy)
 
@@ -241,23 +241,63 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 
 **Install status (2026-05-22)**: ✓ Installed. `conda activate rf3 && rf3 fold ...` works. 22/22 benchmark complete.
 
+### ESMFold2 (Biohub, 2026-05-27 — no MSA, fastest single-model)
+
+```bash
+conda activate esmfold2
+# Via FoldBenchmark wrapper (推荐):
+CUDA_VISIBLE_DEVICES=0 \
+ESMCFOLD_CCD_PATH="/data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2/ccd.pkl" \
+python /data2/zcwang/FoldBenchmark/scripts/run_esmfold2.py \
+    --input  /path/to/input.json \
+    --outdir /path/to/output/ \
+    --model  /data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2 \
+    --num-loops 3
+# Output: pred_esmfold2.cif + confidence_esmfold2.json (ptm, plddt, iptm)
+```
+
+**Input format**: AF3 JSON（与 AF3/AlphaFast 完全复用，无需新格式）。
+
+**Architecture**: ESMC-6B (6B-param sequence LM, 80 layers) + ESMFold2 looped-transformer folding head (0.2B). 推理时计算扩展：`--num-loops`（默认3；增大提高精度但变慢）。
+
+**Key differences**:
+- **No MSA** — zero-shot single-sequence；无需代理/服务器
+- **CCD ligands only**：`LigandInput` 接受 CCD codes（如 `["ATP"]`），SMILES-only 配体会打印警告并跳过
+- **No CLI**：必须用 `run_esmfold2.py` wrapper
+- **Fastest**：平均 **27 s/case**（含模型加载；无 MSA 搜索开销）
+
+**Critical env vars** (已在 run_single_model.sh 中设置):
+- `ESMCFOLD_CCD_PATH` → 本地 ccd.pkl（否则尝试从 HF hub 下载）
+- `ESMFOLD2_MODEL` → 本地模型目录（config.sh 中已改为本地路径）
+
+**VRAM**: ~28 GB (ESMC-6B bf16 ~24 GB + folding head ~1 GB + activations); RTX 4090 (48 GB) 正常。
+
+**Install** (Python 3.12 strict):
+```bash
+conda create -n esmfold2 python=3.12 -y && conda activate esmfold2
+# 下载 zip（proxy）→ 本地安装
+curl --proxy http://127.0.0.1:7892 -L -o /tmp/esm.zip \
+    https://github.com/Biohub/esm/archive/refs/heads/main.zip
+# transformers fork + esm --no-deps + 补依赖（见 docs/MODELS.md §9）
+```
+
 ## Benchmark Results (FoldBenchmark, 2026-05-24, 35 cases, 9 scenarios)
 
-| Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
-|---------|-----------|---------|----------|--------|---------------|-----------|-----|
-| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.31† |
-| Ligand pTM | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.89 | 0.44† |
-| RNA pTM | 0.76 | 0.87 | 0.88 | 0.88 | 0.79 | 0.84 | 0.56† |
-| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | 0.62† |
-| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.52† |
-| DNA pTM | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.76† |
-| Homo-Multimer pTM | 0.89 | 0.94 | **0.94** | 0.92 | 0.82 | 0.88 | 0.49† |
-| Metal Ion pTM | 0.96 | **0.98** | 0.98 | **0.98** | 0.93 | 0.98 | 0.36† |
-| Covalent Mod pTM | 0.93 | **0.96** | 0.95 | 0.92 | 0.85 | 0.94 | 0.47† |
-| Speed PPI | **52s** | 64s | 119s | 143s | 97s | 141s | 60s |
-| Speed Monomer | **52s** | 57s | 126s | 96s | 58s | 129s | **29s** |
-| Stability | 35/35 | **35/35** | 35/35 | 35/35 | 35/35 | **35/35** | **35/35** |
-| License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 | BSD-3 |
+| Feature | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 | ESMFold2 |
+|---------|-----------|---------|----------|--------|---------------|-----------|-----|----------|
+| PPI pTM | 0.91 | 0.94 | 0.94 | **0.96** | 0.86 | 0.88 | 0.31† | 0.89 |
+| Ligand pTM | 0.90 | **0.95** | 0.94 | 0.94 | 0.85 | 0.89 | 0.44† | 0.91 |
+| RNA pTM | 0.76 | 0.87 | 0.88 | 0.88 | 0.79 | 0.84 | 0.56† | 0.74 |
+| Monomer pTM | 0.70 | 0.83 | 0.83 | **0.84** | 0.65 | 0.59 | 0.62† | 0.63 |
+| Antibody pTM | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.52† | 0.68 |
+| DNA pTM | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.76† | 0.85 |
+| Homo-Multimer pTM | 0.89 | 0.94 | **0.94** | 0.92 | 0.82 | 0.88 | 0.49† | 0.78 |
+| Metal Ion pTM | 0.96 | **0.98** | 0.98 | **0.98** | 0.93 | 0.98 | 0.36† | 0.96 |
+| Covalent Mod pTM | 0.93 | **0.96** | 0.95 | 0.92 | 0.85 | 0.94 | 0.47† | 0.90 |
+| Speed PPI | **52s** | 64s | 119s | 143s | 97s | 141s | 60s | 30s |
+| Speed Monomer | **52s** | 57s | 126s | 96s | 58s | 129s | **29s** | **20s** |
+| Stability | 35/35 | **35/35** | 35/35 | 35/35 | 35/35 | **35/35** | **35/35** | 35/35 |
+| License | CC BY-NC-SA | MIT | Apache 2.0 | Apache 2.0 | Apache 2.0 | Apache 2.0 | BSD-3 | MIT |
 
 † RF3 zero-shot (no paired MSA); multi-chain pTM depressed; single-chain pTM meaningful.
 
@@ -268,6 +308,7 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 - **Zero-shot fast screening**: RF3 — 30-60s/case, no MSA needed.
 - **AF3-style outputs (5 samples + ranking)**: Protenix or AlphaFast.
 - **OpenFold3**: 22/22 with six patches; competitive on RNA (0.84) and ligand (0.89).
+- **No-MSA fastest screening**: ESMFold2 — 27s/case zero-shot, no proxy/server needed; best on metal ion (0.96) and ligand (0.91).
 
 ## Directory layout
 
@@ -307,7 +348,10 @@ Both at `/data2/zcwang/structure_prediction/RoseTTAFold3/weights/`
 15. **RF3 no built-in MSA**: unlike all other models, RF3 does not search MSAs internally. For best accuracy, provide pre-computed .a3m files per chain via `msa_files=[chainA.a3m,chainB.a3m]`. For benchmark comparisons, can run without MSA.
 16. **RF3 (2026-05-23)**: 35/35 benchmark complete. `conda activate rf3 && rf3 fold ...` verified working.
 17. **Protenix JIT overhead on new entity types (DNA, homo-multimer)**: First case with a new entity combination triggers CUDA kernel compilation (+800–1400 s). Subsequent cases complete in ~100–130 s normally. Re-time after warmup if needed (`scripts/rerun_protenix_anomalous.sh`).
-18. **新序列快速上手**：无需手动写 JSON/YAML/FASTA。用 `prepare_inputs_from_fasta.py` 输入 Chai-1 style FASTA，一键生成全部 6 种格式到 `inputs/screening/`，然后用 `run_benchmark.sh --fasta ...` 直接跑任意模型组合。自动检测场景类型（monomer / protein_protein / homo_multimer / protein_ligand / protein_rna / protein_dna）；Chain IDs 自动分配 A/B/C/...（最多 26 条链）。
+18. **ESMFold2 CCD only**: LigandInput only accepts CCD codes. SMILES-only ligands are silently skipped with a warning.
+19. **ESMFold2 ESMCFOLD_CCD_PATH**: Must be set to local ccd.pkl path or it tries HF hub download (fails offline).
+20. **ESMFold2 VRAM**: ~28 GB for full model; fits 4090 (48 GB) fine, but too large for A100-40G.
+21. **新序列快速上手**：无需手动写 JSON/YAML/FASTA。用 `prepare_inputs_from_fasta.py` 输入 Chai-1 style FASTA，一键生成全部 6 种格式到 `inputs/screening/`，然后用 `run_benchmark.sh --fasta ...` 直接跑任意模型组合。自动检测场景类型（monomer / protein_protein / homo_multimer / protein_ligand / protein_rna / protein_dna）；Chain IDs 自动分配 A/B/C/...（最多 26 条链）。
     ```bash
     # FASTA → 6 格式
     python scripts/prepare_inputs_from_fasta.py --fasta my.fasta --name my_complex

@@ -1,12 +1,12 @@
 ---
 name: fold-bench
-description: Run the FoldBenchmark comparative benchmark across 8 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead. 35 test cases.
+description: Run the FoldBenchmark comparative benchmark across 9 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3, ESMFold2). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead. 35 test cases.
 ---
 
 # fold-bench
 
-Systematic benchmark of **8** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
-**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `c316f5d`)
+Systematic benchmark of **9** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
+**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `8403f23`)
 
 ## When this skill applies
 
@@ -32,36 +32,37 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 | IntelliFold-2 | **35/35** | All scenarios work |
 | OpenFold3 v0.4.1 | **35/35** | 6 source patches: msa-dedup width / ordinal-rank res_id / makedirs / template-remap try-except / try-finally cleanup / PID-namespaced default tmpdir |
 | RoseTTAFold3 v0.1.12 (Foundry) | **35/35** | Zero-shot (no paired MSA); multi-chain pTM lower as expected |
+| ESMFold2 (Biohub, 2026-05-27) | **35/35** | No MSA; ESMCFOLD_CCD_PATH=local; ESMC-6B backbone ~27 GB pre-downloaded |
 
 ### pTM by Scenario
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
-|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.95** | 0.86 | 0.88 | 0.31† |
-| Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.84 | 0.89 | 0.45† |
-| RNA | 0.77 | 0.76 | 0.87 | **0.88** | 0.88 | 0.79 | 0.84 | 0.56† |
-| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.62† |
-| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.53† |
-| DNA | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.75† |
-| Homo-Multimer | 0.88 | 0.89 | 0.94 | **0.94** | 0.93 | 0.82 | 0.88 | 0.49† |
-| Metal Ion | 0.97 | 0.96 | **0.98** | 0.98 | 0.98 | 0.93 | 0.97 | 0.36† |
-| Covalent Mod | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.86 | 0.94 | 0.47† |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 | ESMFold2 |
+|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|----------|
+| PPI | 0.92 | 0.91 | 0.94 | 0.94 | **0.95** | 0.86 | 0.88 | 0.31† | 0.89 |
+| Ligand | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.84 | 0.89 | 0.45† | 0.91 |
+| RNA | 0.77 | 0.76 | 0.87 | **0.88** | 0.88 | 0.79 | 0.84 | 0.56† | 0.74 |
+| Monomer | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.62† | 0.63 |
+| Antibody | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.53† | 0.68 |
+| DNA | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.75† | 0.85 |
+| Homo-Multimer | 0.88 | 0.89 | 0.94 | **0.94** | 0.93 | 0.82 | 0.88 | 0.49† | 0.78 |
+| Metal Ion | 0.97 | 0.96 | **0.98** | 0.98 | 0.98 | 0.93 | 0.97 | 0.36† | 0.96 |
+| Covalent Mod | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.86 | 0.94 | 0.47† | 0.90 |
 
 † RF3 zero-shot (no MSA); pTM metric may differ from AF3-style; multi-chain depressed by lack of paired MSA.
 
 ### Speed (s/case)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 |
-|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|
-| PPI | 283 | **52** | 64 | 119 | 142 | 97 | 140 | 60 |
-| Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 |
-| RNA | 351 | 52 | 74 | 146 | 147 | 113 | 141 | **49** |
-| Monomer | 210 | 52 | 57 | 126 | 96 | 58 | 129 | **29** |
-| Antibody | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 |
-| DNA | 206 | 52 | 88 | 118 | 109 | 81 | 129 | **38** |
-| Homo-Multimer | 239 | 52 | 85 | 118 | 169 | 107 | 141 | **46** |
-| Metal Ion | 265 | 52 | 93 | 121 | 130 | 119 | 134 | **40** |
-| Covalent Mod | 536 | 52 | 155 | 130 | 114 | 116 | 136 | **42** |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold | OpenFold3 | RF3 | ESMFold2 |
+|----------|-----|-----------|---------|----------|--------|-------------|-----------|-----|----------|
+| PPI | 283 | **52** | 64 | 119 | 142 | 97 | 140 | 60 | 30 |
+| Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 | 26 |
+| RNA | 351 | 52 | 74 | 146 | 147 | 113 | 141 | **49** | 27 |
+| Monomer | 210 | 52 | 57 | 126 | 96 | 58 | 129 | **29** | **20** |
+| Antibody | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 | 40 |
+| DNA | 206 | 52 | 88 | 118 | 109 | 81 | 129 | **38** | **20** |
+| Homo-Multimer | 239 | 52 | 85 | 118 | 169 | 107 | 141 | **46** | 29 |
+| Metal Ion | 265 | 52 | 93 | 121 | 130 | 119 | 134 | **40** | 27 |
+| Covalent Mod | 536 | 52 | 155 | 130 | 114 | 116 | 136 | **42** | 23 |
 
 ## Project layout
 
@@ -89,7 +90,7 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 └── .gitignore
 ```
 
-## 8 Models — Verified CLI
+## 9 Models — Verified CLI
 
 | Model | Env | CLI | Input format |
 |-------|-----|-----|-------------|
@@ -101,6 +102,7 @@ Systematic benchmark of **8** biomolecular structure prediction models at `/data
 | **Chai-1** | conda `chai1` | `chai-lab fold input.fasta output/` | FASTA |
 | **IntelliFold-2** | conda `intellifold` | `intellifold predict input.yaml --out_dir` + `--use_msa_server` | YAML (Boltz-2 format) |
 | **RoseTTAFold3** | conda `rf3` | `rf3 fold inputs=input.json out_dir=output/ ckpt_path=...` | RF3 JSON (components list) |
+| **ESMFold2** | conda `esmfold2` | `python scripts/run_esmfold2.py --input ... --outdir ...` | AF3 JSON (reused) |
 
 **Per-model input format** (each is incompatible with the others):
 - AF3 JSON: `{"sequences": [{"protein": {"id": ["A"], "sequence": "..."}}], ...}`
@@ -264,3 +266,9 @@ bash scripts/run_benchmark.sh \
 22. **Test data validation**: ALWAYS verify chain IDs from RCSB match what TEST_CASES specifies. Past bug: 1ASY/1URN/2AZ0 had wrong RNA chain IDs → all "RNA" outputs were actually protein homodimers.
 23. **Numeric PDB chain IDs**: PDBs like 1LMB use numeric chain IDs (`1`, `2`, `3`, `4`). AF3/AlphaFast require uppercase letter chain IDs (A-Z). `prepare_inputs.py` auto-remaps in `generate_af3_json()` when any chain ID is not a single uppercase letter. All downstream formats (Boltz-2/Chai-1/Protenix/RF3/OF3) inherit the remapped IDs. **When adding new cases, check RCSB auth_asym_ids**.
 24. **Protenix JIT overhead on new entity types**: First run with a new entity type combination (e.g., DNA chains, homo-multimers) triggers CUDA kernel compilation, adding 800–1400 s. Subsequent cases complete in ~100–130 s. The `rerun_protenix_anomalous.sh` script can be used to re-time cases after warmup.
+
+### ESMFold2
+25. **ESMCFOLD_CCD_PATH**: Must set `ESMCFOLD_CCD_PATH=/data2/zcwang/structure_prediction/esmfold2/hf_cache/biohub_ESMFold2/ccd.pkl` or the processor tries to download `ccd.pkl` from HF hub (fails offline). Already set in `run_single_model.sh`.
+26. **esmc_id local path**: `biohub_ESMFold2/config.json` has `esmc_id` patched to `/data2/.../biohub_ESMC_6B` (local path). Do not restore to `biohub/ESMC-6B` or it will try to download ~27 GB on every run.
+27. **SMILES ligands skipped**: ESMFold2 `LigandInput` accepts CCD codes only. SMILES-only ligands print a warning and are dropped from the input. Affects protein_ligand and covalent_mod cases with SMILES-only ligands.
+28. **wait_and_run.sh**: Use `bash scripts/wait_and_run.sh 0 -- --model esmfold2` to queue benchmark until GPU 0 is idle (polls every 60s, confirms 30s, then launches). Safe with concurrent Schrödinger/GROMACS jobs.
