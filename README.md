@@ -1,6 +1,6 @@
 # FoldBenchmark
 
-Systematic benchmark of **8** biomolecular structure prediction models across **9** scenarios (**35** test systems) on 4× RTX 4090.
+Systematic benchmark of **9** biomolecular structure prediction models across **9** scenarios (**35** test systems) on 4× RTX 4090.
 
 **Quick links**:
 [Installation](docs/INSTALL.md) ·
@@ -10,7 +10,7 @@ Systematic benchmark of **8** biomolecular structure prediction models across **
 
 ---
 
-## Results Summary (2026-05-24, 35 cases × 8 models = 280 runs, all passed)
+## Results Summary (2026-05-24, 35 cases × 9 models = 315 runs, all passed)
 
 ### Overall ranking
 
@@ -24,36 +24,37 @@ Systematic benchmark of **8** biomolecular structure prediction models across **
 | **OpenFold3** v0.4.1 | 0.82 | 144 | 35/35 | Needs 6 source patches |
 | **IntelliFold-2** | 0.80 | 105 | 35/35 | Moderate across all scenarios |
 | **RoseTTAFold3** v0.1.12 | 0.51 | **47** | 35/35 | Zero-shot (no MSA); fastest monomer (29 s) |
+| **ESMFold2** (Biohub) | 0.81 | **27** | 35/35 | Fastest (no MSA); CCD ligands only |
 
 ### pTM by scenario (higher = better)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3† |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|------|
-| Protein-Protein (4) | 0.92 | 0.91 | 0.94 | 0.94 | **0.95** | 0.86 | 0.88 | 0.31 |
-| Protein-Ligand (5) | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.84 | 0.89 | 0.45 |
-| Protein-RNA (3) | 0.77 | 0.76 | 0.87 | **0.88** | 0.88 | 0.79 | 0.84 | 0.56 |
-| Monomer (5) | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.62 |
-| Antibody-Antigen (5) | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.53 |
-| Protein-DNA (4) | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.75 |
-| Homo-Multimer (3) | 0.88 | 0.89 | 0.94 | **0.94** | 0.93 | 0.82 | 0.88 | 0.49 |
-| Metal Ion (3) | 0.97 | 0.96 | **0.98** | 0.98 | 0.98 | 0.93 | 0.97 | 0.36 |
-| Covalent Mod (3) | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.86 | 0.94 | 0.47 |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3† | ESMFold2 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|------|----------|
+| Protein-Protein (4) | 0.92 | 0.91 | 0.94 | 0.94 | **0.95** | 0.86 | 0.88 | 0.31 | 0.89 |
+| Protein-Ligand (5) | 0.89 | 0.90 | **0.95** | 0.94 | 0.94 | 0.84 | 0.89 | 0.45 | 0.91 |
+| Protein-RNA (3) | 0.77 | 0.76 | 0.87 | **0.88** | 0.88 | 0.79 | 0.84 | 0.56 | 0.74 |
+| Monomer (5) | 0.69 | 0.70 | 0.83 | 0.83 | **0.84** | 0.64 | 0.59 | 0.62 | 0.63 |
+| Antibody-Antigen (5) | 0.73 | 0.75 | **0.89** | 0.76 | 0.83 | 0.71 | 0.66 | 0.53 | 0.68 |
+| Protein-DNA (4) | 0.89 | 0.89 | **0.97** | 0.89 | 0.94 | 0.85 | 0.87 | 0.75 | 0.85 |
+| Homo-Multimer (3) | 0.88 | 0.89 | 0.94 | **0.94** | 0.93 | 0.82 | 0.88 | 0.49 | 0.78 |
+| Metal Ion (3) | 0.97 | 0.96 | **0.98** | 0.98 | 0.98 | 0.93 | 0.97 | 0.36 | 0.96 |
+| Covalent Mod (3) | 0.93 | 0.93 | **0.96** | 0.95 | 0.92 | 0.86 | 0.94 | 0.47 | 0.90 |
 
 † RF3 zero-shot (Foundry v0.1.12, no MSA); pTM metric computed by RF3 may differ from AF3-style pTM. Multi-chain pTM depressed by lack of paired MSA.
 
 ### Speed (seconds/case, bold = fastest)
 
-| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 |
-|----------|-----|-----------|---------|----------|--------|---------------|-----------|-----|
-| Protein-Protein | 283 | **52** | 64 | 119 | 142 | 97 | 140 | 60 |
-| Protein-Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 |
-| Protein-RNA | 351 | 52 | 74 | 146 | 147 | 113 | 141 | **49** |
-| Monomer | 210 | 52 | 57 | 126 | 96 | 58 | 129 | **29** |
-| Antibody-Antigen | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 |
-| Protein-DNA | 206 | 52 | 88 | 118 | 109 | 81 | 129 | **38** |
-| Homo-Multimer | 239 | 52 | 85 | 118 | 169 | 107 | 141 | **46** |
-| Metal Ion | 265 | 52 | 93 | 121 | 130 | 119 | 134 | **40** |
-| Covalent Mod | 536 | 52 | 155 | 130 | 114 | 116 | 136 | **42** |
+| Scenario | AF3 | AlphaFast | Boltz-2 | Protenix | Chai-1 | IntelliFold-2 | OpenFold3 | RF3 | ESMFold2 |
+|----------|-----|-----------|---------|----------|--------|---------------|-----------|-----|----------|
+| Protein-Protein | 283 | **52** | 64 | 119 | 142 | 97 | 140 | 60 | 30 |
+| Protein-Ligand | 301 | **52** | 63 | 125 | 121 | 94 | 138 | 55 | 26 |
+| Protein-RNA | 351 | 52 | 74 | 146 | 147 | 113 | 141 | **49** | 27 |
+| Monomer | 210 | 52 | 57 | 126 | 96 | 58 | 129 | **29** | **20** |
+| Antibody-Antigen | 462 | **52** | 110 | 153 | 215 | 168 | 195 | 62 | 40 |
+| Protein-DNA | 206 | 52 | 88 | 118 | 109 | 81 | 129 | **38** | **20** |
+| Homo-Multimer | 239 | 52 | 85 | 118 | 169 | 107 | 141 | **46** | 29 |
+| Metal Ion | 265 | 52 | 93 | 121 | 130 | 119 | 134 | **40** | 27 |
+| Covalent Mod | 536 | 52 | 155 | 130 | 114 | 116 | 136 | **42** | 23 |
 
 AlphaFast timings are amortized across the all-in-one batch (all 35 cases, one MMseqs2 DB scan + one JAX compilation cache). Per-case mode is *slower* than AF3.
 
@@ -66,6 +67,7 @@ AlphaFast timings are amortized across the all-in-one batch (all 35 cases, one M
 5. **RoseTTAFold3** (Foundry v0.1.12) is the fastest model (**29–62 s/case** zero-shot), but pTM is substantially lower on multi-chain systems without paired MSA.
 6. **OpenFold3** reaches 35/35 after six source patches; competitive on metal ion (0.97) and covalent mod (0.94), but needs CUTLASS 3.5 + SM 8.9 JIT setup.
 7. **Protenix first-run JIT overhead**: new entity type combinations trigger CUDA kernel compilation (+800–1400 s on first case). Always warm up before timing.
+8. **ESMFold2** (Biohub, 2026-05-27, MIT) achieves **27 s/case** — fastest single-model; no MSA required. pTM competitive on ligand (0.91), metal ion (0.96), and PPI (0.89); lower on monomer (0.63) and antibody (0.68). CCD ligands only (SMILES-only skipped).
 
 Full per-case results: [results/benchmark_results.csv](results/benchmark_results.csv) and [results/summary.md](results/summary.md).
 
@@ -218,6 +220,7 @@ AUGCAUGC
 | IntelliFold-2 | latest | conda `intellifold` | ColabFold server | Apache 2.0 |
 | OpenFold3 | v0.4.1 | conda `openfold3` | ColabFold server | Apache 2.0 |
 | RoseTTAFold3 | v0.1.12 (Foundry) | conda `rf3` | Pre-computed .a3m (no built-in MSA) | BSD-3-Clause |
+| ESMFold2 | 2026-05-27 | conda `esmfold2` (Python 3.12) | No MSA (zero-shot) | MIT |
 
 See [docs/MODELS.md](docs/MODELS.md) for verified CLI commands, input formats, and per-model gotchas. See [docs/INSTALL.md](docs/INSTALL.md) for setup instructions.
 
@@ -273,9 +276,11 @@ FoldBenchmark/
 │   ├── run_alphafast_all_in_one.sh     # AlphaFast batch (35 cases, one DB scan)
 │   ├── run_alphafast_batch.sh          # AlphaFast per-scenario batch (fallback)
 │   ├── rerun_protenix_anomalous.sh     # re-time Protenix JIT-inflated cases
+│   ├── run_esmfold2.py                 # ESMFold2 Python API wrapper (AF3 JSON → CIF)
+│   ├── wait_and_run.sh                 # wait for GPU idle, then launch benchmark
 │   └── collect_results.py              # outputs/ → CSV + summary (dynamic scenario scan)
 └── results/
-    ├── benchmark_results.csv           # 280 rows (8 models × 35 cases)
+    ├── benchmark_results.csv           # 315 rows (9 models × 35 cases)
     ├── timing.csv
     ├── summary.md
     └── top_N/                          # top-N CIFs (created by --top-n flag)
