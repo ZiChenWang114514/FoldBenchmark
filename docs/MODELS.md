@@ -1,6 +1,6 @@
 # Per-Model Usage Reference
 
-Verified working CLI commands and key gotchas for all 9 models.
+Verified working CLI commands and key gotchas for all 10 models.
 This is the canonical "how to actually run each model" reference.
 
 For input format details see [INPUT_FORMATS.md](INPUT_FORMATS.md).
@@ -620,7 +620,7 @@ The `coiled_coil` scenario covers 6 cases spanning coiled-coils and all 3 major 
 | Multi-chain complex | Not benchmarked in literature |
 | RNA / ligand / glycan | **Not supported** |
 | MSA required | No (zero-shot, sequence only) |
-| Installation | `pip install esm` + HuggingFace token to accept EvolutionaryScale agreement |
+| Installation | `conda esm3` (Python 3.12) + local editable install of `esm-main` + `biohub/esm3-sm-open-v1` weights |
 
 ### Why ESM3 alongside ESMFold2
 
@@ -639,26 +639,38 @@ Comparing them on the same 81 cases makes the discriminative-vs-generative trade
 ### Setup
 
 ```bash
-# 1. Create conda env
-conda create -n esm3 python=3.11 -y
+# 1. Create conda env (Python 3.12 required — ESM package enforces >=3.12,<3.13)
+conda create -n esm3 python=3.12 -y
 conda activate esm3
 
-# 2. Install esm package (requires CUDA-compatible PyTorch)
-pip install esm --extra-index-url https://download.pytorch.org/whl/cu121
-pip install gemmi   # for mmCIF export
+# 2. Install PyTorch (CUDA 12.1)
+pip install torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu121
 
-# 3. Accept HuggingFace agreement for EvolutionaryScale/esm3-sm-open-v1
-# Then set ESM3_HF_CACHE in config.sh and weights will auto-download on first run
+# 3. Install Biohub transformers fork (required by ESM 3.3.0)
+pip install /data2/zcwang/structure_prediction/esmfold2/transformers-3a8956fb* \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple --no-build-isolation
 
-# 4. Smoke test
-python -c "
-from esm.models.esm3 import ESM3
-from esm.sdk.api import ESMProtein, GenerationConfig
-m = ESM3.from_pretrained('esm3-sm-open-v1').to('cuda')
-p = ESMProtein(sequence='MKFLKFSLLTAVLFVAIASALA')
-r = m.generate(p, GenerationConfig(track='structure', num_steps=8))
-print('pTM:', r.ptm.mean().item() if r.ptm is not None else 'N/A')
-"
+# 4. Editable-install the ESM package (shared source, no HF download)
+pip install -e /data2/zcwang/structure_prediction/esmfold2/esm-main \
+    --no-deps -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 5. Install remaining deps
+pip install gemmi biotite rdkit biopython einops scikit-learn pandas \
+    msgpack-numpy cloudpathlib httpx tenacity attrs accelerate pydssp \
+    boto3 zstd brotli \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 6. Download weights via hf-mirror (biohub/esm3-sm-open-v1, ~5.2 GB total)
+#    Requires HF token with biohub/esm3-sm-open-v1 Cambrian Non-Commercial agreement.
+bash /data2/zcwang/structure_prediction/esm3/download_weights.sh <HF_TOKEN>
+
+# 7. Smoke test (uses INFRA_PROVIDER=local to bypass HF snapshot_download)
+cd /data2/zcwang/structure_prediction/esm3/hf_cache/esm3-sm-open-v1
+INFRA_PROVIDER=local \
+/data/zcwang/anaconda3/envs/esm3/bin/python \
+    /data2/zcwang/structure_prediction/esm3/smoke_test.py
+# expected: pTM=0.835  pLDDT=1.0  SMOKE TEST PASSED
 ```
 
 ### Known issues
@@ -666,7 +678,7 @@ print('pTM:', r.ptm.mean().item() if r.ptm is not None else 'N/A')
 1. **API evolution**: The ESM3 Python API is still maturing (v0.x → v1.x). If `result.ptm` is missing, check `result.metrics.ptm` or `result.protein_tensor.ptm` in your installed version.
 2. **Multi-chain accuracy**: Complex prediction is not published in benchmarks; expect accuracy weaker than Boltz-2/Chai-1 on PPI / antibody scenarios.
 3. **Skipped scenarios**: `rna_structure` (all 5 cases skipped). Scenarios with ligands run but ligand coordinates are absent from output.
-4. **1.4B model vs larger**: `esm3-sm-open-v1` (1.4B) is the only fully local open model. For higher accuracy, configure `ESM3_MODEL` to a Forge API model name and set `ESM3_FORGE_TOKEN`.
+4. **1.4B model vs larger**: `esm3-sm-open-v1` (1.4B) is the only fully local open model. Larger ESM3 models (34B / 98B) require the EvolutionaryScale Forge API — local inference is limited to this 1.4B open checkpoint.
 
 ---
 

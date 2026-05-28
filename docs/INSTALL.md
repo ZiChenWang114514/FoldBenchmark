@@ -1,6 +1,6 @@
 # Installation Guide
 
-How to set up all 7 structure prediction models on a fresh machine.
+How to set up all 10 structure prediction models on a fresh machine.
 Reference setup: 4× NVIDIA RTX 4090 (48 GB), Ubuntu 22.04, CUDA 12.x or 13.x.
 
 ---
@@ -16,6 +16,9 @@ Reference setup: 4× NVIDIA RTX 4090 (48 GB), Ubuntu 22.04, CUDA 12.x or 13.x.
 | Chai-1 | conda | ~1.5 GB | ColabFold MSA server |
 | IntelliFold-2 | conda | ~2 GB | ColabFold MSA server |
 | AlphaFast | Docker | ~800 GB (MMseqs2) | GPU MMseqs2 MSA |
+| RoseTTAFold3 | conda `rf3` | ~5 GB | No MSA (zero-shot); Foundry v0.1.12 |
+| ESMFold2 (Biohub) | conda `esmfold2` | ~13 GB | No MSA; MIT license |
+| ESM3 sm-open-v1 | conda `esm3` | ~5.2 GB | No MSA; Cambrian Non-Commercial |
 
 Total: ~1.2 TB (most goes to AF3 sharded DBs and AlphaFast MMseqs2 DB).
 
@@ -232,12 +235,17 @@ After install, run a quick sanity check on each model:
 ```bash
 cd /data2/zcwang/FoldBenchmark
 # Smallest test case (46-residue crambin)
-bash scripts/run_benchmark.sh --model boltz2     --scenario monomer --gpu 0
-bash scripts/run_benchmark.sh --model protenix   --scenario monomer --gpu 0
-bash scripts/run_benchmark.sh --model chai1      --scenario monomer --gpu 0
-bash scripts/run_benchmark.sh --model intellifold --scenario monomer --gpu 0
-bash scripts/run_benchmark.sh --model openfold3  --scenario monomer --gpu 0
-bash scripts/run_benchmark.sh --model af3        --scenario monomer --gpu 0
+bash scripts/run_single_model.sh boltz2      monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh protenix    monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh chai1       monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh intellifold monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh openfold3   monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh af3         monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh rf3         monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh esmfold2    monomer 1CRN_crambin 0
+bash scripts/run_single_model.sh esm3        monomer 1CRN_crambin 0
+# AlphaFast: use all-in-one batch (one MMseqs2 DB scan for all cases)
+bash scripts/run_alphafast_all_in_one.sh
 ```
 
 Each should complete in under 5 minutes for a small monomer. If any fail, see

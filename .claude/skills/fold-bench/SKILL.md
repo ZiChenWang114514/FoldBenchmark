@@ -1,12 +1,12 @@
 ---
 name: fold-bench
-description: Run the FoldBenchmark comparative benchmark across 9 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3, ESMFold2). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead. 35 test cases.
+description: Run the FoldBenchmark comparative benchmark across 10 structure prediction models (AF3, AlphaFast, Boltz-2, OpenFold3, Protenix, Chai-1, IntelliFold-2, RoseTTAFold3, ESMFold2, ESM3). TRIGGER when the user asks to benchmark fold models, compare structure predictions, add new test cases, add new models to the benchmark, or check benchmark results. DO NOT TRIGGER for running a single model on a single input — use af3-local or fold-models instead. 35 test cases.
 ---
 
 # fold-bench
 
-Systematic benchmark of **9** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
-**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `8403f23`)
+Systematic benchmark of **10** biomolecular structure prediction models at `/data2/zcwang/FoldBenchmark/`.
+**GitHub**: https://github.com/ZiChenWang114514/FoldBenchmark (latest: commit `fdacc12`)
 
 ## When this skill applies
 
@@ -16,7 +16,7 @@ Systematic benchmark of **9** biomolecular structure prediction models at `/data
 - "哪个模型在 PPI 上最好"
 - Any cross-model comparison of structure prediction accuracy or speed
 
-## Latest Benchmark Results (2026-05-24, 35 cases, 9 scenarios)
+## Latest Benchmark Results (2026-05-24, 35 cases, 9 scenarios; ESM3 added 2026-05-28)
 
 35 test cases total: 4 PPI + 5 ligand + 3 RNA + 5 monomer + 5 antibody + 4 protein_dna + 3 homo_multimer + 3 metal_ion + 3 covalent_mod.
 
@@ -33,6 +33,7 @@ Systematic benchmark of **9** biomolecular structure prediction models at `/data
 | OpenFold3 v0.4.1 | **35/35** | 6 source patches: msa-dedup width / ordinal-rank res_id / makedirs / template-remap try-except / try-finally cleanup / PID-namespaced default tmpdir |
 | RoseTTAFold3 v0.1.12 (Foundry) | **35/35** | Zero-shot (no paired MSA); multi-chain pTM lower as expected |
 | ESMFold2 (Biohub, 2026-05-27) | **35/35** | No MSA; ESMCFOLD_CCD_PATH=local; ESMC-6B backbone ~27 GB pre-downloaded |
+| ESM3 sm-open-v1 (2026-05-28) | **full run pending** | No MSA; generative (iterative decoding); RNA skipped; ~10s/monomer |
 
 ### pTM by Scenario
 
@@ -78,11 +79,12 @@ Systematic benchmark of **9** biomolecular structure prediction models at `/data
 │   ├── run_benchmark.sh                # 主运行器（+8 新参数，含 FASTA/screening）
 │   ├── run_single_model.sh             # 单模型运行器（含全部 env 补丁）
 │   ├── run_alphafast_batch.sh          # AlphaFast 场景批处理（REQUIRED for perf）
-│   ├── master_benchmark.sh             # 一键重跑全部 35×8
+│   ├── master_benchmark.sh             # 一键重跑全部 35×10
+│   ├── run_esm3.py                     # ESM3 wrapper（AF3 JSON → CIF）
 │   ├── rerun_protenix_anomalous.sh     # 重跑 Protenix JIT 异常 case
 │   └── collect_results.py             # outputs/ → CSV + summary（动态扫描 screening/）
 ├── docs/
-│   ├── INSTALL.md               # 8 models setup
+│   ├── INSTALL.md               # 10 models setup
 │   ├── MODELS.md                # per-model CLI + gotchas
 │   ├── INPUT_FORMATS.md         # 6 input formats side-by-side
 │   └── TROUBLESHOOTING.md       # known issues + fixes
@@ -90,7 +92,7 @@ Systematic benchmark of **9** biomolecular structure prediction models at `/data
 └── .gitignore
 ```
 
-## 9 Models — Verified CLI
+## 10 Models — Verified CLI
 
 | Model | Env | CLI | Input format |
 |-------|-----|-----|-------------|
@@ -103,6 +105,7 @@ Systematic benchmark of **9** biomolecular structure prediction models at `/data
 | **IntelliFold-2** | conda `intellifold` | `intellifold predict input.yaml --out_dir` + `--use_msa_server` | YAML (Boltz-2 format) |
 | **RoseTTAFold3** | conda `rf3` | `rf3 fold inputs=input.json out_dir=output/ ckpt_path=...` | RF3 JSON (components list) |
 | **ESMFold2** | conda `esmfold2` | `python scripts/run_esmfold2.py --input ... --outdir ...` | AF3 JSON (reused) |
+| **ESM3** | conda `esm3` (Python 3.12) | `python scripts/run_esm3.py --input ... --outdir ...` | AF3 JSON (reused; protein only) |
 
 **Per-model input format** (each is incompatible with the others):
 - AF3 JSON: `{"sequences": [{"protein": {"id": ["A"], "sequence": "..."}}], ...}`
@@ -128,7 +131,7 @@ bash scripts/run_alphafast_all_in_one.sh        # 全部35 cases，DB只扫一�
 # 若只跑某个scenario（次优，DB扫5次）：
 # bash scripts/run_alphafast_batch.sh monomer
 
-bash scripts/master_benchmark.sh               # 一键重跑全部35×8，含自动清空+汇总
+bash scripts/master_benchmark.sh               # 一键重跑全部35×10，含自动清空+汇总
 
 # Collect (parses Chai-1 .npz too)
 python scripts/collect_results.py

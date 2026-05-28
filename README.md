@@ -10,7 +10,7 @@ Systematic benchmark of **10** biomolecular structure prediction models across *
 
 ---
 
-## Results Summary (2026-05-24, 35 cases × 9 models = 315 runs, all passed)
+## Results Summary (2026-05-24, 35 cases × 9 models = 315 runs; ESM3 added 2026-05-28 — full results pending)
 
 ### Overall ranking
 
@@ -126,7 +126,7 @@ bash scripts/run_benchmark.sh --models "boltz2,chai1,rf3" --gpu 0
 # AlphaFast all-in-one batch (all 35 cases, recommended)
 bash scripts/run_alphafast_all_in_one.sh
 
-# One-shot full benchmark (all 8 models × 35 cases)
+# One-shot full benchmark (all 10 models × 35 cases)
 bash scripts/master_benchmark.sh
 ```
 
@@ -261,7 +261,7 @@ FoldBenchmark/
 ├── README.md
 ├── LESSONS.md                          # accumulated pitfalls & insights
 ├── docs/
-│   ├── INSTALL.md                      # set up all 8 models from scratch
+│   ├── INSTALL.md                      # set up all 10 models from scratch
 │   ├── MODELS.md                       # per-model CLI + gotchas
 │   ├── INPUT_FORMATS.md                # 6 input formats side-by-side
 │   └── TROUBLESHOOTING.md              # known issues + fixes
@@ -280,17 +280,18 @@ FoldBenchmark/
 │   ├── prepare_inputs.py               # PDB → all 6 input formats
 │   ├── prepare_inputs_from_fasta.py    # FASTA/UniProt → all 6 formats (new sequences)
 │   ├── screen.py                       # filter, rank, consensus score, Markdown report
-│   ├── master_benchmark.sh             # one-shot full benchmark (8 models × 35 cases)
+│   ├── master_benchmark.sh             # one-shot full benchmark (10 models × 35 cases)
 │   ├── run_benchmark.sh                # main runner (+FASTA/UniProt/--top-n/--report)
 │   ├── run_single_model.sh             # single (model, scenario, case, gpu)
 │   ├── run_alphafast_all_in_one.sh     # AlphaFast batch (35 cases, one DB scan)
 │   ├── run_alphafast_batch.sh          # AlphaFast per-scenario batch (fallback)
 │   ├── rerun_protenix_anomalous.sh     # re-time Protenix JIT-inflated cases
 │   ├── run_esmfold2.py                 # ESMFold2 Python API wrapper (AF3 JSON → CIF)
+│   ├── run_esm3.py                     # ESM3 Python API wrapper (AF3 JSON → CIF)
 │   ├── wait_and_run.sh                 # wait for GPU idle, then launch benchmark
 │   └── collect_results.py              # outputs/ → CSV + summary (dynamic scenario scan)
 └── results/
-    ├── benchmark_results.csv           # 315 rows (9 models × 35 cases)
+    ├── benchmark_results.csv           # per-case results (models × cases)
     ├── timing.csv
     ├── summary.md
     └── top_N/                          # top-N CIFs (created by --top-n flag)
