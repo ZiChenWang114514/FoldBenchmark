@@ -136,7 +136,10 @@ def ensure_msa_cached(sequence: str, cache_dir: Path, server_url: str) -> Path:
             return seq_dir
         # tar exists but not extracted
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(seq_dir, filter="data")
+            try:
+                tar.extractall(seq_dir, filter="data")
+            except TypeError:
+                tar.extractall(seq_dir)
         return seq_dir
 
     seq_dir.mkdir(parents=True, exist_ok=True)
@@ -145,7 +148,10 @@ def ensure_msa_cached(sequence: str, cache_dir: Path, server_url: str) -> Path:
     tar_path.write_bytes(tar_bytes)
 
     with tarfile.open(tar_path, "r:gz") as tar:
-        tar.extractall(seq_dir, filter="data")
+        try:
+            tar.extractall(seq_dir, filter="data")
+        except TypeError:
+            tar.extractall(seq_dir)
 
     return seq_dir
 

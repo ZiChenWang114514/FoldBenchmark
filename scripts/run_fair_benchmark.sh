@@ -132,12 +132,8 @@ wait_gpu_idle() {
 run_case() {
     # run_case <model> <scenario> <case_name> [env_vars...]
     # 单个 case 失败不中断：记录到 FAILED.txt，继续下一个
-    # 每次推理前先确保 GPU 空闲（防止与其他任务冲突）
     local model=$1 scenario=$2 case_name=$3
     shift 3
-
-    # GPU 空闲检查（每个 case 推理前）
-    wait_gpu_idle
 
     echo "[$(date +%H:%M:%S)] ${model} / ${scenario} / ${case_name}"
 
@@ -212,6 +208,7 @@ MSA_PID=$!
 echo "[Phase 0-bg] MSA pre-compute PID=$MSA_PID"
 
 # ── 前台：no-MSA 模型（rf3, esmfold2, esm3）──
+wait_gpu_idle
 for model in rf3 esmfold2 esm3; do
     echo ""
     echo "-------- $model (no-MSA, GPU $GPU_ID) --------"
@@ -241,6 +238,7 @@ echo "============================================================"
 echo "Phase 1: boltz2 + intellifold with cached MSA (GPU $GPU_ID)"
 echo "============================================================"
 
+wait_gpu_idle
 for model in boltz2 intellifold; do
     echo ""
     echo "-------- $model (cached MSA) --------"
@@ -278,6 +276,8 @@ echo "============================================================"
 
 OF3_STABLE_MSA="${MSA_CACHE}/openfold3_msa"
 mkdir -p "$OF3_STABLE_MSA"
+
+wait_gpu_idle
 
 echo ""
 echo "-------- openfold3 (stable MSA cache) --------"
@@ -330,10 +330,15 @@ echo "============================================================"
 
 wait_cpu_idle
 
-if ! bash "${SCRIPTS}/run_alphafast_all_in_one.sh" 2>&1 | tee "${LOG_DIR}/alphafast.log"; then
-    echo "alphafast,ALL,all-in-one,exit=1" >> "$FAILED_LOG"
+wait_gpu_idle
+bash "${SCRIPTS}/run_alphafast_all_in_one.sh" \
+    2>&1 | tee "${LOG_DIR}/alphafast.log" \
+    || true
+AF_RC=${PIPESTATUS[0]:-0}
+if [ "$AF_RC" -ne 0 ]; then
+    echo "alphafast,ALL,all-in-one,exit=${AF_RC}" >> "$FAILED_LOG"
     FAIL_COUNT=$((FAIL_COUNT + 1))
-    echo "  [FAIL] AlphaFast all-in-one batch failed — check ${LOG_DIR}/alphafast.log"
+    echo "  [FAIL] AlphaFast all-in-one batch (exit=${AF_RC}) — check ${LOG_DIR}/alphafast.log"
 fi
 
 echo "[Phase 4 DONE] $(date)"
