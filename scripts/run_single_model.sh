@@ -72,14 +72,18 @@ case "$MODEL" in
             2>&1 || echo "FAILED: af3/${SCENARIO}/${CASE_NAME}"
         ;;
     boltz2)
-        INPUT_YAML="${INPUTS}/boltz2_yaml/${CASE_NAME}.yaml"
+        # BOLTZ_INPUT_YAML: override input YAML (e.g. patched with msa: field)
+        # BOLTZ_NO_MSA_SERVER=1: skip --use_msa_server (for pre-computed MSA)
+        INPUT_YAML="${BOLTZ_INPUT_YAML:-${INPUTS}/boltz2_yaml/${CASE_NAME}.yaml}"
         [ ! -f "$INPUT_YAML" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate boltz2
         export LD_LIBRARY_PATH="${BOLTZ2_CU13_LIB}:${LD_LIBRARY_PATH}"
+        BOLTZ_MSA_FLAG=""
+        [ "${BOLTZ_NO_MSA_SERVER}" != "1" ] && BOLTZ_MSA_FLAG="--use_msa_server"
         CUDA_VISIBLE_DEVICES=${GPU_ID} boltz predict "$INPUT_YAML" \
             --out_dir "${OUTPUTS}/${CASE_NAME}" \
-            --use_msa_server \
+            $BOLTZ_MSA_FLAG \
             2>&1 || echo "FAILED: boltz2/${SCENARIO}/${CASE_NAME}"
         ;;
     openfold3)
@@ -109,8 +113,14 @@ case "$MODEL" in
         # (PID-suffixed default) and run_openfold.py (try/finally cleanup), this
         # explicit yaml is REDUNDANT for race avoidance — kept as defense-in-depth
         # and to make per-case isolation explicit in the script.
-        OF3_MSA_DIR="/tmp/of3-of-${USER}/colabfold_msas_${CASE_NAME}_$$"
-        rm -rf "$OF3_MSA_DIR" 2>/dev/null || true
+        # OF3_MSA_CACHE_DIR: use stable directory for MSA caching (survives re-runs)
+        if [ -n "${OF3_MSA_CACHE_DIR}" ]; then
+            OF3_MSA_DIR="${OF3_MSA_CACHE_DIR}/${CASE_NAME}"
+            mkdir -p "$OF3_MSA_DIR"
+        else
+            OF3_MSA_DIR="/tmp/of3-of-${USER}/colabfold_msas_${CASE_NAME}_$$"
+            rm -rf "$OF3_MSA_DIR" 2>/dev/null || true
+        fi
         OF3_RUNNER_YAML="/tmp/of3_runner_${CASE_NAME}_$$.yml"
         printf 'msa_computation_settings:\n  msa_output_directory: "%s"\n' "$OF3_MSA_DIR" > "$OF3_RUNNER_YAML"
         trap 'rm -f "$OF3_RUNNER_YAML"' EXIT
@@ -140,22 +150,30 @@ case "$MODEL" in
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate chai1
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        # CHAI_MSA_DIR: provide pre-computed MSA directory (parquet format)
+        CHAI_MSA_OPT=""
+        [ -n "${CHAI_MSA_DIR}" ] && CHAI_MSA_OPT="--msa-directory ${CHAI_MSA_DIR}"
         CUDA_VISIBLE_DEVICES=${GPU_ID} chai-lab fold \
             "$INPUT_FASTA" \
             "${OUTPUTS}/${CASE_NAME}" \
             --use-msa-server \
+            $CHAI_MSA_OPT \
             2>&1 || echo "FAILED: chai1/${SCENARIO}/${CASE_NAME}"
         ;;
     intellifold)
-        INPUT_YAML="${INPUTS}/boltz2_yaml/${CASE_NAME}.yaml"
+        # INTELLIFOLD_INPUT_YAML: override input YAML (e.g. patched with msa: field)
+        # INTELLIFOLD_NO_MSA_SERVER=1: skip --use_msa_server (for pre-computed MSA)
+        INPUT_YAML="${INTELLIFOLD_INPUT_YAML:-${INPUTS}/boltz2_yaml/${CASE_NAME}.yaml}"
         [ ! -f "$INPUT_YAML" ] && echo "SKIP: no input" && exit 0
         source "${CONDA_BASE}/etc/profile.d/conda.sh"
         conda activate intellifold
         mkdir -p "${OUTPUTS}/${CASE_NAME}"
+        IF_MSA_FLAG=""
+        [ "${INTELLIFOLD_NO_MSA_SERVER}" != "1" ] && IF_MSA_FLAG="--use_msa_server"
         CUDA_VISIBLE_DEVICES=${GPU_ID} intellifold predict \
             "$INPUT_YAML" \
             --out_dir "${OUTPUTS}/${CASE_NAME}" \
-            --use_msa_server \
+            $IF_MSA_FLAG \
             2>&1 || echo "FAILED: intellifold/${SCENARIO}/${CASE_NAME}"
         ;;
     alphafast)
