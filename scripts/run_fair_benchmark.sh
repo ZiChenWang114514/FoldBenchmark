@@ -100,33 +100,47 @@ wait_cpu_idle() {
 }
 
 wait_gpu_idle() {
-    # 等待 GPU $GPU_ID 使用率和显存连续 $GPU_WAIT_SEC 秒低于阈值
+    # 等待指定 GPU 使用率和显存连续 $GPU_WAIT_SEC 秒低于阈值
+    # 用法: wait_gpu_idle [gpu_id_list]
+    #   默认检查 $GPU_ID 一张卡
+    #   传入 "0,1,2,3" 则检查全部 4 张卡（用于 AlphaFast）
+    local gpu_list="${1:-$GPU_ID}"
     local idle_streak=0
-    echo "[GPU GATE] Waiting for GPU ${GPU_ID}: util < ${GPU_UTIL_THRESHOLD}% AND mem < ${GPU_MEM_THRESHOLD} MiB for ${GPU_WAIT_SEC}s..."
+    echo "[GPU GATE] Waiting for GPU [${gpu_list}]: util < ${GPU_UTIL_THRESHOLD}% AND mem < ${GPU_MEM_THRESHOLD} MiB for ${GPU_WAIT_SEC}s..."
     while [ $idle_streak -lt $GPU_WAIT_SEC ]; do
-        # nvidia-smi 查询指定 GPU
-        local info
-        info=$(nvidia-smi --id="$GPU_ID" \
-                   --query-gpu=utilization.gpu,memory.used \
-                   --format=csv,noheader,nounits 2>/dev/null) || {
-            echo "[GPU GATE] nvidia-smi failed — skipping GPU check"
-            return 0
-        }
-        local util mem
-        util=$(echo "$info" | awk -F',' '{gsub(/ /,"",$1); print $1}')
-        mem=$(echo "$info" | awk -F',' '{gsub(/ /,"",$2); print $2}')
+        local all_idle=1
+        local busy_info=""
+        # 逐卡检查
+        for gid in ${gpu_list//,/ }; do
+            local info
+            info=$(nvidia-smi --id="$gid" \
+                       --query-gpu=utilization.gpu,memory.used \
+                       --format=csv,noheader,nounits 2>/dev/null) || {
+                echo "[GPU GATE] nvidia-smi failed — skipping GPU check"
+                return 0
+            }
+            local util mem
+            util=$(echo "$info" | awk -F',' '{gsub(/ /,"",$1); print $1}')
+            mem=$(echo "$info" | awk -F',' '{gsub(/ /,"",$2); print $2}')
 
-        if [ "$util" -lt "$GPU_UTIL_THRESHOLD" ] && [ "$mem" -lt "$GPU_MEM_THRESHOLD" ]; then
+            if [ "$util" -ge "$GPU_UTIL_THRESHOLD" ] || [ "$mem" -ge "$GPU_MEM_THRESHOLD" ]; then
+                all_idle=0
+                busy_info="GPU${gid}:util=${util}%,mem=${mem}MiB"
+                break
+            fi
+        done
+
+        if [ "$all_idle" -eq 1 ]; then
             idle_streak=$((idle_streak + 1))
         else
             if [ $idle_streak -gt 0 ]; then
-                echo "[GPU GATE] GPU ${GPU_ID}: util=${util}% mem=${mem}MiB — streak reset (was ${idle_streak}s)"
+                echo "[GPU GATE] ${busy_info} — streak reset (was ${idle_streak}s)"
             fi
             idle_streak=0
         fi
         sleep 1
     done
-    echo "[GPU GATE] GPU ${GPU_ID} idle confirmed (util<${GPU_UTIL_THRESHOLD}% mem<${GPU_MEM_THRESHOLD}MiB for ${GPU_WAIT_SEC}s)."
+    echo "[GPU GATE] GPU [${gpu_list}] idle confirmed for ${GPU_WAIT_SEC}s."
 }
 
 run_case() {
@@ -322,23 +336,66 @@ echo "[Phase 3 DONE] $(date)"
 
 # ================================================================
 # Phase 4: AlphaFast all-in-one (4 GPU, 81 cases 单次 DB 扫描)
+#   需要 4 卡全部空闲 — 如果超时则跳过，生成单独重跑脚本
 # ================================================================
 echo ""
 echo "============================================================"
 echo "Phase 4: AlphaFast all-in-one (4 GPUs, $TOTAL_CASES cases)"
+echo "  Requires ALL 4 GPUs idle (MMseqs2 DB shards across 4 cards)"
 echo "============================================================"
 
+AF_GPUS="${ALPHAFAST_GPUS:-0,1,2,3}"
+AF_MAX_WAIT=3600   # 最多等 1 小时
+
+# 先等 CPU idle
 wait_cpu_idle
 
-wait_gpu_idle
-bash "${SCRIPTS}/run_alphafast_all_in_one.sh" \
-    2>&1 | tee "${LOG_DIR}/alphafast.log" \
-    || true
-AF_RC=${PIPESTATUS[0]:-0}
-if [ "$AF_RC" -ne 0 ]; then
-    echo "alphafast,ALL,all-in-one,exit=${AF_RC}" >> "$FAILED_LOG"
+# 等 4 卡全部空闲，但有超时
+echo "[Phase 4] Waiting up to ${AF_MAX_WAIT}s for ALL GPUs [${AF_GPUS}] to be idle..."
+AF_WAITED=0
+AF_READY=0
+while [ $AF_WAITED -lt $AF_MAX_WAIT ]; do
+    ALL_FREE=1
+    for gid in ${AF_GPUS//,/ }; do
+        info=$(nvidia-smi --id="$gid" --query-gpu=utilization.gpu,memory.used \
+                   --format=csv,noheader,nounits 2>/dev/null) || break
+        util=$(echo "$info" | awk -F',' '{gsub(/ /,"",$1); print $1}')
+        mem=$(echo "$info" | awk -F',' '{gsub(/ /,"",$2); print $2}')
+        if [ "$util" -ge "$GPU_UTIL_THRESHOLD" ] || [ "$mem" -ge "$GPU_MEM_THRESHOLD" ]; then
+            ALL_FREE=0
+            break
+        fi
+    done
+    if [ "$ALL_FREE" -eq 1 ]; then
+        AF_READY=$((AF_READY + 1))
+        [ $AF_READY -ge $GPU_WAIT_SEC ] && break
+    else
+        AF_READY=0
+    fi
+    sleep 1
+    AF_WAITED=$((AF_WAITED + 1))
+    # 每 60 秒报告一次
+    [ $((AF_WAITED % 60)) -eq 0 ] && echo "  [Phase 4] Still waiting... ${AF_WAITED}s / ${AF_MAX_WAIT}s"
+done
+
+if [ $AF_READY -ge $GPU_WAIT_SEC ]; then
+    echo "[Phase 4] All 4 GPUs idle — starting AlphaFast"
+    bash "${SCRIPTS}/run_alphafast_all_in_one.sh" \
+        2>&1 | tee "${LOG_DIR}/alphafast.log" \
+        || true
+    AF_RC=${PIPESTATUS[0]:-0}
+    if [ "$AF_RC" -ne 0 ]; then
+        echo "alphafast,ALL,all-in-one,exit=${AF_RC}" >> "$FAILED_LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+        echo "  [FAIL] AlphaFast all-in-one batch (exit=${AF_RC}) — check ${LOG_DIR}/alphafast.log"
+    fi
+else
+    echo ""
+    echo "  [SKIP] AlphaFast: GPUs [${AF_GPUS}] not all idle after ${AF_MAX_WAIT}s"
+    echo "  Run manually when GPUs are free:"
+    echo "    bash scripts/run_alphafast_all_in_one.sh"
+    echo "alphafast,ALL,all-in-one,SKIPPED_GPU_BUSY" >> "$FAILED_LOG"
     FAIL_COUNT=$((FAIL_COUNT + 1))
-    echo "  [FAIL] AlphaFast all-in-one batch (exit=${AF_RC}) — check ${LOG_DIR}/alphafast.log"
 fi
 
 echo "[Phase 4 DONE] $(date)"
