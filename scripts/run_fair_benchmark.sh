@@ -19,7 +19,8 @@
 #   bash scripts/run_fair_benchmark.sh \
 #       [--cpu-threshold 20] [--cpu-wait 30] [--gpu 3]
 # ============================================================
-set -euo pipefail
+# 不用 set -e / pipefail — 单个 case 失败不中断整个 benchmark
+set -u
 
 # ── 参数解析 ──────────────────────────────────────────────────
 CPU_THRESHOLD=20     # CPU 使用率阈值 (%)
@@ -47,8 +48,11 @@ source "${FOLDBENCH_CONFIG:-${SCRIPTS}/config.sh}"
 
 TS=$(date +%Y%m%d_%H%M%S)
 LOG_DIR="${PROJECT_ROOT}/results/run_fair_${TS}"
+FAILED_LOG="${LOG_DIR}/FAILED.txt"
 mkdir -p "$LOG_DIR" "${PROJECT_ROOT}/results" "$MSA_CACHE"
 [ -f "$TIMING_FILE" ] || echo "model,scenario,case_name,elapsed_seconds" > "$TIMING_FILE"
+: > "$FAILED_LOG"   # 清空失败记录
+FAIL_COUNT=0
 
 # ── 工具函数 ──────────────────────────────────────────────────
 
@@ -91,12 +95,26 @@ wait_cpu_idle() {
 
 run_case() {
     # run_case <model> <scenario> <case_name> [env_vars...]
+    # 单个 case 失败不中断：记录到 FAILED.txt，继续下一个
     local model=$1 scenario=$2 case_name=$3
     shift 3
     echo "[$(date +%H:%M:%S)] ${model} / ${scenario} / ${case_name}"
+
+    # 用子 shell 捕获退出码（tee 不影响判断）
+    local rc=0
     env "$@" \
         bash "${SCRIPTS}/run_single_model.sh" "$model" "$scenario" "$case_name" "$GPU_ID" \
-        2>&1 | tee -a "${LOG_DIR}/${model}.log"
+        2>&1 | tee -a "${LOG_DIR}/${model}.log" \
+        || true   # tee 管道本身不 abort
+
+    # 检查实际 model 进程退出码（PIPESTATUS[0]）
+    rc=${PIPESTATUS[0]:-0}
+    if [ "$rc" -ne 0 ]; then
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+        echo "${model},${scenario},${case_name},exit=${rc}" >> "$FAILED_LOG"
+        echo "  [FAIL] ${model}/${scenario}/${case_name} (exit=${rc}) — logged"
+    fi
+    return 0   # 始终返回 0，不中断主循环
 }
 
 get_all_cases() {
@@ -271,7 +289,11 @@ echo "============================================================"
 
 wait_cpu_idle
 
-bash "${SCRIPTS}/run_alphafast_all_in_one.sh" 2>&1 | tee "${LOG_DIR}/alphafast.log"
+if ! bash "${SCRIPTS}/run_alphafast_all_in_one.sh" 2>&1 | tee "${LOG_DIR}/alphafast.log"; then
+    echo "alphafast,ALL,all-in-one,exit=1" >> "$FAILED_LOG"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+    echo "  [FAIL] AlphaFast all-in-one batch failed — check ${LOG_DIR}/alphafast.log"
+fi
 
 echo "[Phase 4 DONE] $(date)"
 
@@ -285,7 +307,7 @@ echo "============================================================"
 
 python3 "${SCRIPTS}/collect_results.py" 2>&1 | tee "${LOG_DIR}/collect.log"
 
-# ── 完成 ──────────────────────────────────────────────────────
+# ── 完成 + 失败汇总 ──────────────────────────────────────────
 echo ""
 echo "============================================================"
 echo "FAIR BENCHMARK COMPLETE"
@@ -295,7 +317,29 @@ echo "Results  : results/summary.md"
 echo "Timing   : results/timing.csv"
 echo "============================================================"
 
-# 打印每模型完成数统计
+# 每模型完成数
 echo ""
 echo "Per-model completion:"
 awk -F, 'NR>1{c[$1]++} END{for(m in c) printf "  %-12s %d\n", m, c[m]}' "$TIMING_FILE" | sort -k2 -rn
+
+# ── 失败汇总 ──
+echo ""
+if [ "$FAIL_COUNT" -gt 0 ]; then
+    echo "============================================================"
+    echo "  WARNING: ${FAIL_COUNT} case(s) FAILED"
+    echo "  Failed log: ${FAILED_LOG}"
+    echo "============================================================"
+    echo ""
+    # 按模型分组显示
+    while IFS= read -r line; do
+        echo "  $line"
+    done < "$FAILED_LOG"
+    echo ""
+    echo "To retry failed cases:"
+    echo "  while IFS=, read -r model sc ca _; do"
+    echo "    bash scripts/run_single_model.sh \"\$model\" \"\$sc\" \"\$ca\" $GPU_ID"
+    echo "  done < ${FAILED_LOG}"
+else
+    echo "ALL CASES PASSED — no failures."
+    rm -f "$FAILED_LOG"
+fi

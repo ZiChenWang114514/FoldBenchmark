@@ -25,7 +25,7 @@
 #   Phase 2: 9 models × 46 new cases  ≈  6-8 h (AF3 最慢 ~300 s/case)
 #   Phase 3: AlphaFast 81-case batch  ≈  90-120 min（4 GPU 并行）
 # ============================================================
-set -euo pipefail
+set -u  # 不用 -e / pipefail — 单个 case 失败不中断整个 benchmark
 
 GPU=${1:-0}
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -37,7 +37,10 @@ source "${FOLDBENCH_CONFIG:-${SCRIPTS}/config.sh}"
 
 TS=$(date +%Y%m%d_%H%M%S)
 LOG_DIR="${PROJECT_ROOT}/results/run_missing_${TS}"
+FAILED_LOG="${LOG_DIR}/FAILED.txt"
 mkdir -p "$LOG_DIR" "${PROJECT_ROOT}/results"
+: > "$FAILED_LOG"
+FAIL_COUNT=0
 
 # 确保 timing.csv 存在
 [ -f "$TIMING_FILE" ] || echo "model,scenario,case_name,elapsed_seconds" > "$TIMING_FILE"
@@ -56,7 +59,15 @@ run_one() {
     local model=$1 scenario=$2 case_name=$3
     echo "[$(date +%H:%M:%S)] $model / $scenario / $case_name"
     bash "${SCRIPTS}/run_single_model.sh" "$model" "$scenario" "$case_name" "$GPU" \
-        2>&1 | tee -a "${LOG_DIR}/${model}.log"
+        2>&1 | tee -a "${LOG_DIR}/${model}.log" \
+        || true
+    local rc=${PIPESTATUS[0]:-0}
+    if [ "$rc" -ne 0 ]; then
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+        echo "${model},${scenario},${case_name},exit=${rc}" >> "$FAILED_LOG"
+        echo "  [FAIL] ${model}/${scenario}/${case_name} (exit=${rc})"
+    fi
+    return 0
 }
 
 # ================================================================
@@ -169,7 +180,11 @@ echo "Phase 3: AlphaFast all-in-one batch (ALL 81 cases, 4 GPUs)"
 echo "  Overwrites existing alphafast outputs & timing entries"
 echo "========================================================"
 
-bash "${SCRIPTS}/run_alphafast_all_in_one.sh" 2>&1 | tee "${LOG_DIR}/alphafast.log"
+if ! bash "${SCRIPTS}/run_alphafast_all_in_one.sh" 2>&1 | tee "${LOG_DIR}/alphafast.log"; then
+    echo "alphafast,ALL,all-in-one,exit=1" >> "$FAILED_LOG"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+    echo "  [FAIL] AlphaFast all-in-one batch failed"
+fi
 
 echo ""
 echo "[Phase 3 DONE] $(date)"
@@ -190,3 +205,22 @@ echo "End    : $(date)"
 echo "Logs   : $LOG_DIR/"
 echo "Results: results/summary.md"
 echo "========================================================"
+
+# ── 失败汇总 ──
+if [ "$FAIL_COUNT" -gt 0 ]; then
+    echo ""
+    echo "========================================================"
+    echo "  WARNING: ${FAIL_COUNT} case(s) FAILED"
+    echo "  Failed log: ${FAILED_LOG}"
+    echo "========================================================"
+    while IFS= read -r line; do echo "  $line"; done < "$FAILED_LOG"
+    echo ""
+    echo "To retry failed cases:"
+    echo "  while IFS=, read -r model sc ca _; do"
+    echo "    bash scripts/run_single_model.sh \"\$model\" \"\$sc\" \"\$ca\" $GPU"
+    echo "  done < ${FAILED_LOG}"
+else
+    echo ""
+    echo "ALL CASES PASSED — no failures."
+    rm -f "$FAILED_LOG"
+fi
