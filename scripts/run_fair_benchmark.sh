@@ -26,14 +26,20 @@ set -u
 CPU_THRESHOLD=20     # CPU 使用率阈值 (%)
 CPU_WAIT_SEC=30      # 需持续低于阈值的秒数
 GPU_ID=3             # 推理 GPU
+GPU_UTIL_THRESHOLD=10  # GPU 使用率阈值 (%)，低于此视为空闲
+GPU_MEM_THRESHOLD=500  # GPU 显存阈值 (MiB)，低于此视为空闲
+GPU_WAIT_SEC=10        # GPU 需持续空闲的秒数
 DRY_RUN=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --cpu-threshold) CPU_THRESHOLD=$2; shift 2 ;;
-        --cpu-wait)      CPU_WAIT_SEC=$2;  shift 2 ;;
-        --gpu)           GPU_ID=$2;        shift 2 ;;
-        --dry-run)       DRY_RUN=1;        shift   ;;
+        --cpu-threshold)  CPU_THRESHOLD=$2;      shift 2 ;;
+        --cpu-wait)       CPU_WAIT_SEC=$2;        shift 2 ;;
+        --gpu)            GPU_ID=$2;              shift 2 ;;
+        --gpu-util)       GPU_UTIL_THRESHOLD=$2;  shift 2 ;;
+        --gpu-mem)        GPU_MEM_THRESHOLD=$2;   shift 2 ;;
+        --gpu-wait)       GPU_WAIT_SEC=$2;        shift 2 ;;
+        --dry-run)        DRY_RUN=1;              shift   ;;
         *) echo "Unknown: $1"; exit 1 ;;
     esac
 done
@@ -93,14 +99,48 @@ wait_cpu_idle() {
     echo "[CPU GATE] CPU idle confirmed (< ${CPU_THRESHOLD}% for ${CPU_WAIT_SEC}s). Proceeding."
 }
 
+wait_gpu_idle() {
+    # 等待 GPU $GPU_ID 使用率和显存连续 $GPU_WAIT_SEC 秒低于阈值
+    local idle_streak=0
+    echo "[GPU GATE] Waiting for GPU ${GPU_ID}: util < ${GPU_UTIL_THRESHOLD}% AND mem < ${GPU_MEM_THRESHOLD} MiB for ${GPU_WAIT_SEC}s..."
+    while [ $idle_streak -lt $GPU_WAIT_SEC ]; do
+        # nvidia-smi 查询指定 GPU
+        local info
+        info=$(nvidia-smi --id="$GPU_ID" \
+                   --query-gpu=utilization.gpu,memory.used \
+                   --format=csv,noheader,nounits 2>/dev/null) || {
+            echo "[GPU GATE] nvidia-smi failed — skipping GPU check"
+            return 0
+        }
+        local util mem
+        util=$(echo "$info" | awk -F',' '{gsub(/ /,"",$1); print $1}')
+        mem=$(echo "$info" | awk -F',' '{gsub(/ /,"",$2); print $2}')
+
+        if [ "$util" -lt "$GPU_UTIL_THRESHOLD" ] && [ "$mem" -lt "$GPU_MEM_THRESHOLD" ]; then
+            idle_streak=$((idle_streak + 1))
+        else
+            if [ $idle_streak -gt 0 ]; then
+                echo "[GPU GATE] GPU ${GPU_ID}: util=${util}% mem=${mem}MiB — streak reset (was ${idle_streak}s)"
+            fi
+            idle_streak=0
+        fi
+        sleep 1
+    done
+    echo "[GPU GATE] GPU ${GPU_ID} idle confirmed (util<${GPU_UTIL_THRESHOLD}% mem<${GPU_MEM_THRESHOLD}MiB for ${GPU_WAIT_SEC}s)."
+}
+
 run_case() {
     # run_case <model> <scenario> <case_name> [env_vars...]
     # 单个 case 失败不中断：记录到 FAILED.txt，继续下一个
+    # 每次推理前先确保 GPU 空闲（防止与其他任务冲突）
     local model=$1 scenario=$2 case_name=$3
     shift 3
+
+    # GPU 空闲检查（每个 case 推理前）
+    wait_gpu_idle
+
     echo "[$(date +%H:%M:%S)] ${model} / ${scenario} / ${case_name}"
 
-    # 用子 shell 捕获退出码（tee 不影响判断）
     local rc=0
     env "$@" \
         bash "${SCRIPTS}/run_single_model.sh" "$model" "$scenario" "$case_name" "$GPU_ID" \
@@ -138,6 +178,7 @@ echo "============================================================"
 echo "FoldBenchmark — Fair Benchmark"
 echo "Start      : $(date)"
 echo "GPU        : $GPU_ID"
+echo "GPU gate   : util < ${GPU_UTIL_THRESHOLD}%, mem < ${GPU_MEM_THRESHOLD} MiB, for ${GPU_WAIT_SEC}s"
 echo "CPU gate   : < ${CPU_THRESHOLD}% for ${CPU_WAIT_SEC}s"
 echo "Cases      : $TOTAL_CASES"
 echo "MSA cache  : $MSA_CACHE"
